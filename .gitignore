@@ -1,0 +1,10 @@
+.idea
+.git
+api/public/assets
+back/api/config.ini
+front/web/node_modules
+front/web/conf.d/*
+/postgres
+# OS
+.DS_Store
+*.env

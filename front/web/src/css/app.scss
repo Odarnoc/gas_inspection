@@ -1,0 +1,31 @@
+@import 'cropperjs/dist/cropper.css';
+// app global css in SCSS form
+@font-face {
+    font-family: nunito;
+    src: url(./../assets/fonts/nunito/Nunito-Italic-VariableFont_wght.ttf);
+}
+@font-face {
+    font-family: nunito;
+    src: url(./../assets/fonts/nunito/Nunito-VariableFont_wght.ttf);
+}
+
+.page-background {
+  background-color: $info;
+}
+
+.menu-list .q-expansion-item {
+  border-radius: 32px;
+}
+
+.menu-list .q-item {
+  margin: 10px;
+  border-radius: 32px;
+  border-style: solid;
+  border-color: $accent;
+}
+
+.menu-list .q-item.q-router-link--active,
+.q-item--active {
+  background-color: $info;
+  color: white;
+}

@@ -1,0 +1,4 @@
+{
+  "notUserFoundOnGuard": "No se encontro usuario en guard (UserRoleGuard)",
+  "invalidCredentials": "Usuario o contraseña invalida."
+}

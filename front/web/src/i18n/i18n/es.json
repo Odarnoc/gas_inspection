@@ -1,0 +1,22 @@
+{
+  "menus": {
+    "profile": "Perfil",
+    "log_out": "Cerrar sesión",
+    "personal": "Personal",
+    "proyect_type": "Tipos de proyecto",
+    "coverage_map": "Mapa de cobertura",
+    "reports": "Reportes",
+    "requests": "Solicitudes",
+    "assigned": "Asignadas",
+    "approved": "Aprobadas",
+    "observed": "Observadas",
+    "rejected": "Rechazadas"
+  },
+  "fields": {
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "buttons": {
+    "log_in": "Iniciar sesión"
+  }
+}

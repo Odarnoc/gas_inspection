@@ -1,0 +1,40 @@
+version: "3.7"
+networks:
+  common:
+    external:
+      name: common_network
+services:
+  dev:
+    container_name: gas_inspection_front
+    build:
+      context: front/
+      target: 'develop-stage'
+    restart: always
+    ports:
+      - '8164:8164'
+    volumes:
+      - './front/web:/app'
+    command: /bin/sh -c "yarn && quasar dev"
+    environment:
+      - LOCAL=true
+    depends_on:
+      - back
+  back:
+    container_name: gas_inspection_back
+#    env_file:
+#      - .env
+    build:
+      context: back/api/
+      target: 'development'
+      args:
+        server_name: gas_inspection_back
+    restart: always
+    environment:
+      - TZ=America/Mexico_City
+    ports:
+      - 67:3000
+    volumes:
+      - ./back/api:/usr/src/app
+    command: /bin/sh -c "npm i && npm run start:debug"
+    networks:
+      - common
