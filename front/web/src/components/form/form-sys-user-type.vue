@@ -1,21 +1,13 @@
 <template>
   <q-form ref="refForm" class="q-gutter-md">
     <div class="row q-col-gutter-xs">
-      <div class="'col-md-12 col-xs-3">
-        <q-select
-          filled
-          type="text"
-          v-model="state.fields.country.id"
-          :label="$t('fields.country')"
-          emit-value
-          map-options
-          :rules="rules.country"
-          :options="options.countries"
-        />
-      </div>
-      <div class="'col-md-12 col-xs-9">
+      <div class="'col-md-12 col-xs-6">
         <q-input
-          filled
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="text"
           v-model="state.fields.name"
           :rules="rules.name"
@@ -28,7 +20,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 let self
 export default {
   name: 'base-table',
@@ -37,9 +28,6 @@ export default {
       state: {
         fields: {
           id: null,
-          country: {
-            id: null
-          },
           name: ''
         }
       },
@@ -52,19 +40,15 @@ export default {
   computed: {
     rules () {
       return {
-        name: [self.$rules.required(self.$t('validations.required.field'))],
-        country: [self.$rules.required(self.$t('validations.required.field'))]
+        name: [self.$rules.required(self.$t('validations.required.field'))]
       }
     }
   },
   created () {
     self = this
   },
-  mounted () {
-    this.getCountriesOptions()
-  },
+  mounted () {},
   methods: {
-    ...mapActions('system/countries', ['getCountries']),
     async getData () {
       const isValid = await self.$refs.refForm.validate()
       const params = { ...self.state.fields }
@@ -78,18 +62,9 @@ export default {
     },
     resetFields () {
       self.state.fields = {
-        name: '',
-        country: {
-          id: ''
-        }
+        name: ''
       }
       self.$refs.refForm.resetValidation()
-    },
-    async getCountriesOptions () {
-      self.$showLoading()
-      const response = await self.getCountries()
-      self.options.countries = response.data
-      self.$destroyLoading()
     }
   }
 }

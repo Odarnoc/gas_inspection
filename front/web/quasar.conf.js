@@ -252,8 +252,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: 'MikMic',
-        short_name: 'MikMic',
+        name: 'L.I.V. GAS',
+        short_name: 'L.I.V. GAS',
         description: 'Plataforma de transporte privado.',
         display: 'standalone',
         orientation: 'portrait',
@@ -319,7 +319,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'MikMic'
+        appId: 'L.I.V. GAS'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

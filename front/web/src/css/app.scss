@@ -18,14 +18,40 @@
 }
 
 .menu-list .q-item {
-  margin: 10px;
-  border-radius: 32px;
-  border-style: solid;
-  border-color: $accent;
+  color: #d0d0d0;
+}
+
+.menu-list .q-icon {
+  color: white;
 }
 
 .menu-list .q-item.q-router-link--active,
 .q-item--active {
-  background-color: $info;
+  font-size: medium;
+  font-weight: bold;
   color: white;
+}
+
+.bg-primary-input-color{
+  background: $bg-primary-input-color !important;
+}
+
+.text-primary-input-color {
+  color: $label-primary-input-color !important;
+}
+
+.text-border-primary-input-color {
+  color: $border-primary-input-color !important;
+}
+
+.text-border-primary-input-color .q-icon {
+  color: $icon-primary-input-color !important;
+}
+
+.value-primary-input-color {
+  color: $value-primary-input-color !important;
+}
+
+.bg-primary-input-color .q-field__native {
+  color: $value-primary-input-color !important;
 }

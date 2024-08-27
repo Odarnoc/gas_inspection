@@ -13,6 +13,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import { join } from 'path';
+import { ProyectTypeModule } from './admin/user-type/proyectType.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { join } from 'path';
     }),
     CommonModule,
     AuthModule,
+    ProyectTypeModule,
   ],
   providers: [],
 })

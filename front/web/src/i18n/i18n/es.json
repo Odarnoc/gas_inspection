@@ -1,5 +1,14 @@
 {
+  "warning": "Advertencia",
+  "welcome": "¡Bienvenido!",
+  "success": "Éxito",
+  "error": "Error",
+  "file": "Archivo",
+  "no_data": "Datos no disponibles",
+  "rows_per_page_label": "Registros por página",
+  "no_results": "No se encontraron resultados",
   "menus": {
+    "menu": "Menú",
     "profile": "Perfil",
     "log_out": "Cerrar sesión",
     "personal": "Personal",
@@ -14,9 +23,18 @@
   },
   "fields": {
     "email": "Correo electrónico",
-    "password": "Contraseña"
+    "password": "Contraseña",
+    "name": "Nombre"
   },
   "buttons": {
-    "log_in": "Iniciar sesión"
+    "log_in": "Iniciar sesión",
+    "edit": "Editar",
+    "new": "Nuevo",
+    "actions": "Acciones",
+    "save": "Guardar",
+    "update": "Actualizar"
+  },
+  "dialogs": {
+    "loading": "Cargando"
   }
 }

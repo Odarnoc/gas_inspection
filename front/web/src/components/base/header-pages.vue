@@ -1,11 +1,7 @@
 <template>
   <div class="q-pa-sm">
     <div class="row">
-      <div class="col-sm-9 q-pt-md q-pl-md">
-        <back-button-bread-crum v-if="activateButtonBreadCrum" :isClose="isCloseTab" />
-      </div>
-
-      <div class="col-sm-3 pull-right">
+      <div class="col-sm-12 pull-right">
         <div class="q-pa-md q-gutter-sm">
           <q-breadcrumbs align="right">
             <q-breadcrumbs-el icon="home" color="primary" to="/" />

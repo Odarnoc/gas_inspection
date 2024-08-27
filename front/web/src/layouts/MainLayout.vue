@@ -41,7 +41,7 @@
     </q-header>
 
     <q-drawer
-      class="q-pa-md"
+      class="q-pa-md bg-info"
       v-model="leftDrawerOpen"
       bordered
       :width="256"
@@ -49,50 +49,89 @@
       :mini="false"
     >
       <q-list class="menu-list">
-        <q-item to="/personal">
+        <q-item to="/personal" v-ripple>
+          <q-item-section avatar>
+            <q-icon name="groups" />
+          </q-item-section>
           <q-item-section>
             <q-item-label>{{$t('menus.personal')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item to="/coverage_map">
-          <q-item-section>
-            <q-item-label>{{$t('menus.coverage_map')}}</q-item-label>
+        <q-separator />
+        <q-item to="/proyectTypes">
+          <q-item-section avatar>
+            <q-icon name="person" />
           </q-item-section>
-        </q-item>
-        <q-item to="/proyect_type">
           <q-item-section>
             <q-item-label>{{$t('menus.proyect_type')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-expansion-item :content-inset-level="0.5" expand-separator :label="$t('menus.reports')">
+        <q-separator />
+        <q-item to="/coverage_map">
+          <q-item-section avatar>
+            <q-icon name="map" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.coverage_map')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-separator />
+        <q-expansion-item
+          :content-inset-level="0.5"
+          expand-separator
+          :label="$t('menus.reports')"
+          icon="folder_open"
+        >
           <q-item to="/reports">
+            <q-item-section avatar>
+              <q-icon name="description" />
+            </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.reports')}}</q-item-label>
             </q-item-section>
           </q-item>
         </q-expansion-item>
-        <q-expansion-item :content-inset-level="0.5" expand-separator :label="$t('menus.requests')">
+        <q-separator />
+        <q-expansion-item
+          :content-inset-level="0.5"
+          expand-separator
+          :label="$t('menus.requests')"
+          icon="format_list_bulleted"
+        >
           <q-item to="/assigned">
+            <q-item-section avatar>
+              <q-icon name="assignment" />
+            </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.assigned')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item to="/approved">
+            <q-item-section avatar>
+              <q-icon name="assignment_turned_in" />
+            </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.approved')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item to="/observed">
+            <q-item-section avatar>
+              <q-icon name="assignment_late" />
+            </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.observed')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item to="/rejected">
+            <q-item-section avatar>
+              <q-icon name="assignment_returned" />
+            </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.rejected')}}</q-item-label>
             </q-item-section>
           </q-item>
         </q-expansion-item>
+        <q-separator />
       </q-list>
     </q-drawer>
 

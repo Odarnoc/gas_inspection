@@ -18,7 +18,10 @@ const routes = [
     meta: metaAuth,
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') },
+      { path: 'proyectTypes', component: () => import('pages/admin/proyect_types/Index.vue') },
+      { path: 'proyectTypes/new', component: () => import('pages/admin/proyect_types/New.vue') },
+      { path: 'proyectTypes/edit/:id', component: () => import('pages/admin/proyect_types/Edit.vue') }
     ]
   },
 
