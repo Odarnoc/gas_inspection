@@ -1,18 +1,13 @@
-import {
-  IsNumber,
-  IsOptional,
-  IsString,
-  MaxLength,
-  MinLength,
-} from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateUserTypeDto {
+export class CreateProyectTypeDto {
   @IsNumber()
   @IsOptional()
   id?: number;
 
   @IsString()
-  @MinLength(1)
-  @MaxLength(1200)
   name: string;
+
+  @IsString()
+  details: string;
 }

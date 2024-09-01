@@ -6,6 +6,10 @@ export enum TypesEnviroment {
 
 export enum TypesRol {
   admin = 'admin',
-  verificator = 'vendor',
-  client = 'inspector',
+  vendor = 'vendor',
+  inspector = 'inspector',
+}
+
+export enum TypesRequestPetition {
+  assigned = 'assigned',
 }

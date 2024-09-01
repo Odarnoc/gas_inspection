@@ -1,4 +1,6 @@
 {
   "notUserFoundOnGuard": "No se encontro usuario en guard (UserRoleGuard)",
-  "invalidCredentials": "Usuario o contraseña invalida."
+  "invalidCredentials": "Usuario o contraseña invalida.",
+  "emailAlreadyExist": "El correo electrónico usado ya se encuentra registrado",
+  "errUnknown": "Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde"
 }

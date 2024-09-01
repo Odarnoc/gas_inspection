@@ -3,12 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { ProyectTypeController } from './proyectType.controller';
 import { ProyectTypeService } from './proyectType.service';
-import { UserType } from './entities/proyectType.entity';
+import { ProyectType } from './entities/proyectType.entity';
 
 @Module({
   controllers: [ProyectTypeController],
   providers: [ProyectTypeService],
-  imports: [TypeOrmModule.forFeature([UserType]), forwardRef(() => AuthModule)],
+  imports: [
+    TypeOrmModule.forFeature([ProyectType]),
+    forwardRef(() => AuthModule),
+  ],
   exports: [TypeOrmModule, ProyectTypeService],
 })
 export class ProyectTypeModule {}

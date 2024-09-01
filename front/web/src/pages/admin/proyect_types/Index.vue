@@ -18,16 +18,29 @@
                   />
                 </div>
               </div>
-              <base-table :columns="columnsServices" :fetchData="getTable" :pag="pagination">
+              <base-table
+                ref="table"
+                :columns="columnsServices"
+                :fetchData="getTable"
+                :pag="pagination"
+              >
                 <template v-slot:body="props">
                   <q-tr :props="props">
                     <q-td key="name" :props="props">{{ props.row.name }}</q-td>
+                    <q-td key="details" :props="props">{{ props.row.details }}</q-td>
                     <q-td key="actions" :props="props">
                       <q-btn
                         color="primary"
                         icon="fas fa-edit"
                         flat
                         @click="editSelectedRow(props.row.id)"
+                        size="10px"
+                      />
+                      <q-btn
+                        color="negative"
+                        icon="fas fa-trash"
+                        flat
+                        @click="deleteSelectedRow(props.row.id)"
                         size="10px"
                       />
                     </q-td>
@@ -70,6 +83,13 @@ export default {
           sortable: true
         },
         {
+          name: 'details',
+          align: 'left',
+          label: this.$t('fields.details'),
+          field: 'details',
+          sortable: true
+        },
+        {
           name: 'actions',
           align: 'center',
           label: this.$t('buttons.actions'),
@@ -83,13 +103,38 @@ export default {
     this.fetchFromServer()
   },
   methods: {
-    ...mapActions('admin/proyectTypes', ['getTable']),
+    ...mapActions('admin/proyectTypes', ['getTable', 'delete']),
     async fetchFromServer () {
       this.$showLoading()
       this.$destroyLoading()
     },
+    async fetchTableDataByFilters () {
+      this.$showLoading()
+      await this.$refs.table.onRequest({
+        pagination: this.$refs.table.pagination,
+        filter: undefined
+      })
+      this.$destroyLoading()
+    },
     editSelectedRow (id) {
       this.$router.push(`/proyectTypes/edit/${this.$encode(id)}`)
+    },
+    async deleteSelectedRow (id) {
+      if (!(await this.$confirmDialog(this.$t('dialogs.deleteProyectType')))) {
+        return
+      }
+      this.loading = true
+      this.$showLoading()
+      try {
+        const response = await this.delete(id)
+        this.$showNotifySuccess(response)
+        await this.fetchTableDataByFilters()
+      } catch (error) {
+        console.log(error)
+        this.$showNotifyError(error)
+      }
+      this.$destroyLoading()
+      this.loading = false
     }
   }
 }

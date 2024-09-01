@@ -4,6 +4,7 @@ import { createStore } from 'vuex'
 import users from './users'
 import system from './system'
 import admin from './admin'
+import vendor from './vendor'
 
 /*
  * If not building with SSR mode, you can
@@ -19,7 +20,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       users,
       system,
-      admin
+      admin,
+      vendor
     },
 
     // enable strict mode (adds overhead!)

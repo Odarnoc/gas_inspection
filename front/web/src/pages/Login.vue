@@ -137,7 +137,7 @@ export default defineComponent({
         this.confirmDialog = true
       } catch (error) {}
       api
-        .post('/auth/login', this.type == null ? params : params2)
+        .post('/auth/loginWeb', this.type == null ? params : params2)
         .then(({ data }) => {
           this.loading = false
           localStorage.setItem('JWT', data.token)

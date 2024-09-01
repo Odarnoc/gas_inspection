@@ -23,11 +23,11 @@
         <div>
           <q-btn-dropdown color="white" flat icon="fas fa-user">
             <q-list>
-              <q-item clickable @click="driverProfile(userid)" v-close-popup>
+              <!-- <q-item clickable @click="driverProfile(userid)" v-close-popup>
                 <q-item-section>
                   <q-item-label>{{$t('menus.profile')}}</q-item-label>
                 </q-item-section>
-              </q-item>
+              </q-item>-->
 
               <q-item clickable v-close-popup @click="logOut()">
                 <q-item-section>
@@ -49,7 +49,7 @@
       :mini="false"
     >
       <q-list class="menu-list">
-        <q-item to="/personal" v-ripple>
+        <q-item to="/personal" v-ripple v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="groups" />
           </q-item-section>
@@ -58,7 +58,7 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item to="/proyectTypes">
+        <q-item to="/proyectTypes" v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="person" />
           </q-item-section>
@@ -67,7 +67,7 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item to="/coverage_map">
+        <q-item to="/coverage_map" v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="map" />
           </q-item-section>
@@ -81,6 +81,7 @@
           expand-separator
           :label="$t('menus.reports')"
           icon="folder_open"
+          v-if="$hasRoles([$typesRol.admin])"
         >
           <q-item to="/reports">
             <q-item-section avatar>
@@ -92,11 +93,20 @@
           </q-item>
         </q-expansion-item>
         <q-separator />
+        <q-item to="/request">
+          <q-item-section avatar>
+            <q-icon name="assignment" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.requests')}}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-expansion-item
           :content-inset-level="0.5"
           expand-separator
           :label="$t('menus.requests')"
           icon="format_list_bulleted"
+          v-if="$hasRoles([$typesRol.vendor])"
         >
           <q-item to="/assigned">
             <q-item-section avatar>
@@ -155,7 +165,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters('users/users', { role: 'role' })
+    ...mapGetters('users/auth', { role: 'role' })
   },
   created () {},
   methods: {

@@ -23,6 +23,14 @@ const module = {
     update: async (context, payload) => {
       const response = await api.put(`${apiRoot}/update`, payload)
       return response
+    },
+    delete: async ({ commit, dispatch }, id) => {
+      const response = await api.delete(`${apiRoot}/delete/${id}`)
+      return response
+    },
+    getOptions: async (context, showAll) => {
+      const response = await api.get(`${apiRoot}/options`)
+      return response
     }
   },
   getters: {

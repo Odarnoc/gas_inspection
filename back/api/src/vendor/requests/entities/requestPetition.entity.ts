@@ -1,0 +1,115 @@
+import { IsPositive } from 'class-validator';
+import { ProyectType } from 'src/admin/user-type/entities/proyectType.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
+  Index,
+} from 'typeorm';
+
+import { Location } from 'src/common/interfaces/location.interface';
+import { User } from 'src/auth/entities/user.entity';
+import { TypesRequestPetition } from 'src/common/glob/types';
+import { StatusOrder } from 'src/common/glob/status';
+
+@Entity()
+export class RequestPetition {
+  @PrimaryGeneratedColumn('increment')
+  @IsPositive()
+  id: number;
+
+  @Column('text')
+  firstName: string;
+
+  @Column('text')
+  paternalName: string;
+
+  @Column('text')
+  maternalName: string;
+
+  @Column('text', { nullable: true })
+  phone: string;
+
+  @Column('text', { nullable: true })
+  cellphone: string;
+
+  @Column('text', { default: '', nullable: true })
+  zone: string;
+
+  @Column('text', { default: '', nullable: true })
+  avenue: string;
+
+  @Column('text', { default: '', nullable: true })
+  street: string;
+
+  @Column('text', { default: '', nullable: true })
+  door: string;
+
+  @Column('text', { default: '', nullable: true })
+  references: string;
+
+  @Column('smallint', { default: StatusOrder.ASSIGNED })
+  status: number;
+
+  @Column({
+    type: 'point',
+    transformer: {
+      from: (v) => v,
+      to: (v) => `${v.x},${v.y}`,
+    },
+  })
+  @Index({ spatial: true })
+  location: Location;
+
+  @Column('text', { default: '', nullable: true })
+  identityCard: string;
+
+  @Column('text', { default: '', nullable: true })
+  waterBill: string;
+
+  @Column('text', { default: '', nullable: true })
+  electricityBill: string;
+
+  @Column('text', { default: '', nullable: true })
+  realFolio: string;
+
+  @Column('date', { nullable: true })
+  startDate: Date;
+
+  @Column('date', { nullable: true })
+  limitDate: Date;
+
+  @ManyToOne(() => ProyectType, (proyectType) => proyectType.requests, {
+    onDelete: 'SET NULL',
+  })
+  proyectType: ProyectType;
+
+  @ManyToOne(() => User, (user) => user.requests, {
+    onDelete: 'SET NULL',
+  })
+  inspector: User;
+
+  @CreateDateColumn({
+    nullable: true,
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdAt: Date;
+
+  @UpdateDateColumn({
+    nullable: true,
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
+
+  @DeleteDateColumn({
+    nullable: true,
+    type: 'timestamptz',
+  })
+  deletedAt: Date;
+}

@@ -21,7 +21,13 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: 'proyectTypes', component: () => import('pages/admin/proyect_types/Index.vue') },
       { path: 'proyectTypes/new', component: () => import('pages/admin/proyect_types/New.vue') },
-      { path: 'proyectTypes/edit/:id', component: () => import('pages/admin/proyect_types/Edit.vue') }
+      { path: 'proyectTypes/edit/:id', component: () => import('pages/admin/proyect_types/Edit.vue') },
+      { path: 'personal', component: () => import('pages/admin/personal/Index.vue') },
+      { path: 'personal/new', component: () => import('pages/admin/personal/New.vue') },
+      { path: 'personal/edit/:id', component: () => import('pages/admin/personal/Edit.vue') },
+      { path: 'request', component: () => import('pages/vendor/request/Index.vue') },
+      { path: 'request/new', component: () => import('pages/vendor/request/New.vue') },
+      { path: 'request/edit/:id', component: () => import('pages/vendor/request/Edit.vue') }
     ]
   },
 

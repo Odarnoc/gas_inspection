@@ -33,8 +33,8 @@ export default boot(({ app, ssrContext, store }) => {
   // stripe public key
   app.config.globalProperties.$stripePublicKey =
     'pk_test_51IIc46BYgkmYGELWTuP4QA1HOD2KJ7I7f9vgNmjyqu1Tgcwl5vrTecuCMYrAiWqeSUe1j0MsfA2Jf9se4lwwlpGx00U4qqmGaP'
-  app.config.globalProperties.$maskDate = 'DD/MM/YYYY'
-  app.config.globalProperties.$maskDateTime = 'DD/MM/YYYY HH:mm'
+  app.config.globalProperties.$maskDate = 'YYYY-MM-DD'
+  app.config.globalProperties.$maskDateTime = 'YYYY-MM-DD HH:mm'
 
   app.config.globalProperties.$maskDateDB = 'YYYY-MM-DD HH:mm'
   app.config.globalProperties.$maskDateDBNoTime = 'YYYY-MM-DD'
@@ -291,7 +291,7 @@ export default boot(({ app, ssrContext, store }) => {
   ]
 
   app.config.globalProperties.$hasRoles = (admitRoles) => {
-    const userRoles = store.getters['users/users/role']
+    const userRoles = store.getters['users/auth/role']
     if (!userRoles) return false
     return userRoles.every(value => {
       return admitRoles.includes(value)

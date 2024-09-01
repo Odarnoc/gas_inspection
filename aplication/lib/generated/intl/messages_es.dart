@@ -43,20 +43,33 @@ class MessageLookup extends MessageLookupByLibrary {
         "bSignin": MessageLookupByLibrary.simpleMessage("Iniciar sesión"),
         "bSignup": MessageLookupByLibrary.simpleMessage("Registrate aqui"),
         "bUpload": MessageLookupByLibrary.simpleMessage("Subir"),
+        "bView": MessageLookupByLibrary.simpleMessage("Ver"),
         "bYes": MessageLookupByLibrary.simpleMessage("Si"),
         "eValidatoCharacters": m0,
         "eValidatoEmail": MessageLookupByLibrary.simpleMessage(
             "El formato del correo es incorrecto"),
+        "errUnknown": MessageLookupByLibrary.simpleMessage(
+            "Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde"),
         "hEmail": MessageLookupByLibrary.simpleMessage("Correo electrónico"),
         "hPassword": MessageLookupByLibrary.simpleMessage("Contraseña"),
         "hPasswordConfirmation":
             MessageLookupByLibrary.simpleMessage("Verifica la contraseña"),
+        "lActions": MessageLookupByLibrary.simpleMessage("Acciones"),
+        "lAssignedDate":
+            MessageLookupByLibrary.simpleMessage("Fecha de asignación"),
+        "lClient": MessageLookupByLibrary.simpleMessage("Cliente"),
         "lForgetYourPassword":
             MessageLookupByLibrary.simpleMessage("¿Olvidaste tu contraseña?"),
+        "lId": MessageLookupByLibrary.simpleMessage("ID"),
+        "lInternalInspections":
+            MessageLookupByLibrary.simpleMessage("Inspecciones internas"),
         "lNoAccount": MessageLookupByLibrary.simpleMessage(
             "¿Es tu primera vez en Mikinder?"),
+        "lPreinspections":
+            MessageLookupByLibrary.simpleMessage("Preinspecciones"),
         "lProfile": MessageLookupByLibrary.simpleMessage("Perfil"),
         "lSearch": MessageLookupByLibrary.simpleMessage("Buscar"),
+        "signOut": MessageLookupByLibrary.simpleMessage("Cerrar sesión"),
         "tAbout": MessageLookupByLibrary.simpleMessage("Acerca de"),
         "tNotifications": MessageLookupByLibrary.simpleMessage("Notificaciones")
       };

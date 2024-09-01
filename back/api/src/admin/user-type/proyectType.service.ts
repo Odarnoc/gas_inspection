@@ -7,17 +7,17 @@ import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
 import { DEFAULT_RESULT } from '../../common/constants/response';
 import { getOrderBy } from '../../common/helpers/pagination';
-import { UserType } from './entities/proyectType.entity';
-import { CreateUserTypeDto } from './dto/create-proyectType.dto';
+import { ProyectType } from './entities/proyectType.entity';
 import { I18nContext, I18nService } from 'nestjs-i18n';
+import { CreateProyectTypeDto } from './dto/create-proyectType.dto';
 
 @Injectable()
 export class ProyectTypeService {
   private readonly logger = new Logger(ProyectTypeService.name);
 
   constructor(
-    @InjectRepository(UserType)
-    private readonly userTypeRepository: Repository<UserType>,
+    @InjectRepository(ProyectType)
+    private readonly proyectTypeRepository: Repository<ProyectType>,
 
     private readonly i18n: I18nService,
   ) {}
@@ -36,7 +36,7 @@ export class ProyectTypeService {
     sortBy = sortBy || PAGINATION_DEFAULT_VALUES.sortBy;
     descending = descending ?? PAGINATION_DEFAULT_VALUES.descending;
     const order = getOrderBy(sortBy, descending);
-    const [items, total_items] = await this.userTypeRepository.findAndCount({
+    const [items, total_items] = await this.proyectTypeRepository.findAndCount({
       where,
       take: limit,
       skip,
@@ -55,7 +55,7 @@ export class ProyectTypeService {
   }
 
   async get(id: number) {
-    const data = await this.userTypeRepository.findOne({
+    const data = await this.proyectTypeRepository.findOne({
       where: { id },
     });
     return {
@@ -63,9 +63,9 @@ export class ProyectTypeService {
     };
   }
 
-  async create(user: User, createUserTypeDto: CreateUserTypeDto) {
+  async create(user: User, createUserTypeDto: CreateProyectTypeDto) {
     try {
-      const systemDocument = await this.userTypeRepository.save({
+      const systemDocument = await this.proyectTypeRepository.save({
         ...createUserTypeDto,
         created_by: user.id,
         updated_by: user.id,
@@ -82,9 +82,9 @@ export class ProyectTypeService {
     }
   }
 
-  async updated(user: User, createUserTypeDto: CreateUserTypeDto) {
+  async updated(user: User, createUserTypeDto: CreateProyectTypeDto) {
     try {
-      const systemDocument = await this.userTypeRepository.save({
+      const systemDocument = await this.proyectTypeRepository.save({
         ...createUserTypeDto,
         updated_by: user.id,
       });
@@ -98,5 +98,26 @@ export class ProyectTypeService {
     } catch (error) {
       handleDbExceptions(error, this.logger);
     }
+  }
+
+  async delete(id: number) {
+    const user = await this.proyectTypeRepository.softDelete({
+      id,
+    });
+
+    return {
+      user,
+      result: DEFAULT_RESULT.result,
+      message: this.i18n.t('messages.deleteSuccess', {
+        lang: I18nContext.current().lang,
+      }),
+    };
+  }
+
+  async getProyectTypeOptions() {
+    return await this.proyectTypeRepository
+      .createQueryBuilder('c')
+      .select('id AS value, name AS label')
+      .getRawMany();
   }
 }

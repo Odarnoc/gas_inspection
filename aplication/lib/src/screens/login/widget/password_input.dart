@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
-import 'package:mikinder/constants/custom_fonts.dart';
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/screens/login/access_controller.dart';
 
@@ -20,7 +19,7 @@ class PasswordInput extends StatelessWidget {
           bottom: kDefaultPadding * 0.75),
       margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding * 0.5),
       decoration: BoxDecoration(
-        color: kPrimaryColor.withOpacity(0.5),
+        color: kContentColorDarkTheme,
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextFormField(
@@ -28,22 +27,14 @@ class PasswordInput extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
-          icon: const Icon(Icons.lock, color: kThridColor),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           labelText: S.of(context).hPassword,
           labelStyle: const TextStyle(
-            color: Colors.black,
-            fontFamily: CustomFonts.bubblebody,
+            color: kFourthColor,
             fontWeight: FontWeight.bold,
           ),
-          errorStyle: const TextStyle(
-              color: kErrorColor, fontFamily: CustomFonts.bubblebody),
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: kThridColor),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: kThridColor),
-          ),
+          errorStyle: const TextStyle(color: kErrorColor),
+          border: InputBorder.none,
         ),
         initialValue: accessController.password,
         onSaved: (password) => accessController.password = password!,

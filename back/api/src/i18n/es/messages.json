@@ -1,4 +1,5 @@
 {
   "creationSuccess": "Creación exitosa",
-  "updatedSuccess": "Actualización exitosa"
+  "updatedSuccess": "Actualización exitosa",
+  "deleteSuccess": "Eliminación exitosa"
 }

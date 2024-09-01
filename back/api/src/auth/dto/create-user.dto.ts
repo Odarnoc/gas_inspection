@@ -1,19 +1,24 @@
 import { Transform } from 'class-transformer';
 import {
+  IsDateString,
   IsEmail,
   IsOptional,
   IsString,
-  IsUUID,
   MinLength,
 } from 'class-validator';
 
-const defaultCountryId = 1;
-
 export class CreateUserDto {
   @IsString()
-  @MinLength(4)
   @IsOptional()
-  fullName?: string;
+  firstName?: string;
+
+  @IsString()
+  @IsOptional()
+  paternalName?: string;
+
+  @IsString()
+  @IsOptional()
+  maternalName?: string;
 
   @IsString()
   @IsEmail()
@@ -23,23 +28,13 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
-  rfc?: string;
-
-  @IsString()
-  @IsOptional()
-  phoneCountryISOCode?: string;
-
-  @IsString()
-  @IsOptional()
-  phonePrefix?: string;
-
-  @IsString()
-  @MinLength(6)
-  @IsOptional()
   phone?: string;
 
   @IsString()
-  @MinLength(6)
+  @IsOptional()
+  cellphone?: string;
+
+  @IsString()
   @IsOptional()
   password?: string;
 
@@ -47,35 +42,31 @@ export class CreateUserDto {
   @IsOptional()
   image?: string;
 
-  @IsUUID()
+  @IsString()
   @IsOptional()
-  idDevice?: string;
-
-  @IsOptional()
-  tokenPush?: string;
-
-  @IsOptional()
-  user?: number;
-
-  @IsOptional()
-  internal_register?: boolean;
-
-  @IsOptional()
-  rol?: number;
+  rol?: string;
 
   @IsString()
   @IsOptional()
-  code?: string;
+  address?: string;
 
+  @IsString()
   @IsOptional()
-  groupsId?: number;
+  professionalTitle?: string;
 
+  @IsString()
   @IsOptional()
-  cityId?: number;
+  professionalTitleFile?: string;
 
+  @IsString()
   @IsOptional()
-  countryId?: number = defaultCountryId;
+  cv?: string;
 
+  @IsDateString()
   @IsOptional()
-  userTypeId?: number;
+  incomeDate?: Date;
+
+  @IsDateString()
+  @IsOptional()
+  conclusionDate?: Date;
 }

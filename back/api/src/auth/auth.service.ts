@@ -6,17 +6,22 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ArrayContainedBy, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import handleDbExceptions from 'src/common/exceptions/error.db.exception';
-import { ErrorCode } from 'src/common/glob/error';
 import { PasswordUserDto } from './dto/password-user.dto';
 import { DEFAULT_RESULT } from '../common/constants/response';
 import { I18nContext, I18nService } from 'nestjs-i18n';
+import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
+import { PAGINATION_DEFAULT_VALUES } from 'src/common/constants/pagination';
+import { getOrderBy } from 'src/common/helpers/pagination';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { ViewUserInspectorOptions } from './entities/userInspectorOptions.view.entity';
+import { TypesRol } from 'src/common/glob/types';
 
 @Injectable()
 export class AuthService {
@@ -26,12 +31,56 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
+    @InjectRepository(ViewUserInspectorOptions)
+    private readonly viewUserInspectorOptionsRepository: Repository<ViewUserInspectorOptions>,
+
     private readonly jwtService: JwtService,
 
     private readonly i18n: I18nService,
   ) {}
 
-  async register(createUserDto: CreateUserDto) {
+  async getTable({
+    page,
+    rowsPerPage,
+    offset,
+    sortBy,
+    descending,
+    where,
+  }: PaginationCompleteDto) {
+    const current = page || PAGINATION_DEFAULT_VALUES.page;
+    const limit = rowsPerPage || PAGINATION_DEFAULT_VALUES.rowsPerPage;
+    const skip = offset || (current - 1) * limit;
+    sortBy = sortBy || PAGINATION_DEFAULT_VALUES.sortBy;
+    descending = descending ?? PAGINATION_DEFAULT_VALUES.descending;
+    const order = getOrderBy(sortBy, descending);
+    const [items, total_items] = await this.userRepository.findAndCount({
+      where,
+      take: limit,
+      skip,
+      order,
+    });
+    return {
+      tableData: {
+        items,
+        current,
+        limit,
+        sortBy,
+        total_items,
+        descending,
+      },
+    };
+  }
+
+  async get(id: number) {
+    const data = await this.userRepository.findOne({
+      where: { id },
+    });
+    return {
+      data,
+    };
+  }
+
+  async create(createUserDto: CreateUserDto) {
     const { password, ...userData } = createUserDto;
     const verification = await this.userRepository
       .createQueryBuilder('us')
@@ -41,17 +90,18 @@ export class AuthService {
 
     if (verification) {
       if (verification['email'] === userData.email) {
-        throw new BadRequestException({ codeError: ErrorCode.EMAILUNIQUE });
-      } else if (verification['phone'] === userData.phone) {
-        throw new BadRequestException({ codeError: ErrorCode.PHONEUNIQUE });
-      } else {
-        throw new BadRequestException({ codeError: ErrorCode.UNKNOWN });
+        throw new BadRequestException(
+          this.i18n.t('warnings.emailAlreadyExist', {
+            lang: I18nContext.current().lang,
+          }),
+        );
       }
     }
 
     try {
       const user = this.userRepository.create({
         ...userData,
+        roles: [userData.rol],
         password: bcrypt.hashSync(password, 3),
       });
 
@@ -60,14 +110,10 @@ export class AuthService {
       delete user.password;
 
       return {
-        user: {
-          ...user,
-          token: this._getJwtToken({
-            id: user.id,
-            email: user.email,
-          }),
-        },
-        message: 'exito',
+        user,
+        message: this.i18n.t('messages.creationSuccess', {
+          lang: I18nContext.current().lang,
+        }),
         result: DEFAULT_RESULT.result,
       };
     } catch (error) {
@@ -75,12 +121,45 @@ export class AuthService {
     }
   }
 
-  async login(loginUserDto: LoginUserDto) {
+  async updated(user: User, updateUserDto: UpdateUserDto) {
+    try {
+      const systemDocument = await this.userRepository.save({
+        ...updateUserDto,
+        roles: [updateUserDto.rol],
+        updated_by: user.id,
+      });
+      return {
+        systemDocument,
+        message: this.i18n.t('messages.updatedSuccess', {
+          lang: I18nContext.current().lang,
+        }),
+        result: DEFAULT_RESULT.result,
+      };
+    } catch (error) {
+      handleDbExceptions(error, this.logger);
+    }
+  }
+
+  async delete(id: number) {
+    const user = await this.userRepository.softDelete({
+      id,
+    });
+
+    return {
+      user,
+      result: DEFAULT_RESULT.result,
+      message: this.i18n.t('messages.deleteSuccess', {
+        lang: I18nContext.current().lang,
+      }),
+    };
+  }
+
+  async loginWeb(loginUserDto: LoginUserDto) {
     const { password, email } = loginUserDto;
     const user = await this.userRepository.findOne({
       select: {
         id: true,
-        fistName: true,
+        firstName: true,
         paternalName: true,
         maternalName: true,
         email: true,
@@ -90,7 +169,51 @@ export class AuthService {
         image: true,
         roles: true,
       },
-      where: { email },
+      where: {
+        email,
+        roles: ArrayContainedBy([TypesRol.admin, TypesRol.vendor]),
+      },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException(
+        this.i18n.t('warnings.invalidCredentials', {
+          lang: I18nContext.current().lang,
+        }),
+      );
+    }
+
+    if (!bcrypt.compareSync(password, user.password)) {
+      throw new UnauthorizedException(
+        this.i18n.t('warnings.invalidCredentials', {
+          lang: I18nContext.current().lang,
+        }),
+      );
+    }
+
+    delete user.password;
+    return {
+      ...user,
+      token: this._getJwtToken({ id: user.id, email: user.email }),
+    };
+  }
+
+  async loginApp(loginUserDto: LoginUserDto) {
+    const { password, email } = loginUserDto;
+    const user = await this.userRepository.findOne({
+      select: {
+        id: true,
+        firstName: true,
+        paternalName: true,
+        maternalName: true,
+        email: true,
+        password: true,
+        phone: null,
+        cellphone: null,
+        image: true,
+        roles: true,
+      },
+      where: { email, roles: ArrayContainedBy([TypesRol.inspector]) },
     });
 
     if (!user) {
@@ -141,6 +264,10 @@ export class AuthService {
 
   async profile(user: User) {
     return { ...user, result: true };
+  }
+
+  async getInspectorOptions() {
+    return await this.viewUserInspectorOptionsRepository.find();
   }
 
   private _getJwtToken(jwtpayload: JwtPayload) {

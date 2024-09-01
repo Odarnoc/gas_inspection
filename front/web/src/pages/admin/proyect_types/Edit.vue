@@ -6,7 +6,7 @@
       <div class="row bg-white border-panel q-pa-md">
         <div class="col-3" />
         <div class="col-12">
-          <form-sys-user-type ref="documentForm" edit_flag />
+          <form-proyect-type ref="documentForm" edit_flag />
         </div>
         <div class="col-12">
           <q-btn
@@ -65,23 +65,13 @@ export default {
         return
       }
       const params = { ...formResult.params }
-      let data = {}
       try {
         const response = await self.update(params)
-        data = {
-          message: self.$t(`messages.success.${response.data.message}`),
-          result: response.data.result
-        }
+        this.$showNotifySuccess(response)
         await self.fetchFromServer()
       } catch (error) {
-        data = {
-          message: self.$t(
-            `messages.errorCode.${error.response.data.codeError}`
-          ),
-          result: false
-        }
+        this.$showNotifyError(error)
       }
-      self.$showNotifyMessage(data)
       self.$destroyLoading()
       self.loading = false
     }

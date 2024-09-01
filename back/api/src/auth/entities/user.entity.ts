@@ -4,12 +4,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { TypesRol } from 'src/common/glob/types';
+import { RequestPetition } from 'src/vendor/requests/entities/requestPetition.entity';
 
 @Entity()
 export class User {
@@ -18,11 +18,11 @@ export class User {
   id: number;
 
   @Column('text')
-  fistName: string;
+  firstName: string;
 
   @Column('text')
   paternalName: string;
-  
+
   @Column('text')
   maternalName: string;
 
@@ -31,7 +31,7 @@ export class User {
 
   @Column('text', { nullable: true })
   phone: string;
-  
+
   @Column('text', { nullable: true })
   cellphone: string;
 
@@ -43,6 +43,30 @@ export class User {
 
   @Column('text', { array: true, default: [TypesRol.admin] })
   roles: string[];
+
+  @Column('text', { default: '', nullable: true })
+  address: string;
+
+  @Column('text', { default: '', nullable: true })
+  professionalTitle: string;
+
+  @Column('text', { default: '', nullable: true })
+  professionalTitleFile: string;
+
+  @Column('text', { default: '', nullable: true })
+  cv: string;
+
+  @Column('date', { nullable: true })
+  incomeDate: Date;
+
+  @Column('date', { nullable: true })
+  conclusionDate: Date;
+
+  @OneToMany(() => RequestPetition, (request) => request.inspector, {
+    cascade: true,
+    eager: false,
+  })
+  requests?: RequestPetition[];
 
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

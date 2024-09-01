@@ -5,7 +5,7 @@
     <div class="q-pa-md bg-grey-3">
       <div class="row bg-white border-panel q-pa-md">
         <div class="col-12">
-          <form-sys-user-type ref="regForm" :roles="roles" :initRole="1"></form-sys-user-type>
+          <form-proyect-type ref="regForm" :roles="roles" :initRole="1"></form-proyect-type>
         </div>
         <div class="col-12">
           <q-btn
@@ -51,23 +51,13 @@ export default {
         return
       }
       const params = { ...formResult.params }
-      let data = {}
       try {
         const response = await self.create(params)
-        data = {
-          message: self.$t(`messages.success.${response.data.message}`),
-          result: response.data.result
-        }
+        this.$showNotifySuccess(response)
         self.$router.push('/proyectTypes')
       } catch (error) {
-        data = {
-          message: self.$t(
-            `messages.errorCode.${error.response.data.codeError}`
-          ),
-          result: false
-        }
+        this.$showNotifyError(error)
       }
-      self.$showNotifyMessage(data)
       self.$destroyLoading()
       self.loading = false
     }

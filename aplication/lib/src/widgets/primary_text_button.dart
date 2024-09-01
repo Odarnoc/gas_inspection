@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
-import 'package:mikinder/constants/custom_fonts.dart';
 
 class PrimaryTextButton extends StatelessWidget {
   const PrimaryTextButton({
@@ -27,7 +26,6 @@ class PrimaryTextButton extends StatelessWidget {
             text,
             style: TextStyle(
               color: color,
-              fontFamily: CustomFonts.bubblebody,
               fontWeight: FontWeight.w700,
               fontSize: 16,
             ),

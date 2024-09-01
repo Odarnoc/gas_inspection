@@ -1,44 +1,121 @@
 <template>
   <q-form ref="regForm" class="q-gutter-md">
+    <p class="text-h5 text-bold">{{ $t('fields.personalInfo') }}</p>
+
     <div class="row q-col-gutter-xs">
-      <div class="col-12">
-        <q-select
-          filled
-          :options="roles"
-          v-model="user.fields.rol"
-          @update:model-value="onRoleChange()"
-          map-options
-          emit-value
-          :label="$t('fields.user_type')"
-          v-if="!user.fields.id"
-          :rules="rules.roles"
+      <div class="col-12 q-mt-md" align="center" v-if="edit">
+        <image-profile :imageUrl="user.fields.image" />
+        <br />
+        <image-upload
+          :route="createProfileFileRoute"
+          @onUploadFile="updateProfileImage"
+          :isProfileView="true"
         />
+        <br />
       </div>
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          filled
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="text"
-          :readonly="readonly || edit"
-          v-model="user.fields.fullName"
-          :rules="rules.fullName"
-          :label="$t('fields.fullName')"
+          v-model="user.fields.firstName"
+          :rules="rules.firstName"
+          :label="$t('fields.firstName')"
         />
       </div>
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          filled
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.paternalName"
+          :rules="rules.paternalName"
+          :label="$t('fields.paternalName')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.maternalName"
+          :rules="rules.maternalName"
+          :label="$t('fields.maternalName')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="tel"
+          mask="##########"
+          v-model="user.fields.phone"
+          :rules="rules.phone"
+          :label="$t('fields.phone')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="tel"
+          mask="##########"
+          v-model="user.fields.cellphone"
+          :rules="rules.cellphone"
+          :label="$t('fields.cellphone')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.address"
+          :rules="rules.address"
+          :label="$t('fields.address')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="email"
-          :readonly="readonly || edit || updateDataDrivers || updateDataUsers"
+          :disable="edit"
           v-model="user.fields.email"
           :rules="rules.email"
           :label="$t('fields.email')"
         />
       </div>
-      <div class="col-12" v-if="!user.fields.id && !edit">
+      <div class="col-md-3 col-xs-6 col-12" v-if="!edit">
         <q-input
-          filled
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           :type="isPwd ? 'password' : 'text'"
-          :readonly="readonly"
+          v-if="!edit"
           v-model="user.fields.password"
           :rules="rules.password"
           :label="$t('fields.password')"
@@ -46,150 +123,186 @@
           <template v-slot:append>
             <q-icon
               :name="isPwd ? 'visibility_off' : 'visibility'"
+              color="white"
               class="cursor-pointer"
               @click="isPwd = !isPwd"
             />
           </template>
         </q-input>
       </div>
-      <div class="col-12" v-if="!user.fields.id && !edit">
-        <q-input
-          filled
-          :type="isPwd ? 'password' : 'text'"
-          :readonly="readonly"
-          v-model="user.fields.verifyPassword"
-          :rules="rules.verifyPassword"
-          :label="$t('fields.verifyPassword')"
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
-          </template>
-        </q-input>
+    </div>
+    <p class="text-h5 text-bold">{{ $t('fields.professionalProfile') }}</p>
+    <div class="row q-col-gutter-xs">
+      <div class="col-md-4 col-xs-6 col-12">
+        <q-select
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          :options="roles"
+          v-model="user.fields.rol"
+          map-options
+          emit-value
+          :label="$t('fields.rol')"
+          :rules="rules.roles"
+        />
       </div>
+    </div>
+    <div class="row q-col-gutter-xs">
       <div class="col-12">
         <q-input
-          filled
-          type="tel"
-          :readonly="readonly || edit || updateDataDrivers || updateDataUsers"
-          v-model="user.fields.phone"
-          :rules="rules.phone"
-          :label="$t('fields.phone')"
-          mask="##########"
-        />
-      </div>
-      <div class="col-12" v-if="$hasRoles([$typesRol.super_admin]) && updateDataDrivers">
-        <q-input filled v-model="user.fields.rfc" :label="$t('fields.rfc')" :rules="rules.rfc" />
-      </div>
-      <div class="'col-md-12 col-xs-12" v-if="!isGroupActive">
-        <q-select
-          filled
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="text"
-          v-model="user.fields.countryId"
-          :label="$t('fields.country')"
-          emit-value
-          map-options
-          :rules="rules.countryId"
-          :options="options.countries"
-          @update:model-value="filteredStatesByCountry()"
-          :readonly="readonly || edit || updateDataDrivers || updateDataUsers"
-        />
+          v-model="user.fields.professionalTitle"
+          :rules="rules.professionalTitle"
+          :label="$t('fields.professionalTitle')"
+        >
+          <template v-slot:append>
+            <q-btn round dense flat icon="fa fa-file" v-if="edit">
+              <q-menu anchor="top right" self="top left">
+                <q-list>
+                  <q-item>
+                    <q-item-section>
+                      <image-upload
+                        :route="createProfessionalTitleFileRoute"
+                        @onUploadFile="updateProfessionalTitleImage"
+                        :buttonText="$t('buttons.upload')"
+                        :round="false"
+                        icon="upload"
+                      />
+                    </q-item-section>
+                  </q-item>
+                  <q-item v-if="user.fields.professionalTitleFile">
+                    <q-item-section>
+                      <q-btn
+                        push
+                        color="primary"
+                        @click="showFile(user.fields.professionalTitleFile)"
+                        :round="false"
+                        icon="visibility"
+                      >
+                        {{ $t('buttons.view') }}
+                        <q-tooltip>{{ $t('buttons.view') }}</q-tooltip>
+                      </q-btn>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </template>
+        </q-input>
       </div>
-      <div
-        class="col-12"
-        v-if="($hasRoles([$typesRol.deliveryman]) || (user.fields.rol === 4)) && user.fields.roles !== $typesRol.client "
-      >
-        <q-select
-          filled
-          v-model="user.fields.state"
-          :label="$t('fields.state')"
-          :readonly="readonly || edit"
-          map-options
-          emit-value
-          :options="options.states"
-          @update:model-value="filteredCitiesByState()"
-          :rules="rules.state"
-        ></q-select>
-      </div>
-      <div
-        class="col-12"
-        v-if="($hasRoles([$typesRol.deliveryman]) || (user.fields.rol === 4)) && user.fields.roles !== $typesRol.client "
-      >
-        <q-select
-          filled
-          v-model="user.fields.cityId"
-          :label="$t('fields.city')"
-          :readonly="readonly || edit"
-          map-options
-          emit-value
-          :options="options.cities"
-          :rules="rules.cityId"
-        />
-      </div>
-      <div
-        class="col-12"
-        v-if="$hasRoles([$typesRol.deliveryman]) && options.userType.length > 0 || (user.fields.rol === 4) && user.fields.roles !== $typesRol.client && options.userType.length > 0"
-      >
-        <q-select
-          filled
-          v-model="user.fields.userTypeId"
-          :label="$t('fields.userType')"
-          :readonly="readonly || edit"
-          map-options
-          emit-value
-          :options="options.userType"
-          :rules="rules.userType"
-        />
-      </div>
-      <div
-        class="col-12"
-        v-if="$hasRoles([$typesRol.deliveryman]) && isCode && !edit || user.fields.rol === 4 && !edit"
-      >
-        <q-checkbox class="q-pr-sm" v-model="isCodeAdd" :label="$t('fields.invitation_code')" />
-      </div>
-      <div
-        class="col-12 q-py-md"
-        v-if="$hasRoles([$typesRol.deliveryman]) && isCode && isCodeAdd || user.fields.rol === 4 && isCodeAdd"
-      >
+      <div class="col-12" v-if="edit">
         <q-input
-          filled
-          v-model="user.fields.code"
-          :label="$t('fields.code_register')"
-          :readonly="readonly || edit"
-        />
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          :rules="rules.cv"
+          :label="$t('fields.curriculumVitae')"
+          readonly
+        >
+          <template v-slot:append>
+            <q-btn round dense flat icon="fa fa-file" v-if="edit">
+              <q-menu anchor="top right" self="top left">
+                <q-list>
+                  <q-item>
+                    <q-item-section>
+                      <image-upload
+                        :route="createCVFileRoute"
+                        @onUploadFile="updateCVImage"
+                        :buttonText="$t('buttons.upload')"
+                        :round="false"
+                        icon="upload"
+                      />
+                    </q-item-section>
+                  </q-item>
+                  <q-item v-if="user.fields.cv">
+                    <q-item-section>
+                      <q-btn
+                        push
+                        color="primary"
+                        @click="showFile(user.fields.cv)"
+                        :round="false"
+                        icon="visibility"
+                      >
+                        {{ $t('buttons.view') }}
+                        <q-tooltip>{{ $t('buttons.view') }}</q-tooltip>
+                      </q-btn>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </template>
+        </q-input>
       </div>
-      <div
-        class="col-12"
-        v-if="$hasRoles([$typesRol.super_admin]) && !disabled && !updateDataDrivers && !updateDataUsers && !saForm"
-      >
-        <q-select
-          filled
-          v-model="user.fields.code"
-          :label="$t('fields.groups')"
-          :readonly="readonly || edit"
-          map-options
-          emit-value
-          :options="computedOptions(options.groups)"
-        />
+      <div class="col-md-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.incomeDate"
+          :rules="rules.incomeDate"
+          :label="$t('fields.incomeDate')"
+          readonly
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy ref="qDateProxyx2" transition-show="scale" transition-hide="scale">
+                <q-date :mask="$maskDate" color="primary" v-model="user.fields.incomeDate">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup :label="$t('buttons.close')" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
-      <div class="col-12" v-if="!edit && (user.fields.rol === 4 || user.fields.rol === 3)">
-        <q-checkbox
-          class="q-pr-sm"
-          v-model="user.fields.privacyPolicies"
-          :label="$t('fields.privacyPoliciesText')"
-        />
-        <a class="q-pt-sm" href="/privacyPolicy" target="_blank">{{ $t('fields.privacyPolicies') }}</a>
+      <div class="col-md-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.conclusionDate"
+          :rules="rules.conclusionDate"
+          :label="$t('fields.conclusionDate')"
+          readonly
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy ref="qDateProxyx2" transition-show="scale" transition-hide="scale">
+                <q-date :mask="$maskDate" color="primary" v-model="user.fields.conclusionDate">
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup :label="$t('buttons.close')" color="primary" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
-      <slot name="actions"></slot>
     </div>
+    <slot name="actions"></slot>
   </q-form>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
 
 let self
 export default {
@@ -198,45 +311,46 @@ export default {
     return {
       user: {
         fields: {
-          rol: null,
-          fullName: '',
+          id: null,
+          image: '',
+          rol: '',
           email: '',
           password: '',
-          verifyPassword: '',
+          firstName: '',
+          maternalName: '',
+          paternalName: '',
           phone: '',
-          code: null,
-          cityId: null,
+          cellphone: '',
           roles: '',
-          privacyPolicies: false,
-          state: null,
-          countryId: null,
-          userTypeId: null
+          address: '',
+          professionalTitle: '',
+          professionalTitleFile: '',
+          cv: '',
+          incomeDate: '',
+          conclusionDate: ''
         }
       },
       isPwd: true,
-      isCode: false,
-      isCodeAdd: false,
-      isGroupActive: true,
-      options: {
-        groups: [],
-        cities: [],
-        states: [],
-        countries: [],
-        userType: []
-      }
+      roles: [
+        { value: this.$typesRol.admin, label: this.$t('roles.admin') },
+        { value: this.$typesRol.vendor, label: this.$t('roles.vendor') },
+        { value: this.$typesRol.inspector, label: this.$t('roles.inspector') }
+      ]
     }
   },
   props: {
-    initRole: Number,
-    roles: Array,
-    readonly: Boolean,
-    edit: Boolean,
-    disabled: Boolean,
-    updateDataDrivers: Boolean,
-    updateDataUsers: Boolean,
-    saForm: Boolean
+    edit: Boolean
   },
   computed: {
+    createProfileFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/profile/`
+    },
+    createProfessionalTitleFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/professionalTitle/`
+    },
+    createCVFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/cv/`
+    },
     computedOptions () {
       return (options) => [
         { value: null, label: this.$t('options.not_apply') },
@@ -246,15 +360,20 @@ export default {
     rules () {
       return {
         roles: [self.$rules.required(self.$t('validations.required.field'))],
-        fullName: [self.$rules.required(self.$t('validations.required.field'))],
+        firstName: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
+        paternalName: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
+        maternalName: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
         email: [
           self.$rules.required(self.$t('validations.required.email')),
           self.$rules.email(self.$t('validations.invalid_format.email'))
         ],
         password: [self.$rules.required(self.$t('validations.required.field'))],
-        verifyPassword: [
-          self.$rules.required(self.$t('validations.required.field'))
-        ],
         phone: [
           self.$rules.required(self.$t('validations.required.field')),
           self.$rules.numeric(
@@ -265,153 +384,79 @@ export default {
             self.$t('validations.length.field_10_number')
           )
         ],
-        countryId: [
-          self.$rules.required(self.$t('validations.required.field'))
-        ],
-        state: [self.$rules.required(self.$t('validations.required.field'))],
-        cityId: [self.$rules.required(self.$t('validations.required.field'))],
-        rfc: [
-          self.$rules.minLength(
-            13,
-            self.$t('validations.length.field_13_number')
+        cellphone: [
+          self.$rules.required(self.$t('validations.required.field')),
+          self.$rules.numeric(
+            self.$t('validations.invalid_format.field_numeric')
           ),
-          self.$rules.maxLength(
-            13,
-            self.$t('validations.length.field_13_number')
+          self.$rules.minLength(
+            10,
+            self.$t('validations.length.field_10_number')
           )
         ],
-        userType: [self.$rules.required(self.$t('validations.required.field'))]
+        address: [self.$rules.required(self.$t('validations.required.field'))],
+        professionalTitle: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
+        incomeDate: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
+        conclusionDate: [
+          self.$rules.required(self.$t('validations.required.field'))
+        ]
       }
     }
   },
   created () {
     self = this
   },
-  mounted () {
-    this.setGroupOptions()
-    this.setStateOptions()
-    this.setCountriesOptions()
-    this.validateUser()
-  },
+  mounted () {},
   methods: {
-    ...mapActions('system/groups', ['getGroups']),
-    ...mapActions('system/cities', ['getCitiesByStateOptions']),
-    ...mapActions('system/states', [
-      'getStates',
-      'getStatesByCountriesOptions'
-    ]),
-    ...mapActions('system/countries', ['getCountries']),
-    ...mapActions('system/userType', ['setUserOptionsByCountry']),
     async getData () {
       const params = { ...self.user.fields }
-      if (self.user.fields.password !== self.user.fields.verifyPassword) {
-        const data = {
-          message: self.$t('messages.errorSpecific.parallelPassword'),
-          result: false
-        }
-        self.$showNotifyMessage(data)
-        self.loading = false
-        self.$destroyLoading()
-        return {
-          isValid: false,
-          params: params
-        }
-      } else {
-        const isValid = await self.$refs.regForm.validate()
-        return {
-          isValid: isValid,
-          params: params
-        }
+      const isValid = await self.$refs.regForm.validate()
+      return {
+        isValid: isValid,
+        params: params
       }
     },
     setData (data) {
       const { roles } = data
       self.user.fields = data
-      if (data.groups) {
-        self.isCode = true
-        self.user.fields.code = data.groups.name + ' - ' + data.groups.code
-      }
-      if (data.city) {
-        self.user.fields.cityId = data.city.name
-      }
-      if (data.country) {
-        self.user.fields.countryId = data.country.id
-      }
-      self.user.fields.roles = roles[0]
-    },
-    onRoleChange () {
-      if (+self.user.fields.rol === 4) {
-        self.user.fields.code = ''
-        self.user.fields.groupId = null
-        self.user.fields.state = null
-        self.user.fields.cityId = null
-        self.user.fields.userTypeId = null
-        self.options.cities = []
-      }
+      self.user.fields.rol = roles[0]
     },
     resetFields () {
       self.user.fields = {
-        rol: 3,
-        fullName: '',
+        image: '',
+        rol: '',
         email: '',
         password: '',
-        verifyPassword: '',
+        firstName: '',
+        maternalName: '',
+        paternalName: '',
         phone: '',
-        code: '',
-        groupId: null,
+        cellphone: '',
         roles: '',
-        privacyPolicies: false,
-        countryId: null,
-        userTypeId: null
+        address: '',
+        professionalTitle: '',
+        professionalTitleFile: '',
+        cv: '',
+        incomeDate: '',
+        conclusionDate: ''
       }
       self.$refs.regForm.resetValidation()
     },
-    async setGroupOptions () {
-      const response = await self.getGroups()
-      self.options.groups = response.data
+    async updateProfileImage (updateUrlImage) {
+      this.user.fields.image = updateUrlImage
     },
-    async setCitiesOptions (stateId) {
-      const response = await self.getCitiesByStateOptions(stateId)
-      self.options.cities = response.data
+    async updateCVImage (updateUrlImage) {
+      this.user.fields.cv = updateUrlImage
     },
-    async setStateOptions (countryId) {
-      let response = []
-      if (countryId) {
-        response = await self.getStatesByCountriesOptions(countryId)
-      } else {
-        response = await self.getStates()
-      }
-      self.options.states = response.data
+    async updateProfessionalTitleImage (updateUrlImage) {
+      this.user.fields.professionalTitleFile = updateUrlImage
     },
-    async setCountriesOptions () {
-      const response = await self.getCountries()
-      self.options.countries = response.data
-    },
-    async setUserByCountryOptions (countryId) {
-      const response = await self.setUserOptionsByCountry(countryId)
-      self.options.userType = response.data
-    },
-    filteredStatesByCountry () {
-      self.options.cities = []
-      self.$showLoading()
-      this.setUserByCountryOptions(self.user.fields.countryId)
-      self.setStateOptions(self.user.fields.countryId)
-      self.user.fields.state = null
-      self.user.fields.cityId = null
-      self.user.fields.userTypeId = null
-      self.$destroyLoading()
-    },
-    filteredCitiesByState () {
-      self.options.cities = []
-      self.$showLoading()
-      self.setCitiesOptions(self.user.fields.state)
-      self.user.fields.cityId = null
-      self.$destroyLoading()
-    },
-    validateUser () {
-      if (!this.$store.state.users.users.groupId) {
-        this.isGroupActive = false
-      }
+    showFile (url) {
+      window.open(url, '_blank')
     }
   }
 }

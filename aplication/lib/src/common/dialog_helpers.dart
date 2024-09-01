@@ -74,3 +74,18 @@ showSuccessCenterSnackBar(String message) {
     ),
   ));
 }
+
+showErrorUknown() {
+  final context = navigatorKey.currentContext!;
+  final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+  scaffoldMessenger
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      content: Text(S.of(context).errUnknown),
+      backgroundColor: kErrorColor,
+      duration: const Duration(milliseconds: 4500),
+      behavior: SnackBarBehavior.floating,
+      margin: const EdgeInsets.all(20),
+    ));
+}

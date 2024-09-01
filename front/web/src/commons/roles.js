@@ -1,5 +1,5 @@
 export const TypesRol = {
   admin: 'admin',
-  verificator: 'vendor',
-  client: 'inspector'
+  vendor: 'vendor',
+  inspector: 'inspector'
 }

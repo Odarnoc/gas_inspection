@@ -16,61 +16,28 @@ class SigninScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginController =
-        Provider.of<LoginController>(context, listen: false);
     return ChangeNotifierProvider<AccessController>.value(
       value: AccessController(),
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/screen/login_background.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Consumer<AccessController>(
-            builder: (context, accessController, child) => Center(
-              child: Padding(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.all(kDefaultPadding),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: kDefaultPadding * 1.3),
-                            Image.asset("assets/screen/icon.png", height: 150),
-                            const SizedBox(height: kDefaultPadding * 1.3),
-                            EmailInput(accessController),
-                            const SizedBox(height: kDefaultPadding * 1.3),
-                            PasswordInput(accessController),
-                            const SizedBox(height: kDefaultPadding * 1.3),
-                            SigninButton(accessController, formKey: _formKey),
-                            PrimaryTextButton(
-                              text: S.of(context).lForgetYourPassword,
-                              color: Colors.black,
-                              onPressed: () {},
-                            ),
-                            const SizedBox(height: kDefaultPadding * 3),
-                            Text(
-                              S.of(context).lNoAccount,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                            PrimaryTextButton(
-                              text: S.of(context).bSignup,
-                              color: kFourthColor,
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+        backgroundColor: kThridColor,
+        body: Consumer<AccessController>(
+          builder: (context, accessController, child) => Center(
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: kDefaultPadding * 1.3),
+                      Image.asset("assets/screen/icon.png", height: 150),
+                      const SizedBox(height: kDefaultPadding * 1.3),
+                      EmailInput(accessController),
+                      const SizedBox(height: kDefaultPadding * 1.3),
+                      PasswordInput(accessController),
+                      const SizedBox(height: kDefaultPadding * 1.3),
+                      SigninButton(accessController, formKey: _formKey),
+                    ],
                   ),
                 ),
               ),

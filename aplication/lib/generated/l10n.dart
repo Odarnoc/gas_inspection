@@ -339,6 +339,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde`
+  String get errUnknown {
+    return Intl.message(
+      'Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde',
+      name: 'errUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cerrar sesión`
+  String get signOut {
+    return Intl.message(
+      'Cerrar sesión',
+      name: 'signOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID`
+  String get lId {
+    return Intl.message(
+      'ID',
+      name: 'lId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cliente`
+  String get lClient {
+    return Intl.message(
+      'Cliente',
+      name: 'lClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fecha de asignación`
+  String get lAssignedDate {
+    return Intl.message(
+      'Fecha de asignación',
+      name: 'lAssignedDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ver`
+  String get bView {
+    return Intl.message(
+      'Ver',
+      name: 'bView',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Acciones`
+  String get lActions {
+    return Intl.message(
+      'Acciones',
+      name: 'lActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preinspecciones`
+  String get lPreinspections {
+    return Intl.message(
+      'Preinspecciones',
+      name: 'lPreinspections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inspecciones internas`
+  String get lInternalInspections {
+    return Intl.message(
+      'Inspecciones internas',
+      name: 'lInternalInspections',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

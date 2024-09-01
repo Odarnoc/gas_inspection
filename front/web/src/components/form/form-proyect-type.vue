@@ -1,7 +1,7 @@
 <template>
   <q-form ref="refForm" class="q-gutter-md">
     <div class="row q-col-gutter-xs">
-      <div class="'col-md-12 col-xs-6">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
@@ -12,6 +12,19 @@
           v-model="state.fields.name"
           :rules="rules.name"
           :label="$t('fields.name')"
+        />
+      </div>
+      <div class="col-md-9 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="text"
+          v-model="state.fields.details"
+          :rules="rules.details"
+          :label="$t('fields.details')"
         />
       </div>
       <slot name="actions"></slot>
@@ -28,7 +41,8 @@ export default {
       state: {
         fields: {
           id: null,
-          name: ''
+          name: '',
+          details: ''
         }
       },
       options: {
@@ -40,7 +54,8 @@ export default {
   computed: {
     rules () {
       return {
-        name: [self.$rules.required(self.$t('validations.required.field'))]
+        name: [self.$rules.required(self.$t('validations.required.field'))],
+        details: [self.$rules.required(self.$t('validations.required.field'))]
       }
     }
   },

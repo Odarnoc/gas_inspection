@@ -22,9 +22,41 @@
     "rejected": "Rechazadas"
   },
   "fields": {
+    "personalInfo": "Datos personales",
+    "professionalProfile": "Perfil profesional",
+    "address": "Dirección",
     "email": "Correo electrónico",
     "password": "Contraseña",
-    "name": "Nombre"
+    "name": "Nombre",
+    "firstName": "Nombre",
+    "paternalName": "Apellido paterno",
+    "maternalName": "Apellido materno",
+    "phone": "Teléfono",
+    "cellphone": "Celular",
+    "rol": "Cargo a ocupar",
+    "professionalTitle": "Titulo profesional",
+    "curriculumVitae": "Curriculum Vitae",
+    "incomeDate": "Fecha de ingreso",
+    "conclusionDate": "Fecha de conclusión",
+    "city": "Ciudad",
+    "avenue": "Avenida",
+    "street": "Calle",
+    "zone": "Zona",
+    "door": "Puerta",
+    "references": "Referencias",
+    "details": "Detalles",
+    "selectProyectType": "Selecciona tipo de proyecto",
+    "location": "Ubicación",
+    "requirements": "Requisitos",
+    "assignment": "Asignación",
+    "identityCard": "Cedula de identidad",
+    "waterBill": "Fotocopia de agua",
+    "electricityBill": "Fotocopia de luz",
+    "realFolio": "Fotocopia de folio real",
+    "startDate": "Fecha de inicio",
+    "limitDate": "Fecha limite",
+    "proyectStatus": "Estado del proyecto",
+    "proyectType": "Tipo de proyecto"
   },
   "buttons": {
     "log_in": "Iniciar sesión",
@@ -32,9 +64,53 @@
     "new": "Nuevo",
     "actions": "Acciones",
     "save": "Guardar",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "go_back": "Regresar",
+    "view": "Ver",
+    "upload": "Subir",
+    "upload_image": "Subir imagen",
+    "close": "Cerrar"
   },
   "dialogs": {
-    "loading": "Cargando"
+    "loading": "Cargando",
+    "page_not_found": "No se encontro la pagina",
+    "deleteProyectType": "¿Eliminar tipo de proyecto seleccionado?"
+  },
+  "messages": {
+    "errorSpecific": {
+      "errUnknown": "Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde",
+      "whronFileFormat": "El formato seleccionado no es el correcto"
+    }
+  },
+  "roles": {
+    "admin": "Administrador",
+    "vendor": "Vendedor",
+    "inspector": "Inspector"
+  },
+  "requestPetitionStatus": {
+    "assigned": "Asignado"
+  },
+  "validations": {
+    "invalid_format": {
+      "email": "Correo electrónico invalido",
+      "field_alpha": "El campo sólo permite letras",
+      "field_numeric": "El campo solo debe tener números",
+      "field_integer": "El campo solo debe tener números enteros"
+    },
+    "length": {
+      "field_10_number": "El campo debe tener 10 dígitos",
+      "field_13_number": "El campo debe tener 13 dígitos"
+    },
+    "value": {
+      "minValue": "El campo debe ser mayor a {0}",
+      "betweenValue": "El campo debe ser mayor a {0} y menor que {1}",
+      "minVehicleYear": "El vehículo debe ser del año {0} o mas reciente."
+    },
+    "required": {
+      "field": "Campo requerido",
+      "email": "Correo electrónico requerido"
+    }
   }
 }

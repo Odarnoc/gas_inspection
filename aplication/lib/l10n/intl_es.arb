@@ -27,5 +27,14 @@
   "bNo": "No",
   "bReTry": "Reintentar",
   "eValidatoCharacters": "Mínimo de caracteres {number}",
-  "eValidatoEmail": "El formato del correo es incorrecto"
+  "eValidatoEmail": "El formato del correo es incorrecto",
+  "errUnknown": "Oops, algo parece haber ido mal, por favor, inténtelo de nuevo más tarde",
+  "signOut": "Cerrar sesión",
+  "lId": "ID",
+  "lClient": "Cliente",
+  "lAssignedDate": "Fecha de asignación",
+  "bView": "Ver",
+  "lActions": "Acciones",
+  "lPreinspections": "Preinspecciones",
+  "lInternalInspections": "Inspecciones internas"
 }

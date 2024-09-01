@@ -49,6 +49,15 @@ export default boot(({ app, ssrContext }) => {
     })
   }
 
+  app.config.globalProperties.$showNotifySuccess = (response) => {
+    if (response?.data?.message) {
+      app.config.globalProperties.$showNotifyMessage({
+        result: true,
+        message: response.data.message
+      })
+    }
+  }
+
   app.config.globalProperties.$showNotifyError = (error) => {
     const data = {
       result: false,

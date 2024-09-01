@@ -14,6 +14,7 @@ import {
 } from 'nestjs-i18n';
 import { join } from 'path';
 import { ProyectTypeModule } from './admin/user-type/proyectType.module';
+import { RequestPetitionModule } from './vendor/requests/requestPetition.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ProyectTypeModule } from './admin/user-type/proyectType.module';
     CommonModule,
     AuthModule,
     ProyectTypeModule,
+    RequestPetitionModule,
   ],
   providers: [],
 })

@@ -1,6 +1,8 @@
 import api from 'src/commons/api.js'
 import axios from 'axios'
 
+const apiRoot = 'auth'
+
 export default {
   namespaced: true,
   state: {
@@ -37,23 +39,27 @@ export default {
   },
   actions: {
     getTable: async ({ commit, dispatch }, pagination) => {
-      const response = await api.get('users/getTable', pagination)
+      const response = await api.post(`${apiRoot}/getTable`, pagination)
       return response
     },
     get: async ({ commit, dispatch }, id) => {
-      const response = await api.post(`users/get/${id}`)
+      const response = await api.post(`${apiRoot}/get/${id}`)
+      return response
+    },
+    create: async (context, payload) => {
+      const response = await api.post(`${apiRoot}/create`, payload)
       return response
     },
     update: async (context, payload) => {
-      const response = await api.put('users/update', payload)
+      const response = await api.put(`${apiRoot}/update`, payload)
       return response
     },
-    signIn: async (context, payload) => {
-      const response = await api.post('users/create', payload)
+    delete: async ({ commit, dispatch }, id) => {
+      const response = await api.delete(`${apiRoot}/delete/${id}`)
       return response
     },
     getProfile: async (context) => {
-      const response = await api.post('auth/profile')
+      const response = await api.post(`${apiRoot}/profile`)
       const data = response.data
       if (data.result) {
         context.commit('setId', data.id)
@@ -64,12 +70,16 @@ export default {
       return response
     },
     logIn: async ({ commit, dispatch }, payload) => {
-      const response = await api.post('auth/login', payload)
+      const response = await api.post(`${apiRoot}/login`, payload)
       if (response.data.result) {
         localStorage.setItem('JWT', response.data.token)
         axios.defaults.headers.common.Authorization = response.data.token
         commit('setToken', response.data.token)
       }
+      return response
+    },
+    getInspectorOptions: async (context, showAll) => {
+      const response = await api.get(`${apiRoot}/getInspectorOptions`)
       return response
     }
   },

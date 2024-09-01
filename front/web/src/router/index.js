@@ -36,7 +36,7 @@ export default route(function ({ store/*, ssrContext */ }) {
       const JWT = localStorage.getItem('JWT')
       if (JWT) {
         // await new Promise(resolve => setTimeout(resolve, 60000))
-        await store.dispatch('users/users/getProfile')
+        await store.dispatch('users/auth/getProfile')
       }
       const route = determineRouting(JWT, to)
 
