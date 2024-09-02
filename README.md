@@ -54,10 +54,8 @@ Para crear el secret que permite la conexion al registro privado de aws
 
 Para crear el secret con las variables de entorno de prod
 
-- kubectl create secret generic prod-env --from-env-file=.\prod.env
-- kubectl create secret generic beta-env --from-env-file=.\beta.env
+- kubectl create secret generic gas-test-env --from-env-file=.\gas-test.env
 
 Para eliminar el secret con las variables de entorno de prod
 
-- kubectl delete secret generic prod-env
-- kubectl delete secret generic beta-env
+- kubectl delete secret generic gas-test-env

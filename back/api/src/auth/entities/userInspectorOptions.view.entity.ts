@@ -2,8 +2,8 @@ import { ViewColumn, ViewEntity } from 'typeorm';
 
 const query = `
     SELECT
-      u.id value,
-      u."firstName" label
+      u.id as value,
+      u."firstName" as label
 	  FROM public.user AS u
     where 
       u.roles = '{inspector}'

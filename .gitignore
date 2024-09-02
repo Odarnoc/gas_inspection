@@ -5,6 +5,8 @@ back/api/config.ini
 front/web/node_modules
 front/web/conf.d/*
 /postgres
+/manifests
+deploy-test.txt
 # OS
 .DS_Store
 *.env
