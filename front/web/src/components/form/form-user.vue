@@ -334,7 +334,8 @@ export default {
       roles: [
         { value: this.$typesRol.admin, label: this.$t('roles.admin') },
         { value: this.$typesRol.vendor, label: this.$t('roles.vendor') },
-        { value: this.$typesRol.inspector, label: this.$t('roles.inspector') }
+        { value: this.$typesRol.inspector, label: this.$t('roles.inspector') },
+        { value: this.$typesRol.instalator, label: this.$t('roles.instalator') }
       ]
     }
   },

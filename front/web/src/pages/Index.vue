@@ -9,10 +9,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'PageIndex',
-  created () {
-    if (this.$hasRoles([this.$typesRol.deliveryman, this.$typesRol.client])) {
-      this.$router.push('/driverComplement')
-    }
-  }
+  created () {}
 })
 </script>

@@ -87,10 +87,17 @@
   "roles": {
     "admin": "Administrador",
     "vendor": "Vendedor",
-    "inspector": "Inspector"
+    "inspector": "Inspector",
+    "instalator": "Instalador"
   },
   "requestPetitionStatus": {
-    "assigned": "Asignado"
+    "assigned": "Asignada para inspección",
+    "observed": "Observada",
+    "inspectionAproved": "Inspección aprobada",
+    "instalationAssigned": "Asignada para instalación",
+    "interrnalInspection": "Solicitud de inspección interna",
+    "done": "Solicitud finalizada",
+    "rejected": "Inspección rechazada"
   },
   "validations": {
     "invalid_format": {

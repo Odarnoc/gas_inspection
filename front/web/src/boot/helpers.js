@@ -315,29 +315,29 @@ export default boot(({ app, ssrContext, store }) => {
   }
 
   app.config.globalProperties.$translateStatus = (status) => {
-    if (status === statusOrder.STARTED) {
-      return i18n.global.t('status.order.STARTED')
+    if (status === statusOrder.assigned) {
+      return i18n.global.t('requestPetitionStatus.assigned')
     }
-    if (status === statusOrder.ASSIGNED) {
-      return i18n.global.t('status.order.ASSIGNED')
+    if (status === statusOrder.observed) {
+      return i18n.global.t('requestPetitionStatus.observed')
     }
-    if (status === statusOrder.TAKEN) {
-      return i18n.global.t('status.order.TAKEN')
+    if (status === statusOrder.inspectionAproved) {
+      return i18n.global.t('requestPetitionStatus.inspectionAproved')
     }
-    if (status === statusOrder.DELIVERED) {
-      return i18n.global.t('status.order.DELIVERED')
+    if (status === statusOrder.instalationAssigned) {
+      return i18n.global.t('requestPetitionStatus.instalationAssigned')
     }
-    if (status === statusOrder.QUALIFIED) {
-      return i18n.global.t('status.order.QUALIFIED')
+    if (status === statusOrder.interrnalInspection) {
+      return i18n.global.t('requestPetitionStatus.interrnalInspection')
     }
-    if (status === statusOrder.CANCELLED) {
-      return i18n.global.t('status.order.CANCELLED')
+    if (status === statusOrder.done) {
+      return i18n.global.t('requestPetitionStatus.done')
     }
-    if (status === statusOrder.CANCELLED_AUTOMATICALLY) {
-      return i18n.global.t('status.order.CANCELLED_AUTOMATICALLY')
+    if (status === statusOrder.rejected) {
+      return i18n.global.t('requestPetitionStatus.rejected')
     }
 
-    return i18n.global.t('status.order.CANCELLED')
+    return 'Uknown'
   }
 
   app.config.globalProperties.$returnDateOptions = (dateBase, dateCompare, type) => {

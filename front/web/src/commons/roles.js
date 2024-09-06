@@ -1,5 +1,6 @@
 export const TypesRol = {
   admin: 'admin',
   vendor: 'vendor',
-  inspector: 'inspector'
+  inspector: 'inspector',
+  instalator: 'instalator'
 }

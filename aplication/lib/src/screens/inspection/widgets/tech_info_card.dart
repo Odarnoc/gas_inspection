@@ -4,7 +4,7 @@ import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 import 'package:mikinder/src/screens/inspection/widgets/point_list_item.dart';
 
 class TechInfoCard extends StatelessWidget {
-  final DemoController demoController;
+  final InspectionController demoController;
   const TechInfoCard({super.key, required this.demoController});
 
   final valueSize = 10.0;

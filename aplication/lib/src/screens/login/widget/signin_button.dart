@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/generated/l10n.dart';
-import 'package:mikinder/src/screens/clients/inspections_screen.dart';
+import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/login/access_controller.dart';
 import 'package:mikinder/src/widgets/primary_button.dart';
 

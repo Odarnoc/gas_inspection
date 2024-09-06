@@ -5,7 +5,7 @@ import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/constants/glob_keys.dart' as global;
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/providers/preferences_provider.dart';
-import 'package:mikinder/src/screens/clients/inspections_screen.dart';
+import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/login/login_screen.dart';
 
 Future<void> main() async {

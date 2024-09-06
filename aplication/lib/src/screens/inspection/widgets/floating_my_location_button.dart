@@ -3,7 +3,7 @@ import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 
 class FloatingMyLocationButton extends StatelessWidget {
   const FloatingMyLocationButton({super.key, required this.demoController});
-  final DemoController demoController;
+  final InspectionController demoController;
 
   @override
   Widget build(BuildContext context) {

@@ -20,6 +20,7 @@ class AuthService {
   Future<bool> logOut() async {
     final client = InterceptedClient.build(interceptors: [
       LoggerInterceptor(),
+      GeneralInterceptor(),
     ]);
     try {
       final resp = await client.delete(
@@ -71,6 +72,7 @@ class AuthService {
   Future<UserModel?> getProfile() async {
     final client = InterceptedClient.build(interceptors: [
       LoggerInterceptor(),
+      GeneralInterceptor(),
     ]);
     try {
       final resp = await client.post(

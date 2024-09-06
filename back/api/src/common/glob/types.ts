@@ -8,8 +8,5 @@ export enum TypesRol {
   admin = 'admin',
   vendor = 'vendor',
   inspector = 'inspector',
-}
-
-export enum TypesRequestPetition {
-  assigned = 'assigned',
+  instalator = 'instalator',
 }

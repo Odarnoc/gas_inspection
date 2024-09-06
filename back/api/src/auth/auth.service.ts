@@ -213,7 +213,10 @@ export class AuthService {
         image: true,
         roles: true,
       },
-      where: { email, roles: ArrayContainedBy([TypesRol.inspector]) },
+      where: {
+        email,
+        roles: ArrayContainedBy([TypesRol.inspector, TypesRol.instalator]),
+      },
     });
 
     if (!user) {

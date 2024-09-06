@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 
 class FloatingSheetBottom extends StatelessWidget {
-  final DemoController demoController;
+  final InspectionController demoController;
   const FloatingSheetBottom({super.key, required this.demoController});
 
   @override

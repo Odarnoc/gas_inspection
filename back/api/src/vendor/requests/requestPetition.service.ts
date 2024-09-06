@@ -10,6 +10,7 @@ import { getOrderBy } from '../../common/helpers/pagination';
 import { RequestPetition } from './entities/requestPetition.entity';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
+import { StatusOrder } from 'src/common/glob/status';
 
 @Injectable()
 export class RequestPetitionService {
@@ -116,6 +117,42 @@ export class RequestPetitionService {
       message: this.i18n.t('messages.deleteSuccess', {
         lang: I18nContext.current().lang,
       }),
+    };
+  }
+
+  async getPreinspections(user: User) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        inspector: true,
+      },
+      where: {
+        status: StatusOrder.assigned,
+        inspector: {
+          id: user.id,
+        },
+      },
+    });
+    return {
+      data,
+    };
+  }
+
+  async getInternalInspections(user: User) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        inspector: true,
+      },
+      where: {
+        status: StatusOrder.interrnalInspection,
+        inspector: {
+          id: user.id,
+        },
+      },
+    });
+    return {
+      data,
     };
   }
 }

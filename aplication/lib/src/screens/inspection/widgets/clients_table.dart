@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
-import 'package:mikinder/src/screens/clients/inspections_screen.dart';
+import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 
 class ClientsTable2 extends StatelessWidget {
   const ClientsTable2({

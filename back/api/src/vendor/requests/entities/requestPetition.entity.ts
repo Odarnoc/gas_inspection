@@ -13,7 +13,6 @@ import {
 
 import { Location } from 'src/common/interfaces/location.interface';
 import { User } from 'src/auth/entities/user.entity';
-import { TypesRequestPetition } from 'src/common/glob/types';
 import { StatusOrder } from 'src/common/glob/status';
 
 @Entity()
@@ -52,7 +51,7 @@ export class RequestPetition {
   @Column('text', { default: '', nullable: true })
   references: string;
 
-  @Column('smallint', { default: StatusOrder.ASSIGNED })
+  @Column('smallint', { default: StatusOrder.assigned })
   status: number;
 
   @Column({

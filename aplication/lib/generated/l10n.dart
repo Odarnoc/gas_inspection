@@ -429,6 +429,156 @@ class S {
       args: [],
     );
   }
+
+  /// `Nombre`
+  String get lName {
+    return Intl.message(
+      'Nombre',
+      name: 'lName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apellido`
+  String get lLastName {
+    return Intl.message(
+      'Apellido',
+      name: 'lLastName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Teléfono`
+  String get lPhone {
+    return Intl.message(
+      'Teléfono',
+      name: 'lPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dirección`
+  String get lAdrreess {
+    return Intl.message(
+      'Dirección',
+      name: 'lAdrreess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Datos del usuario`
+  String get lUserInfo {
+    return Intl.message(
+      'Datos del usuario',
+      name: 'lUserInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Datos del proyecto`
+  String get lProyectInfo {
+    return Intl.message(
+      'Datos del proyecto',
+      name: 'lProyectInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tipo de proyecto`
+  String get lProyectType {
+    return Intl.message(
+      'Tipo de proyecto',
+      name: 'lProyectType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Volumen mínimo`
+  String get qMinimumVolume {
+    return Intl.message(
+      'Volumen mínimo',
+      name: 'qMinimumVolume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Alimentación de aire`
+  String get qAirSupply {
+    return Intl.message(
+      'Alimentación de aire',
+      name: 'qAirSupply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Salida de aire`
+  String get qAirOutlet {
+    return Intl.message(
+      'Salida de aire',
+      name: 'qAirOutlet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aireación rápida`
+  String get qRapidAeration {
+    return Intl.message(
+      'Aireación rápida',
+      name: 'qRapidAeration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rechazar`
+  String get bReject {
+    return Intl.message(
+      'Rechazar',
+      name: 'bReject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aprobar`
+  String get bAprove {
+    return Intl.message(
+      'Aprobar',
+      name: 'bAprove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cargar isométrico`
+  String get bUploadIsometric {
+    return Intl.message(
+      'Cargar isométrico',
+      name: 'bUploadIsometric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cargar plano de planta`
+  String get bUploadFloorPlan {
+    return Intl.message(
+      'Cargar plano de planta',
+      name: 'bUploadFloorPlan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

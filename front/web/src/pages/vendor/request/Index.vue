@@ -31,7 +31,7 @@
                     <q-td key="phone" :props="props">{{ props.row.phone }}</q-td>
                     <q-td key="startDate" :props="props">{{ props.row.startDate }}</q-td>
                     <q-td key="limitDate" :props="props">{{ props.row.limitDate }}</q-td>
-                    <q-td key="status" :props="props">{{ getStatusName(props.row.status) }}</q-td>
+                    <q-td key="status" :props="props">{{ $translateStatus(props.row.status) }}</q-td>
                     <q-td key="details" :props="props">{{ props.row.details }}</q-td>
                     <q-td key="actions" :props="props">
                       <q-btn
@@ -55,7 +55,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { statusOrder } from 'src/commons/status'
 export default {
   name: 'UserTypeList',
   data () {
@@ -162,17 +161,6 @@ export default {
       }
       this.$destroyLoading()
       this.loading = false
-    },
-    getStatusName (status) {
-      let statusName = ''
-      switch (status) {
-        case statusOrder.ASSIGNED:
-          statusName = this.$t('requestPetitionStatus.assigned')
-          break
-        default:
-          break
-      }
-      return statusName
     }
   }
 }

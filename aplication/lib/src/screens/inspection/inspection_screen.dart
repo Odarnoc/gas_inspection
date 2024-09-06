@@ -3,36 +3,43 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mikinder/src/screens/clients/inspections_screen.dart';
+import 'package:mikinder/src/models/request_petition_model.dart';
+import 'package:mikinder/src/screens/inspection/widgets/proyect_infomation_card.dart';
+import 'package:mikinder/src/screens/inspection/widgets/specific_files_accion_buttons.dart';
+import 'package:mikinder/src/screens/inspection/widgets/user_infomation_card.dart';
+import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 import 'package:mikinder/src/screens/inspection/widgets/bottom_accion_buttons.dart';
-import 'package:mikinder/src/screens/inspection/widgets/clients_table.dart';
-import 'package:mikinder/src/screens/inspection/widgets/floating_my_location_button.dart';
-import 'package:mikinder/src/screens/inspection/widgets/tech_info_card.dart';
 import 'package:provider/provider.dart';
 
 class InspectionScreen extends StatelessWidget {
   const InspectionScreen({
     super.key,
+    required this.requestPetition,
   });
+
+  final RequestPetitionModel requestPetition;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<DemoController>.value(
-      value: DemoController(),
-      child: Consumer<DemoController>(
-        builder: (context, demoController, child) => SafeArea(
+    return ChangeNotifierProvider<InspectionController>.value(
+      value: InspectionController(requestPetition),
+      child: Consumer<InspectionController>(
+        builder: (context, inspectionController, child) => SafeArea(
           child: Scaffold(
-            backgroundColor: kBodyBackgroundColor,
+            backgroundColor: kThridColor,
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  const ClientsTable2(),
+                  UserInformationCard(
+                      inspectionController: inspectionController),
                   Stack(
                     children: [
                       Container(
                         padding: const EdgeInsets.only(
-                            left: 25, right: 25, top: 10, bottom: 10),
+                          left: kDefaultPadding * 1.3,
+                          right: kDefaultPadding * 1.3,
+                        ),
                         height: 350,
                         width: double.infinity - 10,
                         child: GoogleMap(
@@ -45,41 +52,28 @@ class InspectionScreen extends StatelessWidget {
                           mapToolbarEnabled: false,
                           mapType: MapType.normal,
                           buildingsEnabled: false,
-                          markers: demoController.markers,
+                          markers: inspectionController.markers,
                           polylines: {
-                            ...demoController.polylines,
-                            Polyline(
-                              polylineId:
-                                  const PolylineId('new_polyline_update'),
-                              consumeTapEvents: true,
-                              color: Colors.green,
-                              width: 5,
-                              points: demoController.markers
-                                  .map((marker) => marker.position)
-                                  .toList(),
-                            )
+                            ...inspectionController.polylines,
                           },
                           initialCameraPosition:
-                              demoController.initialCameraPosition,
+                              inspectionController.initialCameraPosition,
                           onMapCreated: (googleMapController) async {
-                            await demoController.onMapCreated(
+                            await inspectionController.onMapCreated(
                                 googleMapController, context);
                           },
                           myLocationEnabled: false,
                           compassEnabled: false,
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
-                          onTap: (LatLng point) {
-                            demoController.addMarker(point);
-                          },
                         ),
                       ),
-                      FloatingMyLocationButton(demoController: demoController),
+                      // FloatingMyLocationButton(demoController: demoController),
                     ],
                   ),
-                  TechInfoCard(
-                    demoController: demoController,
-                  ),
+                  ProyectInformationCard(
+                      inspectionController: inspectionController),
+                  const SpecificActionsActionButtons(),
                   const BottomActionButtons(),
                 ],
               ),

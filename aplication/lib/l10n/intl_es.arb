@@ -36,5 +36,20 @@
   "bView": "Ver",
   "lActions": "Acciones",
   "lPreinspections": "Preinspecciones",
-  "lInternalInspections": "Inspecciones internas"
+  "lInternalInspections": "Inspecciones internas",
+  "lName": "Nombre",
+  "lLastName": "Apellido",
+  "lPhone": "Teléfono",
+  "lAdrreess": "Dirección",
+  "lUserInfo": "Datos del usuario",
+  "lProyectInfo": "Datos del proyecto",
+  "lProyectType": "Tipo de proyecto",
+  "qMinimumVolume": "Volumen mínimo",
+  "qAirSupply": "Alimentación de aire",
+  "qAirOutlet": "Salida de aire",
+  "qRapidAeration": "Aireación rápida",
+  "bReject": "Rechazar",
+  "bAprove": "Aprobar",
+  "bUploadIsometric": "Cargar isométrico",
+  "bUploadFloorPlan": "Cargar plano de planta"
 }

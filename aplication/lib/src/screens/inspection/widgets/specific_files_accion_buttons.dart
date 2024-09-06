@@ -4,8 +4,8 @@ import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/inspection/widgets/approve_dialog.dart';
 
-class BottomActionButtons extends StatelessWidget {
-  const BottomActionButtons({super.key});
+class SpecificActionsActionButtons extends StatelessWidget {
+  const SpecificActionsActionButtons({super.key});
 
   final valueSize = 10.0;
 
@@ -34,32 +34,7 @@ class BottomActionButtons extends StatelessWidget {
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
                       backgroundColor:
-                          const WidgetStatePropertyAll(kWarninngColor),
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => InspectionsScreen()),
-                          (Route<dynamic> route) => false);
-                    },
-                    style: ButtonStyle(
-                      padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
-                      backgroundColor:
-                          const WidgetStatePropertyAll(kErrorColor),
+                          const WidgetStatePropertyAll(kPrimaryColor),
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -67,7 +42,7 @@ class BottomActionButtons extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      S.of(context).bReject,
+                      S.of(context).bUploadIsometric,
                       style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -88,7 +63,7 @@ class BottomActionButtons extends StatelessWidget {
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
                       backgroundColor:
-                          const WidgetStatePropertyAll(kPositiveColor),
+                          const WidgetStatePropertyAll(kPrimaryColor),
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -96,9 +71,9 @@ class BottomActionButtons extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      S.of(context).bAprove,
+                      S.of(context).bUploadFloorPlan,
                       style: const TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 12),
                     ),

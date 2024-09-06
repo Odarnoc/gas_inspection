@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Param,
   Delete,
+  Get,
 } from '@nestjs/common';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
@@ -50,5 +51,17 @@ export class RequestPetitionController {
   @Auth()
   softDeleteUsers(@Param('userTypeId', ParseIntPipe) userTypeId: number) {
     return this.userTypeService.delete(userTypeId);
+  }
+
+  @Get('getPreinspections')
+  @Auth()
+  getPreinspections(@GetUser() user: User) {
+    return this.userTypeService.getPreinspections(user);
+  }
+
+  @Get('getInternalInspections')
+  @Auth()
+  getInternalInspections(@GetUser() user: User) {
+    return this.userTypeService.getInternalInspections(user);
   }
 }

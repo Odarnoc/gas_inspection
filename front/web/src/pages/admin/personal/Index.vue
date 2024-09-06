@@ -189,6 +189,9 @@ export default {
           case this.$typesRol.inspector:
             rolName = this.$t('roles.inspector')
             break
+          case this.$typesRol.instalator:
+            rolName = this.$t('roles.instalator')
+            break
           default:
             break
         }
