@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
-import 'package:mikinder/src/screens/inspection/widgets/custo_field_expanded.dart';
+import 'package:mikinder/src/screens/inspection/widgets/custom_field_expanded.dart';
 
 class UserInformationCard extends StatelessWidget {
   const UserInformationCard({super.key, required this.inspectionController});

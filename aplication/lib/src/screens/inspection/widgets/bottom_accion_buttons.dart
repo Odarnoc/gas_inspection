@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/generated/l10n.dart';
-import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
+import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 import 'package:mikinder/src/screens/inspection/widgets/approve_dialog.dart';
+import 'package:mikinder/src/screens/inspection/widgets/documents_dialog.dart';
+import 'package:mikinder/src/screens/inspection/widgets/reject_dialog.dart';
+import 'package:mikinder/src/screens/inspections/inspections_controller.dart';
 
 class BottomActionButtons extends StatelessWidget {
-  const BottomActionButtons({super.key});
+  const BottomActionButtons(
+      {super.key,
+      required this.inspectionController,
+      required this.inspectionsController});
+
+  final InspectionController inspectionController;
+  final InspectionsController inspectionsController;
 
   final valueSize = 10.0;
 
@@ -26,10 +35,12 @@ class BottomActionButtons extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => InspectionsScreen()),
-                          (Route<dynamic> route) => false);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => DocumentsDialog(
+                            inspectionController: inspectionController),
+                      );
                     },
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
@@ -51,10 +62,12 @@ class BottomActionButtons extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => InspectionsScreen()),
-                          (Route<dynamic> route) => false);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) =>
+                            RejectDialog(inspectionController),
+                      );
                     },
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
@@ -78,12 +91,16 @@ class BottomActionButtons extends StatelessWidget {
                 const SizedBox(width: 5),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => const ApproveDialog(),
-                      );
+                    onPressed: () async {
+                      bool result = await inspectionController.approveProyect(
+                          context, inspectionController.requestPetition.id);
+                      if (result) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => const ApproveDialog(),
+                        );
+                      }
                     },
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),

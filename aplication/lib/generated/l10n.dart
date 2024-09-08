@@ -579,6 +579,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Seleccione una foto`
+  String get bSelectPhoto {
+    return Intl.message(
+      'Seleccione una foto',
+      name: 'bSelectPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tomar una foto`
+  String get bTakePhoto {
+    return Intl.message(
+      'Tomar una foto',
+      name: 'bTakePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Carga exitosa`
+  String get lLoadSuccess {
+    return Intl.message(
+      'Carga exitosa',
+      name: 'lLoadSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Actualización exitosa`
+  String get lUpdateSuccess {
+    return Intl.message(
+      'Actualización exitosa',
+      name: 'lUpdateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Eliminar`
+  String get bDelete {
+    return Intl.message(
+      'Eliminar',
+      name: 'bDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continuar`
+  String get bNext {
+    return Intl.message(
+      'Continuar',
+      name: 'bNext',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Observaciones`
+  String get lObservations {
+    return Intl.message(
+      'Observaciones',
+      name: 'lObservations',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

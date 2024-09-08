@@ -60,11 +60,6 @@ class InspectionsScreen extends StatelessWidget {
                 ],
               )
             ],
-            /* shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(30),
-                ),
-              ), */
             backgroundColor: kFourthColor,
           ),
           backgroundColor: kThridColor,

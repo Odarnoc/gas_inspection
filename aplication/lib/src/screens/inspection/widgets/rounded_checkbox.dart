@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
-import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 
 class RoundedCheckbox extends StatelessWidget {
-  const RoundedCheckbox({super.key, required this.inspectionController});
+  const RoundedCheckbox(
+      {super.key, required this.value, required this.onPressed});
 
-  final InspectionController inspectionController;
+  final bool value;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: InkWell(
-      onTap: () {
-        inspectionController.checkbox1 = !inspectionController.checkbox1;
-      },
+      onTap: onPressed,
       child: Container(
         decoration:
             const BoxDecoration(shape: BoxShape.circle, color: kFourthColor),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: inspectionController.checkbox1
+          child: value
               ? const Icon(
                   Icons.check,
                   size: 30.0,

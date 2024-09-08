@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsDateString,
   IsNumber,
   IsObject,
@@ -8,12 +9,17 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { ProyectType } from 'src/admin/user-type/entities/proyectType.entity';
+import { User } from 'src/auth/entities/user.entity';
 import { Location } from 'src/common/interfaces/location.interface';
 
 export class CreateRequestPetitionDto {
   @IsNumber()
   @IsOptional()
   id?: number;
+
+  @IsNumber()
+  @IsOptional()
+  status?: number;
 
   @IsString()
   @IsOptional()
@@ -55,6 +61,7 @@ export class CreateRequestPetitionDto {
   @IsOptional()
   references?: string;
 
+  @IsOptional()
   @IsObject()
   @ValidateNested()
   @Type(() => Location)
@@ -76,6 +83,34 @@ export class CreateRequestPetitionDto {
   @IsOptional()
   realFolio?: string;
 
+  @IsString()
+  @IsOptional()
+  isometric?: string;
+
+  @IsString()
+  @IsOptional()
+  floorPlan?: string;
+
+  @IsString()
+  @IsOptional()
+  observations?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  minimumVolume?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  airSupply?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  airOutlet?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  rapidAeration?: boolean;
+
   @IsDateString()
   @IsOptional()
   startDate?: Date;
@@ -88,4 +123,9 @@ export class CreateRequestPetitionDto {
   @IsOptional()
   @Type(() => ProyectType)
   proyectType?: ProyectType;
+
+  @IsObject()
+  @IsOptional()
+  @Type(() => User)
+  inspector?: User;
 }

@@ -31,9 +31,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cambiar contraseña"),
         "bConfirm": MessageLookupByLibrary.simpleMessage("Confirmar"),
         "bContinue": MessageLookupByLibrary.simpleMessage("Continuar"),
+        "bDelete": MessageLookupByLibrary.simpleMessage("Eliminar"),
         "bDone": MessageLookupByLibrary.simpleMessage("Hecho"),
         "bFinish": MessageLookupByLibrary.simpleMessage("Finalizar"),
         "bLogin": MessageLookupByLibrary.simpleMessage("Ingresar"),
+        "bNext": MessageLookupByLibrary.simpleMessage("Continuar"),
         "bNo": MessageLookupByLibrary.simpleMessage("No"),
         "bOk": MessageLookupByLibrary.simpleMessage("Aceptar"),
         "bReTry": MessageLookupByLibrary.simpleMessage("Reintentar"),
@@ -42,8 +44,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "bReject": MessageLookupByLibrary.simpleMessage("Rechazar"),
         "bReturn": MessageLookupByLibrary.simpleMessage("Regresar"),
         "bSaveChanges": MessageLookupByLibrary.simpleMessage("Guardar"),
+        "bSelectPhoto":
+            MessageLookupByLibrary.simpleMessage("Seleccione una foto"),
         "bSignin": MessageLookupByLibrary.simpleMessage("Iniciar sesión"),
         "bSignup": MessageLookupByLibrary.simpleMessage("Registrate aqui"),
+        "bTakePhoto": MessageLookupByLibrary.simpleMessage("Tomar una foto"),
         "bUpload": MessageLookupByLibrary.simpleMessage("Subir"),
         "bUploadFloorPlan":
             MessageLookupByLibrary.simpleMessage("Cargar plano de planta"),
@@ -71,9 +76,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "lInternalInspections":
             MessageLookupByLibrary.simpleMessage("Inspecciones internas"),
         "lLastName": MessageLookupByLibrary.simpleMessage("Apellido"),
+        "lLoadSuccess": MessageLookupByLibrary.simpleMessage("Carga exitosa"),
         "lName": MessageLookupByLibrary.simpleMessage("Nombre"),
         "lNoAccount": MessageLookupByLibrary.simpleMessage(
             "¿Es tu primera vez en Mikinder?"),
+        "lObservations": MessageLookupByLibrary.simpleMessage("Observaciones"),
         "lPhone": MessageLookupByLibrary.simpleMessage("Teléfono"),
         "lPreinspections":
             MessageLookupByLibrary.simpleMessage("Preinspecciones"),
@@ -83,6 +90,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lProyectType":
             MessageLookupByLibrary.simpleMessage("Tipo de proyecto"),
         "lSearch": MessageLookupByLibrary.simpleMessage("Buscar"),
+        "lUpdateSuccess":
+            MessageLookupByLibrary.simpleMessage("Actualización exitosa"),
         "lUserInfo": MessageLookupByLibrary.simpleMessage("Datos del usuario"),
         "qAirOutlet": MessageLookupByLibrary.simpleMessage("Salida de aire"),
         "qAirSupply":

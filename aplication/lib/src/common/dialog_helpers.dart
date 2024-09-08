@@ -42,11 +42,13 @@ showSuccessSnackBar(String message) {
   final context = navigatorKey.currentContext!;
   final scaffoldMessenger = ScaffoldMessenger.of(context);
 
-  scaffoldMessenger.showSnackBar(SnackBar(
-    duration: const Duration(seconds: 5),
-    backgroundColor: kPrimaryColor,
-    content: Text(message),
-  ));
+  scaffoldMessenger
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      duration: const Duration(seconds: 5),
+      backgroundColor: kPositiveColor,
+      content: Text(message),
+    ));
 }
 
 showSuccessCenterSnackBar(String message) {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "540767245495",
+    "project_id": "livgas-cfd9d",
+    "storage_bucket": "livgas-cfd9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540767245495:android:242e48819a7a868622a932",
+        "android_client_info": {
+          "package_name": "com.livgas.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_U7OSOwtpXiuZi2dmFjZ7anD4LuJCDdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

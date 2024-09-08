@@ -7,6 +7,7 @@ import 'package:mikinder/src/models/request_petition_model.dart';
 import 'package:mikinder/src/screens/inspection/widgets/proyect_infomation_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/specific_files_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspection/widgets/user_infomation_card.dart';
+import 'package:mikinder/src/screens/inspections/inspections_controller.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 import 'package:mikinder/src/screens/inspection/widgets/bottom_accion_buttons.dart';
@@ -16,9 +17,11 @@ class InspectionScreen extends StatelessWidget {
   const InspectionScreen({
     super.key,
     required this.requestPetition,
+    required this.inspectionsController,
   });
 
   final RequestPetitionModel requestPetition;
+  final InspectionsController inspectionsController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,9 @@ class InspectionScreen extends StatelessWidget {
       child: Consumer<InspectionController>(
         builder: (context, inspectionController, child) => SafeArea(
           child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: kFourthColor,
+            ),
             backgroundColor: kThridColor,
             body: SingleChildScrollView(
               child: Column(
@@ -73,8 +79,13 @@ class InspectionScreen extends StatelessWidget {
                   ),
                   ProyectInformationCard(
                       inspectionController: inspectionController),
-                  const SpecificActionsActionButtons(),
-                  const BottomActionButtons(),
+                  SpecificActionsActionButtons(
+                    inspectionController: inspectionController,
+                  ),
+                  BottomActionButtons(
+                    inspectionController: inspectionController,
+                    inspectionsController: inspectionsController,
+                  ),
                 ],
               ),
             ),

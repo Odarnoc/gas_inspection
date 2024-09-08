@@ -7,18 +7,17 @@ import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
 import { DEFAULT_RESULT } from '../../common/constants/response';
 import { getOrderBy } from '../../common/helpers/pagination';
-import { RequestPetition } from './entities/requestPetition.entity';
 import { I18nContext, I18nService } from 'nestjs-i18n';
-import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
-import { StatusOrder } from 'src/common/glob/status';
+import { CreateRequestDocumentDto } from './dto/create-requestDocumets.dto';
+import { RequestDocuments } from './entities/requestDocuments.entity';
 
 @Injectable()
-export class RequestPetitionService {
-  private readonly logger = new Logger(RequestPetitionService.name);
+export class RequestDocumentsService {
+  private readonly logger = new Logger(RequestDocumentsService.name);
 
   constructor(
-    @InjectRepository(RequestPetition)
-    private readonly requestPetitionRepository: Repository<RequestPetition>,
+    @InjectRepository(RequestDocuments)
+    private readonly requestDocumentsRepository: Repository<RequestDocuments>,
 
     private readonly i18n: I18nService,
   ) {}
@@ -38,10 +37,7 @@ export class RequestPetitionService {
     descending = descending ?? PAGINATION_DEFAULT_VALUES.descending;
     const order = getOrderBy(sortBy, descending);
     const [items, total_items] =
-      await this.requestPetitionRepository.findAndCount({
-        relations: {
-          proyectType: true,
-        },
+      await this.requestDocumentsRepository.findAndCount({
         where,
         take: limit,
         skip,
@@ -60,11 +56,7 @@ export class RequestPetitionService {
   }
 
   async get(id: number) {
-    const data = await this.requestPetitionRepository.findOne({
-      relations: {
-        proyectType: true,
-        inspector: true,
-      },
+    const data = await this.requestDocumentsRepository.findOne({
       where: { id },
     });
     return {
@@ -72,10 +64,12 @@ export class RequestPetitionService {
     };
   }
 
-  async create(user: User, createUserTypeDto: CreateRequestPetitionDto) {
+  async create(user: User, createUserTypeDto: CreateRequestDocumentDto) {
     try {
-      const systemDocument = await this.requestPetitionRepository.save({
+      const systemDocument = await this.requestDocumentsRepository.save({
         ...createUserTypeDto,
+        created_by: user.id,
+        updated_by: user.id,
       });
 
       return {
@@ -89,18 +83,11 @@ export class RequestPetitionService {
     }
   }
 
-  async updated(user: User, createUserTypeDto: CreateRequestPetitionDto) {
+  async updated(user: User, createUserTypeDto: CreateRequestDocumentDto) {
     try {
-      await this.requestPetitionRepository.save({
+      const systemDocument = await this.requestDocumentsRepository.save({
         ...createUserTypeDto,
-      });
-
-      const systemDocument = await this.requestPetitionRepository.findOne({
-        relations: {
-          proyectType: true,
-          inspector: true,
-        },
-        where: { id: createUserTypeDto.id },
+        updated_by: user.id,
       });
       return {
         systemDocument,
@@ -115,7 +102,7 @@ export class RequestPetitionService {
   }
 
   async delete(id: number) {
-    const user = await this.requestPetitionRepository.softDelete({
+    const user = await this.requestDocumentsRepository.softDelete({
       id,
     });
 
@@ -128,34 +115,21 @@ export class RequestPetitionService {
     };
   }
 
-  async getPreinspections(user: User) {
-    const data = await this.requestPetitionRepository.find({
-      relations: {
-        proyectType: true,
-        inspector: true,
-      },
-      where: {
-        status: StatusOrder.assigned,
-        inspector: {
-          id: user.id,
-        },
-      },
-    });
-    return {
-      data,
-    };
+  async getProyectTypeOptions() {
+    return await this.requestDocumentsRepository
+      .createQueryBuilder('c')
+      .select('id AS value, name AS label')
+      .getRawMany();
   }
 
-  async getInternalInspections(user: User) {
-    const data = await this.requestPetitionRepository.find({
+  async getDocuments(id: number) {
+    const data = await this.requestDocumentsRepository.find({
       relations: {
-        proyectType: true,
-        inspector: true,
+        requestPetition: true,
       },
       where: {
-        status: StatusOrder.interrnalInspection,
-        inspector: {
-          id: user.id,
+        requestPetition: {
+          id,
         },
       },
     });

@@ -185,8 +185,10 @@ class InternalInspectionsTable extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          InspectionScreen(requestPetition: requestPetition)),
+                      builder: (context) => InspectionScreen(
+                            requestPetition: requestPetition,
+                            inspectionsController: inspectionsController,
+                          )),
                 );
               },
               style: ButtonStyle(

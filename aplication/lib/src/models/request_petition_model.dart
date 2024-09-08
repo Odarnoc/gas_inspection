@@ -15,6 +15,12 @@ class RequestPetitionModel {
   String references;
   int status;
   LocationModel location;
+  String isometric;
+  String floorPlan;
+  bool minimumVolume;
+  bool airSupply;
+  bool airOutlet;
+  bool rapidAeration;
   DateTime startDate;
   DateTime limitDate;
   DateTime createdAt;
@@ -34,6 +40,12 @@ class RequestPetitionModel {
     required this.references,
     required this.status,
     required this.location,
+    required this.isometric,
+    required this.floorPlan,
+    required this.minimumVolume,
+    required this.airSupply,
+    required this.airOutlet,
+    required this.rapidAeration,
     required this.startDate,
     required this.limitDate,
     required this.createdAt,
@@ -55,6 +67,12 @@ class RequestPetitionModel {
         references: json["references"],
         status: json["status"],
         location: LocationModel.fromJson(json["location"]),
+        isometric: json["isometric"],
+        floorPlan: json["floorPlan"],
+        minimumVolume: json["minimumVolume"],
+        airSupply: json["airSupply"],
+        airOutlet: json["airOutlet"],
+        rapidAeration: json["rapidAeration"],
         startDate: DateTime.parse(json["startDate"]),
         limitDate: DateTime.parse(json["limitDate"]),
         createdAt: DateTime.parse(json["createdAt"]),
@@ -75,6 +93,11 @@ class RequestPetitionModel {
         "references": references,
         "status": status,
         "location": location.toJson(),
+        "isometric": isometric,
+        "floorPlan": floorPlan,
+        "minimumVolume": minimumVolume,
+        "airSupply": airSupply,
+        "airOutlet": airOutlet,
         "startDate":
             "${startDate.year.toString().padLeft(4, '0')}-${startDate.month.toString().padLeft(2, '0')}-${startDate.day.toString().padLeft(2, '0')}",
         "limitDate":

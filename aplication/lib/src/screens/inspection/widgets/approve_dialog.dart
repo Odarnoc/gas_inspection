@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mikinder/generated/l10n.dart';
+import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 
 class ApproveDialog extends StatelessWidget {
   const ApproveDialog({super.key});
@@ -16,12 +18,17 @@ class ApproveDialog extends StatelessWidget {
               size: 60,
               color: Colors.green[400],
             ),
-            const Text('Aprobado'),
+            Text(S.of(context).lUpdateSuccess),
             OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => InspectionsScreen()),
+                      (Route<dynamic> route) {
+                    return false;
+                  });
                 },
-                child: const Text("Continuar"))
+                child: Text(S.of(context).bNext))
           ],
         ),
       ),

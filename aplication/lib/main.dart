@@ -7,11 +7,17 @@ import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/providers/preferences_provider.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/login/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PreferencesProvider().init();
   final pref = PreferencesProvider();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   pref.locale = 'es';
   runApp(MyApp(pref: pref));

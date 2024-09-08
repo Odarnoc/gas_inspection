@@ -9,11 +9,13 @@ import {
   DeleteDateColumn,
   ManyToOne,
   Index,
+  OneToMany,
 } from 'typeorm';
 
 import { Location } from 'src/common/interfaces/location.interface';
 import { User } from 'src/auth/entities/user.entity';
 import { StatusOrder } from 'src/common/glob/status';
+import { RequestDocuments } from 'src/vendor/requestDocuments/entities/requestDocuments.entity';
 
 @Entity()
 export class RequestPetition {
@@ -76,11 +78,32 @@ export class RequestPetition {
   @Column('text', { default: '', nullable: true })
   realFolio: string;
 
+  @Column('text', { default: '', nullable: true })
+  isometric: string;
+
+  @Column('text', { default: '', nullable: true })
+  floorPlan: string;
+
+  @Column('bool', { default: false })
+  minimumVolume: boolean;
+
+  @Column('bool', { default: false })
+  airSupply: boolean;
+
+  @Column('bool', { default: false })
+  airOutlet: boolean;
+
+  @Column('bool', { default: false })
+  rapidAeration: boolean;
+
   @Column('date', { nullable: true })
   startDate: Date;
 
   @Column('date', { nullable: true })
   limitDate: Date;
+
+  @Column('text', { default: '', nullable: true })
+  observations: string;
 
   @ManyToOne(() => ProyectType, (proyectType) => proyectType.requests, {
     onDelete: 'SET NULL',
@@ -91,6 +114,16 @@ export class RequestPetition {
     onDelete: 'SET NULL',
   })
   inspector: User;
+
+  @OneToMany(
+    () => RequestDocuments,
+    (requestDocument) => requestDocument.requestPetition,
+    {
+      cascade: true,
+      eager: false,
+    },
+  )
+  requestDocuments?: RequestDocuments[];
 
   @CreateDateColumn({
     nullable: true,

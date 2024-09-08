@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/generated/l10n.dart';
-import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
-import 'package:mikinder/src/screens/inspection/widgets/approve_dialog.dart';
+import 'package:mikinder/src/common/file_helper.dart';
+import 'package:mikinder/src/common/file_routes_constant.dart';
+import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
+import 'package:mikinder/src/widgets/upload_file/upload_file.dart';
 
 class SpecificActionsActionButtons extends StatelessWidget {
-  const SpecificActionsActionButtons({super.key});
+  const SpecificActionsActionButtons(
+      {super.key, required this.inspectionController});
+
+  final InspectionController inspectionController;
 
   final valueSize = 10.0;
 
@@ -26,10 +31,23 @@ class SpecificActionsActionButtons extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => InspectionsScreen()),
-                          (Route<dynamic> route) => false);
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => UploadFile((image) async {
+                          inspectionController.inAsyncCall = true;
+                          String imageUpload = await uploadFile(
+                              image,
+                              '${GeneralRoutes.proyects}${inspectionController.requestPetition.id}/${SpecificRoutes.isometric}',
+                              '${inspectionController.requestPetition.id}-${DateTime.now().toIso8601String()}',
+                              kTargetWidthUser,
+                              isDocument: true);
+                          inspectionController.updateUrlIsometric(
+                              context,
+                              imageUpload,
+                              inspectionController.requestPetition.id);
+                        }),
+                      );
                     },
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
@@ -57,7 +75,19 @@ class SpecificActionsActionButtons extends StatelessWidget {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (context) => const ApproveDialog(),
+                        builder: (context) => UploadFile((image) async {
+                          inspectionController.inAsyncCall = true;
+                          String imageUpload = await uploadFile(
+                              image,
+                              '${GeneralRoutes.proyects}${inspectionController.requestPetition.id}/${SpecificRoutes.floorPlan}',
+                              '${inspectionController.requestPetition.id}-${DateTime.now().toIso8601String()}',
+                              kTargetWidthUser,
+                              isDocument: true);
+                          inspectionController.updateUrlFloorPlan(
+                              context,
+                              imageUpload,
+                              inspectionController.requestPetition.id);
+                        }),
                       );
                     },
                     style: ButtonStyle(

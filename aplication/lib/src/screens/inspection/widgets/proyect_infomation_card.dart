@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
-import 'package:mikinder/src/screens/inspection/widgets/custo_field_expanded.dart';
+import 'package:mikinder/src/screens/inspection/widgets/custom_field_expanded.dart';
 import 'package:mikinder/src/screens/inspection/widgets/rounded_checkbox.dart';
 
 class ProyectInformationCard extends StatelessWidget {
@@ -69,13 +69,23 @@ class ProyectInformationCard extends StatelessWidget {
               text: S.of(context).qMinimumVolume,
               backgroundColor: kTableFieldsBackgroundColor),
           const SizedBox(width: 10),
-          RoundedCheckbox(inspectionController: inspectionController),
+          RoundedCheckbox(
+            value: inspectionController.checkbox1,
+            onPressed: () {
+              inspectionController.checkbox1 = !inspectionController.checkbox1;
+            },
+          ),
           const SizedBox(width: 10),
           CustomFieldExpanded(
               text: S.of(context).qAirSupply,
               backgroundColor: kTableFieldsBackgroundColor),
           const SizedBox(width: 10),
-          RoundedCheckbox(inspectionController: inspectionController),
+          RoundedCheckbox(
+            value: inspectionController.checkbox2,
+            onPressed: () {
+              inspectionController.checkbox2 = !inspectionController.checkbox2;
+            },
+          ),
         ],
       ),
     );
@@ -89,13 +99,23 @@ class ProyectInformationCard extends StatelessWidget {
               text: S.of(context).qAirOutlet,
               backgroundColor: kTableFieldsBackgroundColor),
           const SizedBox(width: 10),
-          RoundedCheckbox(inspectionController: inspectionController),
+          RoundedCheckbox(
+            value: inspectionController.checkbox3,
+            onPressed: () {
+              inspectionController.checkbox3 = !inspectionController.checkbox3;
+            },
+          ),
           const SizedBox(width: 10),
           CustomFieldExpanded(
               text: S.of(context).qRapidAeration,
               backgroundColor: kTableFieldsBackgroundColor),
           const SizedBox(width: 10),
-          RoundedCheckbox(inspectionController: inspectionController),
+          RoundedCheckbox(
+            value: inspectionController.checkbox4,
+            onPressed: () {
+              inspectionController.checkbox4 = !inspectionController.checkbox4;
+            },
+          ),
         ],
       ),
     );
