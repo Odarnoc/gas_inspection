@@ -92,15 +92,23 @@
             </q-item-section>
           </q-item>
         </q-expansion-item>
+        <q-expansion-item
+          :content-inset-level="0.5"
+          expand-separator
+          :label="$t('menus.chageHistory')"
+          icon="history"
+          v-if="$hasRoles([$typesRol.admin])"
+        >
+          <q-item to="/logs/request">
+            <q-item-section avatar>
+              <q-icon name="description" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{$t('menus.requests')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
         <q-separator />
-        <q-item to="/request">
-          <q-item-section avatar>
-            <q-icon name="assignment" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>{{$t('menus.requests')}}</q-item-label>
-          </q-item-section>
-        </q-item>
         <q-expansion-item
           :content-inset-level="0.5"
           expand-separator
@@ -108,20 +116,12 @@
           icon="format_list_bulleted"
           v-if="$hasRoles([$typesRol.vendor])"
         >
-          <q-item to="/assigned">
+          <q-item to="/request">
             <q-item-section avatar>
               <q-icon name="assignment" />
             </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.assigned')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/approved">
-            <q-item-section avatar>
-              <q-icon name="assignment_turned_in" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.approved')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item to="/observed">
@@ -130,6 +130,14 @@
             </q-item-section>
             <q-item-section>
               <q-item-label>{{$t('menus.observed')}}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item to="/approved">
+            <q-item-section avatar>
+              <q-icon name="assignment_turned_in" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{$t('menus.approved')}}</q-item-label>
             </q-item-section>
           </q-item>
           <q-item to="/rejected">

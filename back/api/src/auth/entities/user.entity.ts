@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { TypesRol } from 'src/common/glob/types';
 import { RequestPetition } from 'src/vendor/requests/entities/requestPetition.entity';
+import { RequestPetitionLogs } from 'src/log/request-petition/entities/request-petition-logs.entity';
 
 @Entity()
 export class User {
@@ -79,4 +80,11 @@ export class User {
     type: 'timestamptz',
   })
   deletedAt: Date;
+
+  @OneToMany(
+    () => RequestPetitionLogs,
+    (requestPetitionLogs) => requestPetitionLogs.user,
+    { cascade: true, eager: false },
+  )
+  requestPetitionLogs?: RequestPetitionLogs[];
 }

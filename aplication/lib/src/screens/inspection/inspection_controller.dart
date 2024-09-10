@@ -149,7 +149,11 @@ class InspectionController extends ChangeNotifier {
       BuildContext context, String imageUploadUrl, int id) async {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
-        .updateRequestPetition({'isometric': imageUploadUrl, 'id': id});
+        .updateRequestPetition({
+      'isometric': imageUploadUrl,
+      'id': id,
+      'log': 'Se cargo isométrico'
+    });
     if (newRequestPetitionModel != null) {
       showSuccessSnackBar(S.of(context).lLoadSuccess);
       _requestPetition.isometric = imageUploadUrl;
@@ -162,7 +166,11 @@ class InspectionController extends ChangeNotifier {
       BuildContext context, String imageUploadUrl, int id) async {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
-        .updateRequestPetition({'floorPlan': imageUploadUrl, 'id': id});
+        .updateRequestPetition({
+      'floorPlan': imageUploadUrl,
+      'id': id,
+      'log': 'Se cargo plano de planta'
+    });
     if (newRequestPetitionModel != null) {
       showSuccessSnackBar(S.of(context).lLoadSuccess);
       _requestPetition.floorPlan = imageUploadUrl;
@@ -181,7 +189,8 @@ class InspectionController extends ChangeNotifier {
       'airOutlet': checkbox3,
       'rapidAeration': checkbox4,
       'status': StatusProyect.inspectionAproved,
-      'id': id
+      'id': id,
+      'log': 'Se aprobó inspección'
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;
@@ -203,6 +212,7 @@ class InspectionController extends ChangeNotifier {
       'id': requestPetition.id,
       'observations': observations,
       'status': StatusProyect.observed,
+      'log': 'Se agregaron observaciones de inspección'
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;

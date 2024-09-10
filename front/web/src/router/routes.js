@@ -25,9 +25,13 @@ const routes = [
       { path: 'personal', component: () => import('pages/admin/personal/Index.vue') },
       { path: 'personal/new', component: () => import('pages/admin/personal/New.vue') },
       { path: 'personal/edit/:id', component: () => import('pages/admin/personal/Edit.vue') },
-      { path: 'request', component: () => import('pages/vendor/request/Index.vue') },
+      { path: 'request', component: () => import('src/pages/vendor/request/Index-assigned.vue') },
+      { path: 'observed', component: () => import('src/pages/vendor/request/Index-observed.vue') },
+      { path: 'approved', component: () => import('src/pages/vendor/request/Index-approved.vue') },
+      { path: 'rejected', component: () => import('src/pages/vendor/request/Index-rejected.vue') },
       { path: 'request/new', component: () => import('pages/vendor/request/New.vue') },
-      { path: 'request/edit/:id', component: () => import('pages/vendor/request/Edit.vue') }
+      { path: 'request/edit/:id', component: () => import('pages/vendor/request/Edit.vue') },
+      { path: 'logs/request', component: () => import('pages/admin/logs/request/Index.vue') }
     ]
   },
 

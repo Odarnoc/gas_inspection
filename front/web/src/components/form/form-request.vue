@@ -460,7 +460,9 @@ export default {
           startDate: '',
           limitDate: '',
           proyectType: null,
-          inspector: null
+          inspector: null,
+          status: null,
+          observations: ''
         }
       },
       isPwd: true,

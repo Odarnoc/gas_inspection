@@ -128,4 +128,8 @@ export class CreateRequestPetitionDto {
   @IsOptional()
   @Type(() => User)
   inspector?: User;
+
+  @IsString()
+  @IsOptional()
+  log?: string;
 }

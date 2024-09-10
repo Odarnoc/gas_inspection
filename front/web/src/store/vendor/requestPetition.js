@@ -12,6 +12,22 @@ const module = {
       const response = await api.post(`${apiRoot}/getTable`, pagination)
       return response
     },
+    getTableApproved: async ({ commit, dispatch }, pagination) => {
+      const response = await api.post(`${apiRoot}/getTableApproved`, pagination)
+      return response
+    },
+    getTableAssigned: async ({ commit, dispatch }, pagination) => {
+      const response = await api.post(`${apiRoot}/getTableAssigned`, pagination)
+      return response
+    },
+    getTableObserved: async ({ commit, dispatch }, pagination) => {
+      const response = await api.post(`${apiRoot}/getTableObserved`, pagination)
+      return response
+    },
+    getTableRejected: async ({ commit, dispatch }, pagination) => {
+      const response = await api.post(`${apiRoot}/getTableRejected`, pagination)
+      return response
+    },
     get: async ({ commit, dispatch }, id) => {
       const response = await api.post(`${apiRoot}/get/${id}`)
       return response

@@ -19,7 +19,8 @@
     "assigned": "Asignadas",
     "approved": "Aprobadas",
     "observed": "Observadas",
-    "rejected": "Rechazadas"
+    "rejected": "Rechazadas",
+    "chageHistory": "Historial de cambios"
   },
   "fields": {
     "personalInfo": "Datos personales",
@@ -56,7 +57,12 @@
     "startDate": "Fecha de inicio",
     "limitDate": "Fecha limite",
     "proyectStatus": "Estado del proyecto",
-    "proyectType": "Tipo de proyecto"
+    "proyectType": "Tipo de proyecto",
+    "createdAt": "Fecha de creación",
+    "user": "Usuario",
+    "eventType": "Tipo de evento",
+    "log": "Detalles",
+    "extraDetails": "Detalles extra"
   },
   "buttons": {
     "log_in": "Iniciar sesión",
@@ -71,7 +77,9 @@
     "view": "Ver",
     "upload": "Subir",
     "upload_image": "Subir imagen",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "saveAndReassign": "Guardar y reasignar",
+    "reject": "Rechazar"
   },
   "dialogs": {
     "loading": "Cargando",

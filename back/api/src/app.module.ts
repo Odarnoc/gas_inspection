@@ -16,6 +16,7 @@ import { join } from 'path';
 import { ProyectTypeModule } from './admin/user-type/proyectType.module';
 import { RequestPetitionModule } from './vendor/requests/requestPetition.module';
 import { RequestDocumentsModule } from './vendor/requestDocuments/requestDocuments.module';
+import { RequestPetitionLogsModule } from './log/request-petition/request-petition-logs.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { RequestDocumentsModule } from './vendor/requestDocuments/requestDocumen
     ProyectTypeModule,
     RequestPetitionModule,
     RequestDocumentsModule,
+    RequestPetitionLogsModule,
   ],
   providers: [],
 })

@@ -10,3 +10,13 @@ export enum TypesRol {
   inspector = 'inspector',
   instalator = 'instalator',
 }
+
+export enum TypesEventLogs {
+  create = 'Creación',
+  update = 'Actualización',
+  delete = 'Eliminación',
+}
+
+export enum TypesResultEventLogs {
+  success = 'Éxito',
+}

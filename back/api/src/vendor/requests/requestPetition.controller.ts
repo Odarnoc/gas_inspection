@@ -13,6 +13,7 @@ import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
 import { User } from '../../auth/entities/user.entity';
 import { RequestPetitionService } from './requestPetition.service';
 import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
+import { StatusOrder } from 'src/common/glob/status';
 
 @Controller('requestPetition')
 export class RequestPetitionController {
@@ -20,6 +21,38 @@ export class RequestPetitionController {
 
   @Post('getTable')
   getTable(@Body() paginationDto: PaginationCompleteDto) {
+    return this.userTypeService.getTable(paginationDto);
+  }
+
+  @Post('getTableAssigned')
+  getTableAssigned(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: StatusOrder.assigned,
+    };
+    return this.userTypeService.getTable(paginationDto);
+  }
+
+  @Post('getTableObserved')
+  getTableObserved(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: StatusOrder.observed,
+    };
+    return this.userTypeService.getTable(paginationDto);
+  }
+
+  @Post('getTableApproved')
+  getTableApproved(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: StatusOrder.inspectionAproved,
+    };
+    return this.userTypeService.getTable(paginationDto);
+  }
+
+  @Post('getTableRejected')
+  getTableRejected(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: StatusOrder.rejected,
+    };
     return this.userTypeService.getTable(paginationDto);
   }
 
@@ -44,7 +77,12 @@ export class RequestPetitionController {
     @GetUser() user: User,
     @Body() createUserTypeDto: CreateRequestPetitionDto,
   ) {
-    return this.userTypeService.updated(user, createUserTypeDto);
+    return this.userTypeService.updated(
+      user,
+      createUserTypeDto,
+      createUserTypeDto.log ?? 'Se actualizo la información del proyecto',
+      `id: ${createUserTypeDto?.id}`,
+    );
   }
 
   @Delete('delete/:userTypeId')

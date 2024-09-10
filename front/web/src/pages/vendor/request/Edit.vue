@@ -10,11 +10,28 @@
         </div>
         <div class="col-12">
           <q-btn
-            class="float-right"
+            v-if="status == statusOrder.observed"
+            class="float-right q-mr-md"
+            color="primary"
+            icon="save"
+            :label="$t('buttons.saveAndReassign')"
+            @click="saveAndReassign"
+          />
+          <q-btn
+            v-if="status != statusOrder.rejected"
+            class="float-right q-mr-md"
             color="secondary"
             icon="save"
             :label="$t('buttons.update')"
             @click="save"
+          />
+          <q-btn
+            v-if="status == statusOrder.observed"
+            class="float-right q-mr-md"
+            color="negative"
+            icon="delete"
+            :label="$t('buttons.reject')"
+            @click="reject"
           />
         </div>
       </div>
@@ -23,6 +40,7 @@
 </template>
 
 <script>
+import { statusOrder } from 'src/commons/status'
 import { mapActions } from 'vuex'
 
 let self
@@ -31,7 +49,11 @@ export default {
   data () {
     return {
       id: null,
-      imageUrl: null
+      imageUrl: null,
+      status: null,
+      statusOrder: {
+        ...statusOrder
+      }
     }
   },
   created () {
@@ -53,6 +75,7 @@ export default {
       const response = await self.get(self.id)
       const data = response.data
       self.$refs.documentForm.setData(data.data)
+      this.status = data.data.status
       self.$destroyLoading()
     },
     async save () {
@@ -65,6 +88,46 @@ export default {
         return
       }
       const params = { ...formResult.params }
+      try {
+        const response = await self.update(params)
+        this.$showNotifySuccess(response)
+        await self.fetchFromServer()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      self.$destroyLoading()
+      self.loading = false
+    },
+    async saveAndReassign () {
+      self.loading = true
+      self.$showLoading()
+      const formResult = await self.$refs.documentForm.getData()
+      if (!formResult.isValid) {
+        self.loading = false
+        self.$destroyLoading()
+        return
+      }
+      const params = { ...formResult.params, status: statusOrder.assigned }
+      try {
+        const response = await self.update(params)
+        this.$showNotifySuccess(response)
+        await self.fetchFromServer()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      self.$destroyLoading()
+      self.loading = false
+    },
+    async reject () {
+      self.loading = true
+      self.$showLoading()
+      const formResult = await self.$refs.documentForm.getData()
+      if (!formResult.isValid) {
+        self.loading = false
+        self.$destroyLoading()
+        return
+      }
+      const params = { ...formResult.params, status: statusOrder.rejected }
       try {
         const response = await self.update(params)
         this.$showNotifySuccess(response)

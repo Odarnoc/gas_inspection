@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
 import { Repository } from 'typeorm';
@@ -11,6 +11,8 @@ import { RequestPetition } from './entities/requestPetition.entity';
 import { I18nContext, I18nService } from 'nestjs-i18n';
 import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
 import { StatusOrder } from 'src/common/glob/status';
+import { RequestPetitionLogsService } from 'src/log/request-petition/request-petition-logs.service';
+import { TypesEventLogs, TypesResultEventLogs } from 'src/common/glob/types';
 
 @Injectable()
 export class RequestPetitionService {
@@ -19,6 +21,9 @@ export class RequestPetitionService {
   constructor(
     @InjectRepository(RequestPetition)
     private readonly requestPetitionRepository: Repository<RequestPetition>,
+
+    @Inject(RequestPetitionLogsService)
+    private readonly requestPetitionLogsService: RequestPetitionLogsService,
 
     private readonly i18n: I18nService,
   ) {}
@@ -78,6 +83,14 @@ export class RequestPetitionService {
         ...createUserTypeDto,
       });
 
+      await this.requestPetitionLogsService.createLog({
+        user,
+        eventType: TypesEventLogs.create,
+        result: TypesResultEventLogs.success,
+        log: 'Se creo un nuevo proyecto',
+        extraDetails: `id: ${systemDocument.id}`,
+      });
+
       return {
         systemDocument,
         message: this.i18n.t('messages.creationSuccess', {
@@ -89,7 +102,12 @@ export class RequestPetitionService {
     }
   }
 
-  async updated(user: User, createUserTypeDto: CreateRequestPetitionDto) {
+  async updated(
+    user: User,
+    createUserTypeDto: CreateRequestPetitionDto,
+    log: string,
+    extraDetails: string,
+  ) {
     try {
       await this.requestPetitionRepository.save({
         ...createUserTypeDto,
@@ -101,6 +119,14 @@ export class RequestPetitionService {
           inspector: true,
         },
         where: { id: createUserTypeDto.id },
+      });
+
+      await this.requestPetitionLogsService.createLog({
+        user,
+        eventType: TypesEventLogs.update,
+        result: TypesResultEventLogs.success,
+        log,
+        extraDetails,
       });
       return {
         systemDocument,

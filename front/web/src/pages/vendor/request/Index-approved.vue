@@ -7,21 +7,10 @@
         <div class="col q-pa-md">
           <div class="row q-mb-sm q-mt-md">
             <div class="col-12">
-              <div class="row q-col-gutter-xs q-mb-md">
-                <div class="col-12">
-                  <q-btn
-                    class="float-right"
-                    color="secondary"
-                    icon="add"
-                    :label="$t('buttons.new')"
-                    @click="$router.push('/request/new')"
-                  />
-                </div>
-              </div>
               <base-table
                 ref="table"
                 :columns="columnsServices"
-                :fetchData="getTable"
+                :fetchData="getTableApproved"
                 :pag="pagination"
               >
                 <template v-slot:body="props">
@@ -69,7 +58,7 @@ export default {
   },
   computed: {
     breadCrumRoutes () {
-      return [this.$t('menus.requests')]
+      return [this.$t('menus.requests'), this.$t('menus.approved')]
     },
     columnsServices () {
       return [
@@ -129,7 +118,7 @@ export default {
     this.fetchFromServer()
   },
   methods: {
-    ...mapActions('vendor/requestPetition', ['getTable', 'delete']),
+    ...mapActions('vendor/requestPetition', ['getTableApproved', 'delete']),
     async fetchFromServer () {
       this.$showLoading()
       this.$destroyLoading()

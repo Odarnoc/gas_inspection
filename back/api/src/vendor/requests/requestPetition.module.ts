@@ -4,6 +4,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { RequestPetitionController } from './requestPetition.controller';
 import { RequestPetitionService } from './requestPetition.service';
 import { RequestPetition } from './entities/requestPetition.entity';
+import { RequestPetitionLogsModule } from 'src/log/request-petition/request-petition-logs.module';
 
 @Module({
   controllers: [RequestPetitionController],
@@ -11,6 +12,7 @@ import { RequestPetition } from './entities/requestPetition.entity';
   imports: [
     TypeOrmModule.forFeature([RequestPetition]),
     forwardRef(() => AuthModule),
+    forwardRef(() => RequestPetitionLogsModule),
   ],
   exports: [TypeOrmModule, RequestPetitionService],
 })
