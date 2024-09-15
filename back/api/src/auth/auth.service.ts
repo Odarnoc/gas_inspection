@@ -22,6 +22,7 @@ import { getOrderBy } from 'src/common/helpers/pagination';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ViewUserInspectorOptions } from './entities/userInspectorOptions.view.entity';
 import { TypesRol } from 'src/common/glob/types';
+import { ViewUserInstalatorOptions } from './entities/userInstalatorOptions.view.entity';
 
 @Injectable()
 export class AuthService {
@@ -33,6 +34,9 @@ export class AuthService {
 
     @InjectRepository(ViewUserInspectorOptions)
     private readonly viewUserInspectorOptionsRepository: Repository<ViewUserInspectorOptions>,
+
+    @InjectRepository(ViewUserInstalatorOptions)
+    private readonly viewUserInstalatorOptionsRepository: Repository<ViewUserInstalatorOptions>,
 
     private readonly jwtService: JwtService,
 
@@ -271,6 +275,10 @@ export class AuthService {
 
   async getInspectorOptions() {
     return await this.viewUserInspectorOptionsRepository.find();
+  }
+
+  async getInstalatorOptions() {
+    return await this.viewUserInstalatorOptionsRepository.find();
   }
 
   private _getJwtToken(jwtpayload: JwtPayload) {

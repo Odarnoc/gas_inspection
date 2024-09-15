@@ -132,7 +132,7 @@ export default {
       this.$destroyLoading()
     },
     editSelectedRow (id) {
-      this.$router.push(`/request/edit/${this.$encode(id)}`)
+      this.$router.push(`/request/approved/${this.$encode(id)}`)
     },
     async deleteSelectedRow (id) {
       if (!(await this.$confirmDialog(this.$t('dialogs.deleteProyectType')))) {

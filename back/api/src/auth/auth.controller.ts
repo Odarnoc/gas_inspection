@@ -79,4 +79,9 @@ export class AuthController {
   getInspectorOptions() {
     return this.authService.getInspectorOptions();
   }
+
+  @Get('getInstalatorOptions')
+  getInstalatorOptions() {
+    return this.authService.getInstalatorOptions();
+  }
 }

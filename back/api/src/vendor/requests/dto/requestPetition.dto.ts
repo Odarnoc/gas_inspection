@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { ProyectType } from 'src/admin/user-type/entities/proyectType.entity';
 import { User } from 'src/auth/entities/user.entity';
+import { StatusOrder } from 'src/common/glob/status';
 import { Location } from 'src/common/interfaces/location.interface';
 
 export class CreateRequestPetitionDto {
@@ -19,7 +20,7 @@ export class CreateRequestPetitionDto {
 
   @IsNumber()
   @IsOptional()
-  status?: number;
+  status?: number = StatusOrder.assigned;
 
   @IsString()
   @IsOptional()
@@ -124,10 +125,13 @@ export class CreateRequestPetitionDto {
   @Type(() => ProyectType)
   proyectType?: ProyectType;
 
-  @IsObject()
   @IsOptional()
   @Type(() => User)
   inspector?: User;
+
+  @IsOptional()
+  @Type(() => User)
+  instalator?: User;
 
   @IsString()
   @IsOptional()

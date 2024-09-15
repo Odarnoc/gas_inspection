@@ -989,6 +989,13 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@dotsoftware/vue-google-maps-community-fork@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/@dotsoftware/vue-google-maps-community-fork/-/vue-google-maps-community-fork-0.4.0.tgz"
+  integrity sha512-BiZv/48DV/7OPv66aj9rqkVPoR+qi6LfwRiSYkVnEOnJ6lwfoKw501CCqzJBscX67NFs5rEPaT6MlqAUFIhO/Q==
+  dependencies:
+    "@googlemaps/markerclusterer" "^2.0.3"
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-0.4.3.tgz"
@@ -1003,13 +1010,6 @@
     js-yaml "^3.13.1"
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
-
-"@fawmi/vue-google-maps@^0.9.79":
-  version "0.9.79"
-  resolved "https://registry.npmjs.org/@fawmi/vue-google-maps/-/vue-google-maps-0.9.79.tgz"
-  integrity sha512-SnITonfrBfT/7uESF8SCs1DRWHSJyr/K0bPv9taONAUp/YiggmlwHOwAzA63UeDl8vP0bBmT56MYC1bZmAdUjQ==
-  dependencies:
-    "@googlemaps/markerclusterer" "^2.0.3"
 
 "@firebase/analytics-compat@0.1.17":
   version "0.1.17"
@@ -3007,9 +3007,9 @@ crc32-stream@^4.0.2:
     readable-stream "^3.4.0"
 
 cropperjs@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/cropperjs/-/cropperjs-1.6.1.tgz#fd132021d93b824b1b0f2c2c3b763419fb792d89"
-  integrity sha512-F4wsi+XkDHCOMrHMYjrTEE4QBOrsHHN5/2VsVAaRq8P7E5z7xQpT75S+f/9WikmBEailas3+yo+6zPIomW+NOA==
+  version "1.6.2"
+  resolved "https://registry.npmjs.org/cropperjs/-/cropperjs-1.6.2.tgz"
+  integrity sha512-nhymn9GdnV3CqiEHJVai54TULFAE3VshJTXSqSJKa8yXAKyBKDWdhHarnlIPrshJ0WMFTGuFvG02YjLXfPiuOA==
 
 cross-spawn@7.0.3, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
   version "7.0.3"
@@ -7095,6 +7095,13 @@ vue-eslint-parser@^7.10.0:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^6.3.0"
+
+vue-google-maps-community-fork@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/vue-google-maps-community-fork/-/vue-google-maps-community-fork-0.3.1.tgz#444ae284c2d18f5dc855b8d03a4246592bde6006"
+  integrity sha512-RcnpQZdv/aXf6Aeuq+hWdtwZaC4HRgXBY+S59QpbozgVIK4MHp23zbAQjpJ/zzG/B0e7BL91UIa8psuwbPBZQA==
+  dependencies:
+    "@googlemaps/markerclusterer" "^2.0.3"
 
 vue-i18n@^9.0.0:
   version "9.1.9"

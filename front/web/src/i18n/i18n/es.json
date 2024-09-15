@@ -7,6 +7,7 @@
   "no_data": "Datos no disponibles",
   "rows_per_page_label": "Registros por página",
   "no_results": "No se encontraron resultados",
+  "no_documents": "No se encontraron documentos",
   "menus": {
     "menu": "Menú",
     "profile": "Perfil",
@@ -62,7 +63,11 @@
     "user": "Usuario",
     "eventType": "Tipo de evento",
     "log": "Detalles",
-    "extraDetails": "Detalles extra"
+    "extraDetails": "Detalles extra",
+    "extraInfo": "Información adicional",
+    "observations": "Observaciones",
+    "isometric": "Isométrico",
+    "floorPlan": "Plano de planta"
   },
   "buttons": {
     "log_in": "Iniciar sesión",
@@ -79,7 +84,9 @@
     "upload_image": "Subir imagen",
     "close": "Cerrar",
     "saveAndReassign": "Guardar y reasignar",
-    "reject": "Rechazar"
+    "saveAndassign": "Guardar y asignar",
+    "reject": "Rechazar",
+    "delete": "Eliminar"
   },
   "dialogs": {
     "loading": "Cargando",
@@ -109,6 +116,7 @@
   },
   "validations": {
     "invalid_format": {
+      "color": "Color invalido",
       "email": "Correo electrónico invalido",
       "field_alpha": "El campo sólo permite letras",
       "field_numeric": "El campo solo debe tener números",

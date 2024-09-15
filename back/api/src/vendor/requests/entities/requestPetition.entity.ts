@@ -112,8 +112,15 @@ export class RequestPetition {
 
   @ManyToOne(() => User, (user) => user.requests, {
     onDelete: 'SET NULL',
+    nullable: true,
   })
   inspector: User;
+
+  @ManyToOne(() => User, (user) => user.requestsInstalator, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  instalator: User;
 
   @OneToMany(
     () => RequestDocuments,

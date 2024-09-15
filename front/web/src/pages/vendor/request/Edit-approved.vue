@@ -6,7 +6,7 @@
       <div class="row bg-white border-panel q-pa-md">
         <div class="col-3" />
         <div class="col-12">
-          <form-request ref="documentForm" edit_flag />
+          <form-request-approved ref="documentForm" edit_flag />
         </div>
         <div class="col-12" v-if="isometric || floorPlan">
           <q-carousel swipeable animated arrows v-model="slide" infinite>
@@ -27,28 +27,20 @@
         <div class="col-12">
           <q-btn color="warning" icon="photo_camera" @click="showExtraDocuments" />
           <q-btn
-            v-if="status == statusOrder.observed"
+            v-if="status == statusOrder.inspectionAproved"
             class="float-right q-mr-md"
             color="primary"
             icon="save"
-            :label="$t('buttons.saveAndReassign')"
-            @click="saveAndReassign"
+            :label="$t('buttons.saveAndassign')"
+            @click="saveAndAssign"
           />
           <q-btn
-            v-if="status != statusOrder.rejected"
+            v-if="status == statusOrder.inspectionAproved"
             class="float-right q-mr-md"
             color="secondary"
             icon="save"
             :label="$t('buttons.update')"
             @click="save"
-          />
-          <q-btn
-            v-if="status == statusOrder.observed"
-            class="float-right q-mr-md"
-            color="negative"
-            icon="delete"
-            :label="$t('buttons.reject')"
-            @click="reject"
           />
         </div>
       </div>
@@ -105,12 +97,13 @@ export default {
   created () {
     self = this
     self.id = this.$decode(this.$route.params.id)
+  },
+  mounted () {
     self.fetchFromServer()
   },
-  mounted () {},
   computed: {
     breadCrumRoutes () {
-      return [self.$t('menus.requests'), self.$t('buttons.edit')]
+      return [self.$t('menus.requests'), self.$t('buttons.approved')]
     }
   },
   methods: {
@@ -157,7 +150,7 @@ export default {
       self.$destroyLoading()
       self.loading = false
     },
-    async saveAndReassign () {
+    async saveAndAssign () {
       self.loading = true
       self.$showLoading()
       const formResult = await self.$refs.documentForm.getData()
@@ -168,32 +161,8 @@ export default {
       }
       const params = {
         ...formResult.params,
-        status: statusOrder.assigned,
-        log: 'Se reasigno el proyecto a inspección'
-      }
-      try {
-        const response = await self.update(params)
-        this.$showNotifySuccess(response)
-        await self.fetchFromServer()
-      } catch (error) {
-        this.$showNotifyError(error)
-      }
-      self.$destroyLoading()
-      self.loading = false
-    },
-    async reject () {
-      self.loading = true
-      self.$showLoading()
-      const formResult = await self.$refs.documentForm.getData()
-      if (!formResult.isValid) {
-        self.loading = false
-        self.$destroyLoading()
-        return
-      }
-      const params = {
-        ...formResult.params,
-        status: statusOrder.rejected,
-        log: 'Se rechazo el proyecto'
+        status: statusOrder.instalationAssigned,
+        log: 'Se asigno el proyecto a instalación'
       }
       try {
         const response = await self.update(params)

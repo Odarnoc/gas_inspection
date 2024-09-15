@@ -17,6 +17,7 @@ import { ProyectTypeModule } from './admin/user-type/proyectType.module';
 import { RequestPetitionModule } from './vendor/requests/requestPetition.module';
 import { RequestDocumentsModule } from './vendor/requestDocuments/requestDocuments.module';
 import { RequestPetitionLogsModule } from './log/request-petition/request-petition-logs.module';
+import { CovergeLinesModule } from './admin/coverage-map/covergeLines.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { RequestPetitionLogsModule } from './log/request-petition/request-petiti
     RequestPetitionModule,
     RequestDocumentsModule,
     RequestPetitionLogsModule,
+    CovergeLinesModule,
   ],
   providers: [],
 })

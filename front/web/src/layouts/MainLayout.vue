@@ -67,7 +67,7 @@
           </q-item-section>
         </q-item>
         <q-separator />
-        <q-item to="/coverage_map" v-if="$hasRoles([$typesRol.admin])">
+        <q-item to="/coverageMap" v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="map" />
           </q-item-section>

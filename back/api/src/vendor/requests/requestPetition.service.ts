@@ -69,6 +69,7 @@ export class RequestPetitionService {
       relations: {
         proyectType: true,
         inspector: true,
+        instalator: true,
       },
       where: { id },
     });

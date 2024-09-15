@@ -422,6 +422,21 @@
         </GMapMap>
       </div>
     </div>
+    <div class="row q-col-gutter-xs" v-if="user.fields.observations">
+      <div class="col-12">
+        <q-input
+          readonly
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
+          type="textarea"
+          v-model="user.fields.observations"
+          :label="$t('fields.observations')"
+        />
+      </div>
+    </div>
     <br />
     <slot name="actions"></slot>
   </q-form>
@@ -429,6 +444,7 @@
 
 <script>
 import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
+import { statusOrder } from 'src/commons/status'
 import { mapActions } from 'vuex'
 
 let self
@@ -461,7 +477,7 @@ export default {
           limitDate: '',
           proyectType: null,
           inspector: null,
-          status: null,
+          status: statusOrder.assigned,
           observations: ''
         }
       },

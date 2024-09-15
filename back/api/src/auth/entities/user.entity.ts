@@ -69,6 +69,12 @@ export class User {
   })
   requests?: RequestPetition[];
 
+  @OneToMany(() => RequestPetition, (request) => request.instalator, {
+    cascade: true,
+    eager: false,
+  })
+  requestsInstalator?: RequestPetition[];
+
   @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 

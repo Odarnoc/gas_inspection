@@ -81,6 +81,10 @@ export default {
     getInspectorOptions: async (context, showAll) => {
       const response = await api.get(`${apiRoot}/getInspectorOptions`)
       return response
+    },
+    getInstalatorOptions: async (context, showAll) => {
+      const response = await api.get(`${apiRoot}/getInstalatorOptions`)
+      return response
     }
   },
   getters: {

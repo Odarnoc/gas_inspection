@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import VueGoogleMaps from '@fawmi/vue-google-maps'
+import VueGoogleMaps from 'vue-google-maps-community-fork'
 
 export default boot(({ app }) => {
   app.use(VueGoogleMaps, {
