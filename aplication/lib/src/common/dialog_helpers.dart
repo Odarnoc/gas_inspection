@@ -47,7 +47,10 @@ showSuccessSnackBar(String message) {
     ..showSnackBar(SnackBar(
       duration: const Duration(seconds: 5),
       backgroundColor: kPositiveColor,
-      content: Text(message),
+      content: Text(
+        message,
+        style: const TextStyle(color: Colors.black),
+      ),
     ));
 }
 

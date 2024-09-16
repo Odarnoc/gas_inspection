@@ -37,6 +37,20 @@ class InspectionsScreen extends StatelessWidget {
                 itemBuilder: (ctx) => [
                   PopupMenuItem(
                     onTap: () {
+                      inspectionsController.loadRequestPetitions();
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.replay_outlined,
+                          color: Colors.black,
+                        ),
+                        Text(S.of(context).bReload),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
                       final navigator = Navigator.of(context);
 
                       pref.clean();

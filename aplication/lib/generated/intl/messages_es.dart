@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bRecoverAccount":
             MessageLookupByLibrary.simpleMessage("Recuperar cuenta"),
         "bReject": MessageLookupByLibrary.simpleMessage("Rechazar"),
+        "bReload": MessageLookupByLibrary.simpleMessage("Refrescar"),
         "bReturn": MessageLookupByLibrary.simpleMessage("Regresar"),
         "bSaveChanges": MessageLookupByLibrary.simpleMessage("Guardar"),
         "bSelectPhoto":
@@ -70,11 +71,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "lAssignedDate":
             MessageLookupByLibrary.simpleMessage("Fecha de asignación"),
         "lClient": MessageLookupByLibrary.simpleMessage("Cliente"),
+        "lFloorPlan": MessageLookupByLibrary.simpleMessage("Plano de planta"),
         "lForgetYourPassword":
             MessageLookupByLibrary.simpleMessage("¿Olvidaste tu contraseña?"),
         "lId": MessageLookupByLibrary.simpleMessage("ID"),
         "lInternalInspections":
             MessageLookupByLibrary.simpleMessage("Inspecciones internas"),
+        "lIsometric": MessageLookupByLibrary.simpleMessage("Isométrico"),
         "lLastName": MessageLookupByLibrary.simpleMessage("Apellido"),
         "lLoadSuccess": MessageLookupByLibrary.simpleMessage("Carga exitosa"),
         "lName": MessageLookupByLibrary.simpleMessage("Nombre"),

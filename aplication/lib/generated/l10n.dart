@@ -580,6 +580,26 @@ class S {
     );
   }
 
+  /// `Isométrico`
+  String get lIsometric {
+    return Intl.message(
+      'Isométrico',
+      name: 'lIsometric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plano de planta`
+  String get lFloorPlan {
+    return Intl.message(
+      'Plano de planta',
+      name: 'lFloorPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Seleccione una foto`
   String get bSelectPhoto {
     return Intl.message(
@@ -645,6 +665,16 @@ class S {
     return Intl.message(
       'Observaciones',
       name: 'lObservations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refrescar`
+  String get bReload {
+    return Intl.message(
+      'Refrescar',
+      name: 'bReload',
       desc: '',
       args: [],
     );

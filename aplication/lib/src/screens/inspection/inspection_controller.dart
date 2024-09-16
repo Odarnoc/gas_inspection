@@ -2,11 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mikinder/constants/glob_keys.dart';
 import 'package:mikinder/constants/status_constant.dart';
 import 'package:mikinder/generated/l10n.dart';
+import 'package:mikinder/services/coverage_map_service.dart';
 import 'package:mikinder/services/request_document_service.dart';
 import 'package:mikinder/services/request_petition_service.dart';
 import 'package:mikinder/src/common/dialog_helpers.dart';
+import 'package:mikinder/src/common/extensions/HexColor.dart';
+import 'package:mikinder/src/models/coverage_lines_model.dart';
 import 'package:mikinder/src/models/request_document_model.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
 
@@ -15,6 +19,7 @@ class InspectionController extends ChangeNotifier {
       RequestPetitionService();
   final RequestDocumentService requestDocumentService =
       RequestDocumentService();
+  final CoveageMapService coveageMapService = CoveageMapService();
 
   Completer<GoogleMapController> _completer = Completer();
   late CameraPosition initialCameraPosition;
@@ -110,6 +115,7 @@ class InspectionController extends ChangeNotifier {
         target: LatLng(requestPetition.location.x, requestPetition.location.y),
         zoom: 16);
     addMarker(LatLng(requestPetition.location.x, requestPetition.location.y));
+    loadLines();
   }
 
   onMapCreated(GoogleMapController controller, BuildContext context) async {
@@ -117,19 +123,25 @@ class InspectionController extends ChangeNotifier {
     _completer.complete(controller);
   }
 
-  void addPolylines() {
-    const PolylineId polylineId = PolylineId('polyline_id_1');
+  Future<void> loadLines() async {
+    inAsyncCall = true;
+    final lines = await coveageMapService.getLines();
+    for (var element in lines) {
+      addPolylines(element);
+    }
+    inAsyncCall = false;
+    notifyListeners();
+  }
+
+  void addPolylines(CoverageLinesModel line) {
+    PolylineId polylineId = PolylineId('polyline_id_${line.id}');
 
     final Polyline polyline = Polyline(
       polylineId: polylineId,
-      consumeTapEvents: true,
-      color: Colors.lightGreenAccent[400]!,
+      consumeTapEvents: false,
+      color: HexColor.fromHex(line.color),
       width: 5,
-      points: const [
-        LatLng(-16.504082, -68.133658),
-        LatLng(-16.505296, -68.131790),
-        LatLng(-16.505576, -68.131448),
-      ],
+      points: line.line.map((e) => LatLng(e.lat, e.lng)).toList(),
     );
 
     _polylines[polylineId] = polyline;
@@ -145,8 +157,7 @@ class InspectionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateUrlIsometric(
-      BuildContext context, String imageUploadUrl, int id) async {
+  updateUrlIsometric(String imageUploadUrl, int id) async {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
         .updateRequestPetition({
@@ -155,15 +166,14 @@ class InspectionController extends ChangeNotifier {
       'log': 'Se cargo isométrico'
     });
     if (newRequestPetitionModel != null) {
-      showSuccessSnackBar(S.of(context).lLoadSuccess);
+      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
       _requestPetition.isometric = imageUploadUrl;
       notifyListeners();
     }
     inAsyncCall = false;
   }
 
-  updateUrlFloorPlan(
-      BuildContext context, String imageUploadUrl, int id) async {
+  updateUrlFloorPlan(String imageUploadUrl, int id) async {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
         .updateRequestPetition({
@@ -172,7 +182,7 @@ class InspectionController extends ChangeNotifier {
       'log': 'Se cargo plano de planta'
     });
     if (newRequestPetitionModel != null) {
-      showSuccessSnackBar(S.of(context).lLoadSuccess);
+      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
       _requestPetition.floorPlan = imageUploadUrl;
       notifyListeners();
     }

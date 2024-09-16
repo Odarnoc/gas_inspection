@@ -52,11 +52,14 @@
   "bAprove": "Aprobar",
   "bUploadIsometric": "Cargar isométrico",
   "bUploadFloorPlan": "Cargar plano de planta",
+  "lIsometric": "Isométrico",
+  "lFloorPlan": "Plano de planta",
   "bSelectPhoto": "Seleccione una foto",
   "bTakePhoto": "Tomar una foto",
   "lLoadSuccess": "Carga exitosa",
   "lUpdateSuccess": "Actualización exitosa",
   "bDelete": "Eliminar",
   "bNext": "Continuar",
-  "lObservations": "Observaciones"
+  "lObservations": "Observaciones",
+  "bReload": "Refrescar"
 }
