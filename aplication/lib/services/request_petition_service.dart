@@ -13,6 +13,8 @@ import 'package:mikinder/src/providers/preferences_provider.dart';
 const _urlUpdate = 'requestPetition/update';
 const _urlGetPreinspections = 'requestPetition/getPreinspections';
 const _urlGetInternalInspections = 'requestPetition/getInternalInspections';
+const _urlGetInstalations = 'requestPetition/getInstalations';
+const _urlGetReasignedInstalations = 'requestPetition/getReasignedInstalations';
 
 class RequestPetitionService {
   final prefs = PreferencesProvider();
@@ -60,6 +62,76 @@ class RequestPetitionService {
     try {
       final resp = await client.get(
         Uri.parse('$kDomain$_urlGetInternalInspections'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      Map<String, dynamic> decodedResp = json.decode(resp.body);
+      for (var item in decodedResp['data']) {
+        requests.add(RequestPetitionModel.fromJson(item));
+      }
+      return requests;
+    } on BadRequestException {
+      if (kDebugMode) {
+        print(
+            'RequestPetitionService getInternalInspections: BadRequestException');
+      }
+    } catch (err) {
+      showErrorUknown();
+      if (kDebugMode) {
+        print('RequestPetitionService getInternalInspections: $err');
+      }
+    } finally {
+      client.close();
+    }
+    return requests;
+  }
+
+  Future<List<RequestPetitionModel>> getInstalations() async {
+    List<RequestPetitionModel> requests = [];
+    final client = InterceptedClient.build(interceptors: [
+      LoggerInterceptor(),
+      GeneralInterceptor(),
+    ]);
+    try {
+      final resp = await client.get(
+        Uri.parse('$kDomain$_urlGetInstalations'),
+        headers: {
+          'Authorization': 'Bearer ${prefs.token}',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      Map<String, dynamic> decodedResp = json.decode(resp.body);
+      for (var item in decodedResp['data']) {
+        requests.add(RequestPetitionModel.fromJson(item));
+      }
+      return requests;
+    } on BadRequestException {
+      if (kDebugMode) {
+        print(
+            'RequestPetitionService getInternalInspections: BadRequestException');
+      }
+    } catch (err) {
+      showErrorUknown();
+      if (kDebugMode) {
+        print('RequestPetitionService getInternalInspections: $err');
+      }
+    } finally {
+      client.close();
+    }
+    return requests;
+  }
+
+  Future<List<RequestPetitionModel>> getReasignedInstalations() async {
+    List<RequestPetitionModel> requests = [];
+    final client = InterceptedClient.build(interceptors: [
+      LoggerInterceptor(),
+      GeneralInterceptor(),
+    ]);
+    try {
+      final resp = await client.get(
+        Uri.parse('$kDomain$_urlGetReasignedInstalations'),
         headers: {
           'Authorization': 'Bearer ${prefs.token}',
           'Content-Type': 'application/json; charset=UTF-8',

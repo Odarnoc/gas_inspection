@@ -214,6 +214,50 @@ class InspectionController extends ChangeNotifier {
     return isSuccess;
   }
 
+  Future<bool> internalApproveProyect(BuildContext context, int id) async {
+    bool isSuccess = false;
+    inAsyncCall = true;
+    RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
+        .updateRequestPetition({
+      'status': StatusProyect.done,
+      'id': id,
+      'log': 'Se finalizo el proyecto'
+    });
+    if (newRequestPetitionModel != null) {
+      isSuccess = true;
+      _requestPetition.minimumVolume = checkbox1;
+      _requestPetition.airSupply = checkbox2;
+      _requestPetition.airOutlet = checkbox3;
+      _requestPetition.rapidAeration = checkbox4;
+      notifyListeners();
+    }
+    inAsyncCall = false;
+    return isSuccess;
+  }
+
+  Future<bool> updateProyect() async {
+    bool isSuccess = false;
+    inAsyncCall = true;
+    RequestPetitionModel? newRequestPetitionModel =
+        await requestPetitionService.updateRequestPetition({
+      'minimumVolume': checkbox1,
+      'airSupply': checkbox2,
+      'airOutlet': checkbox3,
+      'rapidAeration': checkbox4,
+      'id': requestPetition.id,
+    });
+    if (newRequestPetitionModel != null) {
+      isSuccess = true;
+      _requestPetition.minimumVolume = checkbox1;
+      _requestPetition.airSupply = checkbox2;
+      _requestPetition.airOutlet = checkbox3;
+      _requestPetition.rapidAeration = checkbox4;
+      notifyListeners();
+    }
+    inAsyncCall = false;
+    return isSuccess;
+  }
+
   Future<bool> rejectProyect() async {
     bool isSuccess = false;
     inAsyncCall = true;
@@ -223,6 +267,27 @@ class InspectionController extends ChangeNotifier {
       'observations': observations,
       'status': StatusProyect.observed,
       'log': 'Se agregaron observaciones de inspección'
+    });
+    if (newRequestPetitionModel != null) {
+      isSuccess = true;
+      _requestPetition.minimumVolume = checkbox1;
+      _requestPetition.airSupply = checkbox2;
+      _requestPetition.airOutlet = checkbox3;
+      _requestPetition.rapidAeration = checkbox4;
+      notifyListeners();
+    }
+    inAsyncCall = false;
+    return isSuccess;
+  }
+
+  Future<bool> internalRejectProyect() async {
+    bool isSuccess = false;
+    inAsyncCall = true;
+    RequestPetitionModel? newRequestPetitionModel =
+        await requestPetitionService.updateRequestPetition({
+      'id': requestPetition.id,
+      'status': StatusProyect.instalationReassigned,
+      'log': 'La inspección interna se ha reasignado a instalador'
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;

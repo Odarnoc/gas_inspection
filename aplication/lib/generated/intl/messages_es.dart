@@ -43,6 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recuperar cuenta"),
         "bReject": MessageLookupByLibrary.simpleMessage("Rechazar"),
         "bReload": MessageLookupByLibrary.simpleMessage("Refrescar"),
+        "bRequestInspection":
+            MessageLookupByLibrary.simpleMessage("Solicitar inspección"),
         "bReturn": MessageLookupByLibrary.simpleMessage("Regresar"),
         "bSaveChanges": MessageLookupByLibrary.simpleMessage("Guardar"),
         "bSelectPhoto":
@@ -50,12 +52,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "bSignin": MessageLookupByLibrary.simpleMessage("Iniciar sesión"),
         "bSignup": MessageLookupByLibrary.simpleMessage("Registrate aqui"),
         "bTakePhoto": MessageLookupByLibrary.simpleMessage("Tomar una foto"),
+        "bUpdate": MessageLookupByLibrary.simpleMessage("Actualizar"),
         "bUpload": MessageLookupByLibrary.simpleMessage("Subir"),
         "bUploadFloorPlan":
             MessageLookupByLibrary.simpleMessage("Cargar plano de planta"),
         "bUploadIsometric":
             MessageLookupByLibrary.simpleMessage("Cargar isométrico"),
         "bView": MessageLookupByLibrary.simpleMessage("Ver"),
+        "bViewFloorPlan":
+            MessageLookupByLibrary.simpleMessage("Ver plano de planta"),
+        "bViewIsometric":
+            MessageLookupByLibrary.simpleMessage("Ver isométrico"),
         "bYes": MessageLookupByLibrary.simpleMessage("Si"),
         "eValidatoCharacters": m0,
         "eValidatoEmail": MessageLookupByLibrary.simpleMessage(
@@ -68,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Verifica la contraseña"),
         "lActions": MessageLookupByLibrary.simpleMessage("Acciones"),
         "lAdrreess": MessageLookupByLibrary.simpleMessage("Dirección"),
+        "lAsignedProyects":
+            MessageLookupByLibrary.simpleMessage("Proyectos asignados"),
         "lAssignedDate":
             MessageLookupByLibrary.simpleMessage("Fecha de asignación"),
         "lClient": MessageLookupByLibrary.simpleMessage("Cliente"),
@@ -92,6 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Datos del proyecto"),
         "lProyectType":
             MessageLookupByLibrary.simpleMessage("Tipo de proyecto"),
+        "lReasignedProyects":
+            MessageLookupByLibrary.simpleMessage("Proyectos reasignados"),
         "lSearch": MessageLookupByLibrary.simpleMessage("Buscar"),
         "lUpdateSuccess":
             MessageLookupByLibrary.simpleMessage("Actualización exitosa"),

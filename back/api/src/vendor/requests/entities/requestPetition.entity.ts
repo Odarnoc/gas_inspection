@@ -1,5 +1,5 @@
 import { IsPositive } from 'class-validator';
-import { ProyectType } from 'src/admin/user-type/entities/proyectType.entity';
+import { ProyectType } from 'src/admin/proyectType/entities/proyectType.entity';
 import {
   Column,
   CreateDateColumn,

@@ -102,4 +102,16 @@ export class RequestPetitionController {
   getInternalInspections(@GetUser() user: User) {
     return this.userTypeService.getInternalInspections(user);
   }
+
+  @Get('getInstalations')
+  @Auth()
+  getInstalations(@GetUser() user: User) {
+    return this.userTypeService.getInstalations(user);
+  }
+
+  @Get('getReasignedInstalations')
+  @Auth()
+  getReasignedInstalations(@GetUser() user: User) {
+    return this.userTypeService.getReasignedInstalations(user);
+  }
 }

@@ -3,9 +3,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/constants/glob_keys.dart' as global;
+import 'package:mikinder/constants/types_constants.dart';
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/providers/preferences_provider.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
+import 'package:mikinder/src/screens/instalations/instalations_screen.dart';
 import 'package:mikinder/src/screens/login/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (BuildContext context) => const LoginScreen(),
         'inspections': (BuildContext context) => InspectionsScreen(),
+        'instalations': (BuildContext context) => InstalationsScreen(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -58,6 +61,9 @@ class MyApp extends StatelessWidget {
 
   String getInitialRoute() {
     if (pref.isAuth) {
+      if (pref.user.roles.contains(TypesRol.instalator)) {
+        return 'instalations';
+      }
       return 'inspections';
     }
 

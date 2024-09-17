@@ -37,6 +37,8 @@
   "lActions": "Acciones",
   "lPreinspections": "Preinspecciones",
   "lInternalInspections": "Inspecciones internas",
+  "lAsignedProyects": "Proyectos asignados",
+  "lReasignedProyects": "Proyectos reasignados",
   "lName": "Nombre",
   "lLastName": "Apellido",
   "lPhone": "Teléfono",
@@ -52,6 +54,8 @@
   "bAprove": "Aprobar",
   "bUploadIsometric": "Cargar isométrico",
   "bUploadFloorPlan": "Cargar plano de planta",
+  "bViewIsometric": "Ver isométrico",
+  "bViewFloorPlan": "Ver plano de planta",
   "lIsometric": "Isométrico",
   "lFloorPlan": "Plano de planta",
   "bSelectPhoto": "Seleccione una foto",
@@ -61,5 +65,7 @@
   "bDelete": "Eliminar",
   "bNext": "Continuar",
   "lObservations": "Observaciones",
-  "bReload": "Refrescar"
+  "bReload": "Refrescar",
+  "bRequestInspection": "Solicitar inspección",
+  "bUpdate": "Actualizar"
 }

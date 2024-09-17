@@ -3,46 +3,48 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mikinder/constants/status_constant.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
-import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons.dart';
-import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons2.dart';
-import 'package:mikinder/src/screens/inspection/widgets/internal_specific_files_accion_buttons.dart';
-import 'package:mikinder/src/screens/inspection/widgets/proyect_infomation_card.dart';
-import 'package:mikinder/src/screens/inspection/widgets/specific_files_accion_buttons.dart';
-import 'package:mikinder/src/screens/inspection/widgets/user_infomation_card.dart';
-import 'package:mikinder/src/screens/inspections/inspections_controller.dart';
+import 'package:mikinder/src/screens/instalation/widgets/specific_files_accion_buttons.dart';
+import 'package:mikinder/src/screens/instalation/widgets/user_infomation_card.dart';
+import 'package:mikinder/src/screens/instalation/instalation_controller.dart';
+import 'package:mikinder/src/screens/instalation/widgets/bottom_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
-import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
-import 'package:mikinder/src/screens/inspection/widgets/bottom_accion_buttons.dart';
+import 'package:mikinder/src/screens/instalations/instalations_screen.dart';
 import 'package:provider/provider.dart';
 
-class InspectionScreen extends StatelessWidget {
-  const InspectionScreen({
+class InstalationScreen extends StatelessWidget {
+  const InstalationScreen({
     super.key,
     required this.requestPetition,
-    required this.inspectionsController,
   });
 
   final RequestPetitionModel requestPetition;
-  final InspectionsController inspectionsController;
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<InspectionController>.value(
-      value: InspectionController(requestPetition),
-      child: Consumer<InspectionController>(
-        builder: (context, inspectionController, child) => SafeArea(
+    return ChangeNotifierProvider<InstalationController>.value(
+      value: InstalationController(requestPetition),
+      child: Consumer<InstalationController>(
+        builder: (context, instalationController, child) => SafeArea(
           child: Scaffold(
             appBar: AppBar(
               backgroundColor: kFourthColor,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => InstalationsScreen()),
+                    (Route<dynamic> route) {
+                  return false;
+                }),
+              ),
             ),
             backgroundColor: kThridColor,
             body: SingleChildScrollView(
               child: Column(
                 children: [
                   UserInformationCard(
-                      inspectionController: inspectionController),
+                      instalationController: instalationController),
                   Stack(
                     children: [
                       Container(
@@ -62,14 +64,14 @@ class InspectionScreen extends StatelessWidget {
                           mapToolbarEnabled: false,
                           mapType: MapType.normal,
                           buildingsEnabled: false,
-                          markers: inspectionController.markers,
+                          markers: instalationController.markers,
                           polylines: {
-                            ...inspectionController.polylines,
+                            ...instalationController.polylines,
                           },
                           initialCameraPosition:
-                              inspectionController.initialCameraPosition,
+                              instalationController.initialCameraPosition,
                           onMapCreated: (googleMapController) async {
-                            await inspectionController.onMapCreated(
+                            await instalationController.onMapCreated(
                                 googleMapController, context);
                           },
                           myLocationEnabled: false,
@@ -81,45 +83,11 @@ class InspectionScreen extends StatelessWidget {
                       // FloatingMyLocationButton(demoController: demoController),
                     ],
                   ),
-                  ProyectInformationCard(
-                      inspectionController: inspectionController),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.assigned,
-                    child: SpecificActionsActionButtons(
-                      inspectionController: inspectionController,
-                    ),
+                  SpecificActionsActionButtons(
+                    instalationController: instalationController,
                   ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.assigned,
-                    child: BottomActionButtons(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalSpecificActionsActionButtons(
-                      inspectionController: inspectionController,
-                    ),
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalBottomActionButtons(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalBottomActionButtons2(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
+                  BottomActionButtons(
+                    instalationController: instalationController,
                   ),
                 ],
               ),

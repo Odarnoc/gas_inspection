@@ -430,6 +430,26 @@ class S {
     );
   }
 
+  /// `Proyectos asignados`
+  String get lAsignedProyects {
+    return Intl.message(
+      'Proyectos asignados',
+      name: 'lAsignedProyects',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Proyectos reasignados`
+  String get lReasignedProyects {
+    return Intl.message(
+      'Proyectos reasignados',
+      name: 'lReasignedProyects',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Nombre`
   String get lName {
     return Intl.message(
@@ -580,6 +600,26 @@ class S {
     );
   }
 
+  /// `Ver isométrico`
+  String get bViewIsometric {
+    return Intl.message(
+      'Ver isométrico',
+      name: 'bViewIsometric',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ver plano de planta`
+  String get bViewFloorPlan {
+    return Intl.message(
+      'Ver plano de planta',
+      name: 'bViewFloorPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Isométrico`
   String get lIsometric {
     return Intl.message(
@@ -675,6 +715,26 @@ class S {
     return Intl.message(
       'Refrescar',
       name: 'bReload',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Solicitar inspección`
+  String get bRequestInspection {
+    return Intl.message(
+      'Solicitar inspección',
+      name: 'bRequestInspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Actualizar`
+  String get bUpdate {
+    return Intl.message(
+      'Actualizar',
+      name: 'bUpdate',
       desc: '',
       args: [],
     );

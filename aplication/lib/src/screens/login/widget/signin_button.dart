@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mikinder/constants/types_constants.dart';
 import 'package:mikinder/generated/l10n.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
+import 'package:mikinder/src/screens/instalations/instalations_screen.dart';
 import 'package:mikinder/src/screens/login/access_controller.dart';
 import 'package:mikinder/src/widgets/primary_button.dart';
 
@@ -25,11 +27,19 @@ class SigninButton extends StatelessWidget {
 
         final response = await accessController.signin();
         if (response != null) {
-          navigator.pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => InspectionsScreen()),
-              (Route<dynamic> route) {
-            return false;
-          });
+          if (accessController.prefs.user.roles.contains(TypesRol.instalator)) {
+            navigator.pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => InstalationsScreen()),
+                (Route<dynamic> route) {
+              return false;
+            });
+          } else {
+            navigator.pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => InspectionsScreen()),
+                (Route<dynamic> route) {
+              return false;
+            });
+          }
         }
       },
     );

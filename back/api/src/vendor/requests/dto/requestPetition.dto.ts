@@ -8,9 +8,8 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ProyectType } from 'src/admin/user-type/entities/proyectType.entity';
+import { ProyectType } from 'src/admin/proyectType/entities/proyectType.entity';
 import { User } from 'src/auth/entities/user.entity';
-import { StatusOrder } from 'src/common/glob/status';
 import { Location } from 'src/common/interfaces/location.interface';
 
 export class CreateRequestPetitionDto {
@@ -20,7 +19,7 @@ export class CreateRequestPetitionDto {
 
   @IsNumber()
   @IsOptional()
-  status?: number = StatusOrder.assigned;
+  status?: number;
 
   @IsString()
   @IsOptional()

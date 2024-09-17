@@ -46,7 +46,7 @@ class RejectDialog extends StatelessWidget {
             final navigator = Navigator.of(context);
             bool result = await inspectionController.rejectProyect();
             if (!result) return;
-            Navigator.of(context).pushAndRemoveUntil(
+            navigator.pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => InspectionsScreen()),
                 (Route<dynamic> route) {
               return false;

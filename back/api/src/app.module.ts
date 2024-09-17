@@ -13,7 +13,7 @@ import {
   QueryResolver,
 } from 'nestjs-i18n';
 import { join } from 'path';
-import { ProyectTypeModule } from './admin/user-type/proyectType.module';
+import { ProyectTypeModule } from './admin/proyectType/proyectType.module';
 import { RequestPetitionModule } from './vendor/requests/requestPetition.module';
 import { RequestDocumentsModule } from './vendor/requestDocuments/requestDocuments.module';
 import { RequestPetitionLogsModule } from './log/request-petition/request-petition-logs.module';

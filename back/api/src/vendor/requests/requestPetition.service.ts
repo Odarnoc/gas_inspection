@@ -190,4 +190,40 @@ export class RequestPetitionService {
       data,
     };
   }
+
+  async getInstalations(user: User) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        instalator: true,
+      },
+      where: {
+        status: StatusOrder.instalationAssigned,
+        instalator: {
+          id: user.id,
+        },
+      },
+    });
+    return {
+      data,
+    };
+  }
+
+  async getReasignedInstalations(user: User) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        instalator: true,
+      },
+      where: {
+        status: StatusOrder.instalationReassigned,
+        instalator: {
+          id: user.id,
+        },
+      },
+    });
+    return {
+      data,
+    };
+  }
 }
