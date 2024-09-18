@@ -1,8 +1,6 @@
-import { IsString, MinLength } from 'class-validator';
-import { ErrorCode } from 'src/common/glob/error';
+import { IsString } from 'class-validator';
 
 export class PasswordUserDto {
   @IsString()
-  @MinLength(6, { message: `${ErrorCode.MINLENGTHPASSWORD}` })
   password: string;
 }

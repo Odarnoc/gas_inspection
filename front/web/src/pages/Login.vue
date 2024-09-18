@@ -5,66 +5,70 @@
         <div class="row justify-center q-mb-xl" style="padding-top: 10vh;">
           <img src="statics/Logo.png" style="width: 192px;height: 192px" />
         </div>
-        <div class="row justify-center">
-          <div class="col-sm-4 q-pa-md">
-            <div class="row justify-center q-col-gutter-md">
-              <div class="col-12">
-                <q-input
-                  v-model="email"
-                  standout
-                  rounded
-                  color="accent"
-                  input-class="text-accent"
-                  bg-color="white"
-                  :label="$t('fields.email')"
-                  v-on:keyup.enter="logIn()"
-                />
-              </div>
-              <div class="col-12">
-                <q-input
-                  v-model="password"
-                  standout
-                  rounded
-                  color="accent"
-                  input-class="text-accent"
-                  bg-color="white"
-                  :label="$t('fields.password')"
-                  :type="isPwd ? 'password' : 'text'"
-                  v-on:keyup.enter="logIn()"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      color="accent"
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
+        <q-form ref="loginForm" class="q-gutter-md">
+          <div class="row justify-center">
+            <div class="col-sm-4 q-pa-md">
+              <div class="row justify-center q-col-gutter-md">
+                <div class="col-12">
+                  <q-input
+                    v-model="email"
+                    standout
+                    rounded
+                    color="accent"
+                    input-class="text-accent"
+                    bg-color="white"
+                    :label="$t('fields.email')"
+                    v-on:keyup.enter="logIn()"
+                    :rules="rules.email"
+                  />
+                </div>
+                <div class="col-12">
+                  <q-input
+                    v-model="password"
+                    standout
+                    rounded
+                    color="accent"
+                    input-class="text-accent"
+                    bg-color="white"
+                    :label="$t('fields.password')"
+                    :type="isPwd ? 'password' : 'text'"
+                    v-on:keyup.enter="logIn()"
+                    :rules="rules.password"
+                  >
+                    <template v-slot:append>
+                      <q-icon
+                        color="accent"
+                        :name="isPwd ? 'visibility_off' : 'visibility'"
+                        class="cursor-pointer"
+                        @click="isPwd = !isPwd"
+                      />
+                    </template>
+                  </q-input>
+                </div>
+                <div class="col-12 text-center self-center q-mt-sm">
+                  <q-btn
+                    class="self-center"
+                    color="secondary"
+                    rounded
+                    :label="$t('buttons.log_in')"
+                    :loading="loading"
+                    @click="logIn()"
+                  />
+                </div>
+                <!-- <div class="col-12 text-center self-center q-mt-sm">
+                    <q-btn
+                      class="self-center"
+                      color="white"
+                      :label="$t('buttons.forgot_password')"
+                      flat
+                      rounded
+                      to="/forgotPassword"
                     />
-                  </template>
-                </q-input>
+                </div>-->
               </div>
-              <div class="col-12 text-center self-center q-mt-sm">
-                <q-btn
-                  class="self-center"
-                  color="secondary"
-                  rounded
-                  :label="$t('buttons.log_in')"
-                  :loading="loading"
-                  @click="logIn()"
-                />
-              </div>
-              <!-- <div class="col-12 text-center self-center q-mt-sm">
-                <q-btn
-                  class="self-center"
-                  color="white"
-                  :label="$t('buttons.forgot_password')"
-                  flat
-                  rounded
-                  to="/forgotPassword"
-                />
-              </div>-->
             </div>
           </div>
-        </div>
+        </q-form>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -91,6 +95,17 @@ export default defineComponent({
       type: null,
       modals: {
         emailVerification: false
+      }
+    }
+  },
+  computed: {
+    rules () {
+      return {
+        email: [
+          this.$rules.required(this.$t('validations.required.email')),
+          this.$rules.email(this.$t('validations.invalid_format.email'))
+        ],
+        password: [this.$rules.required(this.$t('validations.required.field'))]
       }
     }
   },
@@ -121,6 +136,10 @@ export default defineComponent({
   },
   methods: {
     async logIn () {
+      const isValid = await this.$refs.loginForm.validate()
+      if (!isValid) {
+        return
+      }
       const params = {
         email: this.email,
         password: this.password

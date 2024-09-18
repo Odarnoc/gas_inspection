@@ -1,11 +1,5 @@
 import { Transform } from 'class-transformer';
-import {
-  IsDateString,
-  IsEmail,
-  IsOptional,
-  IsString,
-  MinLength,
-} from 'class-validator';
+import { IsDateString, IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
