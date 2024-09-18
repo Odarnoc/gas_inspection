@@ -12,8 +12,8 @@ module.exports = {
     }
   },
   BETA: {
-    API_URL: 'http://aef0dd1f6dd6848fbb4d736fed12b069-1865174252.us-east-1.elb.amazonaws.com/api/',
-    SOCKET_URL: 'http://aef0dd1f6dd6848fbb4d736fed12b069-1865174252.us-east-1.elb.amazonaws.com',
+    API_URL: 'https://gasinspection-production.up.railway.app/api/',
+    SOCKET_URL: 'https://gasinspection-production.up.railway.app',
     FIREBASE_CONFIG: {
       apiKey: 'AIzaSyD1rSeAXN_ZqQ0My6mWR6xQituuVpRgXAc',
       authDomain: 'livgas-cfd9d.firebaseapp.com',
@@ -24,8 +24,8 @@ module.exports = {
     }
   },
   PRODUCTION: {
-    API_URL: 'http://aef0dd1f6dd6848fbb4d736fed12b069-1865174252.us-east-1.elb.amazonaws.com/api/',
-    SOCKET_URL: 'http://aef0dd1f6dd6848fbb4d736fed12b069-1865174252.us-east-1.elb.amazonaws.com',
+    API_URL: 'https://gasinspection-production.up.railway.app/api/',
+    SOCKET_URL: 'https://gasinspection-production.up.railway.app',
     FIREBASE_CONFIG: {
       apiKey: 'AIzaSyD1rSeAXN_ZqQ0My6mWR6xQituuVpRgXAc',
       authDomain: 'livgas-cfd9d.firebaseapp.com',

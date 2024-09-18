@@ -10,8 +10,7 @@ FROM develop-stage as build-stage
 ARG BuildEnv
 
 RUN yarn
-RUN if [ "$BuildEnv" = "prod" ] ; then PROD=true quasar build ; else echo not PROD ; fi
-RUN if [ "$BuildEnv" = "beta" ] ; then BETA=true quasar build ; else echo not BETA ; fi
+RUN PROD=true quasar build
 #RUN quasar build
 
 # production stage
