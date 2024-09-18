@@ -36,7 +36,7 @@
             @click="saveAndReassign"
           />
           <q-btn
-            v-if="status != statusOrder.rejected"
+            v-if="status != statusOrder.rejected && status != statusOrder.done"
             class="float-right q-mr-md"
             color="secondary"
             icon="save"

@@ -21,6 +21,7 @@
     "approved": "Aprobadas",
     "observed": "Observadas",
     "rejected": "Rechazadas",
+    "completed": "Completadas",
     "chageHistory": "Historial de cambios"
   },
   "fields": {

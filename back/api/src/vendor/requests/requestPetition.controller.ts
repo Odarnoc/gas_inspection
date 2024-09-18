@@ -56,6 +56,14 @@ export class RequestPetitionController {
     return this.userTypeService.getTable(paginationDto);
   }
 
+  @Post('getTableDone')
+  getTableDone(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: StatusOrder.done,
+    };
+    return this.userTypeService.getTable(paginationDto);
+  }
+
   @Post('get/:id')
   @Auth()
   get(@Param('id', ParseIntPipe) id: number) {

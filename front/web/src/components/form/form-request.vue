@@ -3,6 +3,7 @@
     <div class="row q-col-gutter-xs justify-center">
       <div class="col-md-6 col-xs-6 col-12 justify-center">
         <q-select
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -23,6 +24,7 @@
     <div class="row q-col-gutter-xs">
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -36,6 +38,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -49,6 +52,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -62,6 +66,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -76,6 +81,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -93,6 +99,7 @@
     <div class="row q-col-gutter-xs">
       <div class="col-md-6 col-xs-6 col-12">
         <q-select
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -309,7 +316,12 @@
         >
           <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy ref="qDateProxyx2" transition-show="scale" transition-hide="scale">
+              <q-popup-proxy
+                ref="qDateProxyx2"
+                transition-show="scale"
+                transition-hide="scale"
+                v-if="!readonlyByStatus"
+              >
                 <q-date :mask="$maskDate" color="primary" v-model="user.fields.startDate">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup :label="$t('buttons.close')" color="primary" flat />
@@ -335,7 +347,12 @@
         >
           <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy ref="qDateProxyx2" transition-show="scale" transition-hide="scale">
+              <q-popup-proxy
+                ref="qDateProxyx2"
+                transition-show="scale"
+                transition-hide="scale"
+                v-if="!readonlyByStatus"
+              >
                 <q-date :mask="$maskDate" color="primary" v-model="user.fields.limitDate">
                   <div class="row items-center justify-end">
                     <q-btn v-close-popup :label="$t('buttons.close')" color="primary" flat />
@@ -351,6 +368,7 @@
     <div class="row q-col-gutter-xs">
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -364,6 +382,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -377,6 +396,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -390,6 +410,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -403,6 +424,7 @@
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
+          :readonly="readonlyByStatus"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -418,7 +440,11 @@
     <div class="row q-col-gutter-xs">
       <div class="col-12">
         <GMapMap :center="center" :zoom="13" style="width: auto; height: 500px">
-          <GMapMarker :position="marker" :draggable="true" @dragend="updateMarker($event)" />
+          <GMapMarker
+            :position="marker"
+            :draggable="!readonlyByStatus"
+            @dragend="updateMarker($event)"
+          />
         </GMapMap>
       </div>
     </div>
@@ -489,6 +515,12 @@ export default {
     edit: Boolean
   },
   computed: {
+    readonlyByStatus () {
+      return (
+        this.user.fields.status === statusOrder.rejected ||
+        this.user.fields.status === statusOrder.done
+      )
+    },
     createIdentityCardFileRoute () {
       return `${GENERAL_ROUTES.user}identityCard/${new Date().getTime()}/`
     },

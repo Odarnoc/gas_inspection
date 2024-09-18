@@ -148,6 +148,14 @@
               <q-item-label>{{$t('menus.rejected')}}</q-item-label>
             </q-item-section>
           </q-item>
+          <q-item to="/done">
+            <q-item-section avatar>
+              <q-icon name="assignment_returned" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>{{$t('menus.completed')}}</q-item-label>
+            </q-item-section>
+          </q-item>
         </q-expansion-item>
         <q-separator />
       </q-list>

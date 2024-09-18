@@ -29,6 +29,7 @@ const routes = [
       { path: 'observed', component: () => import('src/pages/vendor/request/Index-observed.vue') },
       { path: 'approved', component: () => import('src/pages/vendor/request/Index-approved.vue') },
       { path: 'rejected', component: () => import('src/pages/vendor/request/Index-rejected.vue') },
+      { path: 'done', component: () => import('src/pages/vendor/request/Index-done.vue') },
       { path: 'request/new', component: () => import('pages/vendor/request/New.vue') },
       { path: 'request/edit/:id', component: () => import('pages/vendor/request/Edit.vue') },
       { path: 'request/approved/:id', component: () => import('pages/vendor/request/Edit-approved.vue') },
