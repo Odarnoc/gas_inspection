@@ -1,4 +1,4 @@
-package com.mikmic360.mikinder
+package com.livgas.app
 
 import io.flutter.embedding.android.FlutterActivity
 
