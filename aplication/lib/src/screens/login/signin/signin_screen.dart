@@ -20,29 +20,64 @@ class SigninScreen extends StatelessWidget {
       value: AccessController(),
       child: Scaffold(
         backgroundColor: kThridColor,
-        body: Consumer<AccessController>(
-          builder: (context, accessController, child) => Center(
-            child: Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(kDefaultPadding),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: kDefaultPadding * 1.3),
-                      Image.asset("assets/screen/icon.png", height: 150),
-                      const SizedBox(height: kDefaultPadding * 1.3),
-                      EmailInput(accessController),
-                      const SizedBox(height: kDefaultPadding * 1.3),
-                      PasswordInput(accessController),
-                      const SizedBox(height: kDefaultPadding * 1.3),
-                      SigninButton(accessController, formKey: _formKey),
-                    ],
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth > 600) {
+              return Consumer<AccessController>(
+                builder: (context, accessController, child) => Center(
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: kDefaultPadding,
+                            bottom: kDefaultPadding,
+                            left: kDefaultPadding * 22,
+                            right: kDefaultPadding * 22),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            Image.asset("assets/screen/icon.png", height: 150),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            EmailInput(accessController),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            PasswordInput(accessController),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            SigninButton(accessController, formKey: _formKey),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
+              );
+            } else {
+              return Consumer<AccessController>(
+                builder: (context, accessController, child) => Center(
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(kDefaultPadding),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            Image.asset("assets/screen/icon.png", height: 150),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            EmailInput(accessController),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            PasswordInput(accessController),
+                            const SizedBox(height: kDefaultPadding * 1.3),
+                            SigninButton(accessController, formKey: _formKey),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );

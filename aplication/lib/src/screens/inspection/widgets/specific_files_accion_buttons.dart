@@ -16,6 +16,7 @@ class SpecificActionsActionButtons extends StatelessWidget {
   final valueSize = 10.0;
   final GlobalKey _menuKey = const GlobalObjectKey('menu1');
   final GlobalKey _menuKey2 = const GlobalObjectKey('menu2');
+  final GlobalKey _menuKey3 = const GlobalObjectKey('menu3');
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +109,7 @@ class SpecificActionsActionButtons extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        S.of(context).bUploadIsometric,
+                        S.of(context).lIsometric,
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -195,7 +196,94 @@ class SpecificActionsActionButtons extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        S.of(context).bUploadFloorPlan,
+                        S.of(context).lFloorPlan,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5),
+                Expanded(
+                  child: PopupMenuButton(
+                    key: _menuKey3,
+                    itemBuilder: (_) => <PopupMenuItem<String>>[
+                      PopupMenuItem(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) => UploadFile((image) async {
+                              inspectionController.inAsyncCall = true;
+                              String imageUpload = await uploadFile(
+                                  image,
+                                  '${GeneralRoutes.proyects}${inspectionController.requestPetition.id}/${SpecificRoutes.materials}',
+                                  '${inspectionController.requestPetition.id}-${DateTime.now().toIso8601String()}',
+                                  kTargetWidthUser,
+                                  isDocument: true);
+                              inspectionController.updateUrlMaterials(
+                                  imageUpload,
+                                  inspectionController.requestPetition.id);
+                            }),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.upload,
+                              color: Colors.black,
+                            ),
+                            Text(S.of(context).bUpload),
+                          ],
+                        ),
+                      ),
+                      if (inspectionController
+                          .requestPetition.materials.isNotEmpty)
+                        PopupMenuItem(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => SpecificDocumentsDialog(
+                                inspectionController: inspectionController,
+                                title: S.of(context).lMaterials,
+                                url: inspectionController
+                                    .requestPetition.materials,
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.remove_red_eye,
+                                color: Colors.black,
+                              ),
+                              Text(S.of(context).bView),
+                            ],
+                          ),
+                        ),
+                    ],
+                    onSelected: (_) {},
+                    child: ElevatedButton(
+                      onPressed: () {
+                        dynamic state = _menuKey3.currentState;
+                        state.showButtonMenu();
+                      },
+                      style: ButtonStyle(
+                        padding:
+                            const WidgetStatePropertyAll(EdgeInsets.all(10)),
+                        backgroundColor:
+                            const WidgetStatePropertyAll(kPrimaryColor),
+                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        S.of(context).lMaterials,
                         style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

@@ -84,6 +84,9 @@ export class RequestPetition {
   @Column('text', { default: '', nullable: true })
   floorPlan: string;
 
+  @Column('text', { default: '', nullable: true })
+  materials: string;
+
   @Column('bool', { default: false })
   minimumVolume: boolean;
 

@@ -8,10 +8,11 @@
         <div class="col-12">
           <form-request ref="documentForm" edit_flag />
         </div>
-        <div class="col-12" v-if="isometric || floorPlan">
+        <div class="col-12" v-if="isometric || floorPlan || materials">
           <q-carousel swipeable animated arrows v-model="slide" infinite>
             <q-carousel-slide class="uncropped-image" :name="1" :img-src="isometric" />
             <q-carousel-slide class="uncropped-image" :name="2" :img-src="floorPlan" />
+            <q-carousel-slide class="uncropped-image" :name="3" :img-src="materials" />
 
             <template v-slot:control>
               <q-carousel-control
@@ -19,7 +20,7 @@
                 :offset="[16, 8]"
                 class="text-white text-center rounded-borders"
                 style="background: rgba(0, 0, 0, .4); padding: 4px 8px;"
-              >{{ slide == 1 ? $t('fields.isometric') : $t('fields.floorPlan') }}</q-carousel-control>
+              >{{ slide == 1 ? $t('fields.isometric') : slide == 2 ? $t('fields.floorPlan') : $t('fields.materials') }}</q-carousel-control>
             </template>
           </q-carousel>
           <br />
@@ -92,6 +93,7 @@ export default {
       id: null,
       floorPlan: null,
       isometric: null,
+      materials: null,
       status: null,
       slide: 1,
       slideExtra: 0,
@@ -131,6 +133,7 @@ export default {
       this.status = data.data.status
       this.floorPlan = data.data.floorPlan
       this.isometric = data.data.isometric
+      this.materials = data.data.materials
       self.$destroyLoading()
     },
     async setDocuments () {

@@ -640,6 +640,16 @@ class S {
     );
   }
 
+  /// `Materiales`
+  String get lMaterials {
+    return Intl.message(
+      'Materiales',
+      name: 'lMaterials',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Seleccione una foto`
   String get bSelectPhoto {
     return Intl.message(

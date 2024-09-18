@@ -17,6 +17,7 @@ class RequestPetitionModel {
   LocationModel location;
   String isometric;
   String floorPlan;
+  String materials;
   bool minimumVolume;
   bool airSupply;
   bool airOutlet;
@@ -42,6 +43,7 @@ class RequestPetitionModel {
     required this.location,
     required this.isometric,
     required this.floorPlan,
+    required this.materials,
     required this.minimumVolume,
     required this.airSupply,
     required this.airOutlet,
@@ -69,6 +71,7 @@ class RequestPetitionModel {
         location: LocationModel.fromJson(json["location"]),
         isometric: json["isometric"],
         floorPlan: json["floorPlan"],
+        materials: json["materials"],
         minimumVolume: json["minimumVolume"],
         airSupply: json["airSupply"],
         airOutlet: json["airOutlet"],
@@ -95,6 +98,7 @@ class RequestPetitionModel {
         "location": location.toJson(),
         "isometric": isometric,
         "floorPlan": floorPlan,
+        "materials": materials,
         "minimumVolume": minimumVolume,
         "airSupply": airSupply,
         "airOutlet": airOutlet,

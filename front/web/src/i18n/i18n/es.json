@@ -67,7 +67,8 @@
     "extraInfo": "Información adicional",
     "observations": "Observaciones",
     "isometric": "Isométrico",
-    "floorPlan": "Plano de planta"
+    "floorPlan": "Plano de planta",
+    "materials": "Materiales"
   },
   "buttons": {
     "log_in": "Iniciar sesión",

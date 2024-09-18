@@ -93,6 +93,10 @@ export class CreateRequestPetitionDto {
 
   @IsString()
   @IsOptional()
+  materials?: string;
+
+  @IsString()
+  @IsOptional()
   observations?: string;
 
   @IsBoolean()

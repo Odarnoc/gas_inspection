@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lIsometric": MessageLookupByLibrary.simpleMessage("Isométrico"),
         "lLastName": MessageLookupByLibrary.simpleMessage("Apellido"),
         "lLoadSuccess": MessageLookupByLibrary.simpleMessage("Carga exitosa"),
+        "lMaterials": MessageLookupByLibrary.simpleMessage("Materiales"),
         "lName": MessageLookupByLibrary.simpleMessage("Nombre"),
         "lNoAccount": MessageLookupByLibrary.simpleMessage(
             "¿Es tu primera vez en Mikinder?"),

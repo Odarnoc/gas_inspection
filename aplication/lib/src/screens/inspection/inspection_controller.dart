@@ -173,6 +173,22 @@ class InspectionController extends ChangeNotifier {
     inAsyncCall = false;
   }
 
+  updateUrlMaterials(String imageUploadUrl, int id) async {
+    inAsyncCall = true;
+    RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
+        .updateRequestPetition({
+      'materials': imageUploadUrl,
+      'id': id,
+      'log': 'Se cargo foto de materiales'
+    });
+    if (newRequestPetitionModel != null) {
+      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
+      _requestPetition.materials = imageUploadUrl;
+      notifyListeners();
+    }
+    inAsyncCall = false;
+  }
+
   updateUrlFloorPlan(String imageUploadUrl, int id) async {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel = await requestPetitionService

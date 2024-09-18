@@ -5,5 +5,6 @@ class GeneralRoutes {
 class SpecificRoutes {
   static const String isometric = 'isometric/';
   static const String floorPlan = 'floorPlan/';
+  static const String materials = 'materials/';
   static const String extras = 'extras/';
 }
