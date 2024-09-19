@@ -247,10 +247,10 @@ export class AuthService {
   }
 
   async updatePassword(user: User, passwordUserDto: PasswordUserDto) {
-    const { password } = passwordUserDto;
+    const { password, userId } = passwordUserDto;
     try {
       const userUpdate = await this.userRepository.preload({
-        id: user.id,
+        id: userId,
         password: bcrypt.hashSync(password, 3),
       });
 
@@ -260,8 +260,10 @@ export class AuthService {
         delete userUpdate.password;
         return {
           user: { ...userUpdate },
-          result: true,
-          message: 'actualizado',
+          message: this.i18n.t('messages.updatedSuccess', {
+            lang: I18nContext.current().lang,
+          }),
+          result: DEFAULT_RESULT.result,
         };
       }
     } catch (error) {

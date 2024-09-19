@@ -35,6 +35,13 @@
                     <q-td key="roles" :props="props">{{ getRolName(props.row.roles) }}</q-td>
                     <q-td key="actions" :props="props">
                       <q-btn
+                        color="secondary"
+                        icon="fas fa-lock"
+                        flat
+                        @click="changePasswordSelectedRow(props.row)"
+                        size="10px"
+                      />
+                      <q-btn
                         color="primary"
                         icon="fas fa-edit"
                         flat
@@ -57,6 +64,47 @@
         </div>
       </div>
     </div>
+    <q-dialog v-model="changePasswordDialog">
+      <q-card class="q-dialog-plugin">
+        <q-card-section>
+          {{ $t('dialogs.changePassword', [
+          selectedRow.firstName,
+          selectedRow.email
+          ]) }}
+        </q-card-section>
+        <q-card-section>
+          <div class="row q-col-gutter-xs">
+            <div class="col-12">
+              <q-input
+                outlined
+                bg-color="primary-input-color"
+                color="border-primary-input-color"
+                label-color="primary-input-color"
+                input-class="value-primary-input-color"
+                :type="isPwd ? 'password' : 'text'"
+                v-model="password"
+                :rules="rules.password"
+                :label="$t('fields.password')"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    color="white"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
+              </q-input>
+            </div>
+          </div>
+        </q-card-section>
+        <p></p>
+        <q-card-actions align="right">
+          <q-btn color="negative" :label="$t('buttons.cancel')" @click="hideChangePasswordDialog" />
+          <q-btn color="secondary" :label="$t('buttons.save')" @click="updatePassword" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -71,12 +119,25 @@ export default {
       },
       loading: false,
       filter: '',
-      carrierId: 0
+      carrierId: 0,
+      changePasswordDialog: false,
+      selectedRow: {
+        id: null,
+        firstName: null,
+        email: null
+      },
+      password: null,
+      isPwd: true
     }
   },
   computed: {
     breadCrumRoutes () {
       return [this.$t('menus.personal')]
+    },
+    rules () {
+      return {
+        password: [this.$rules.required(this.$t('validations.required.field'))]
+      }
     },
     columnsServices () {
       return [
@@ -143,7 +204,15 @@ export default {
     this.fetchFromServer()
   },
   methods: {
-    ...mapActions('users/auth', ['getTable', 'delete']),
+    ...mapActions('users/auth', [
+      'getTable',
+      'delete',
+      'updatePasswordByUserId'
+    ]),
+    hideChangePasswordDialog () {
+      this.changePasswordDialog = false
+      this.resetPasswordDialog()
+    },
     async fetchFromServer () {
       this.$showLoading()
       this.$destroyLoading()
@@ -155,6 +224,28 @@ export default {
         filter: undefined
       })
       this.$destroyLoading()
+    },
+    changePasswordSelectedRow (row) {
+      this.selectedRow = row
+      this.changePasswordDialog = true
+    },
+    async updatePassword () {
+      this.loading = true
+      this.$showLoading()
+      try {
+        const response = await this.updatePasswordByUserId({
+          userId: this.selectedRow.id,
+          password: this.password
+        })
+        this.$showNotifySuccess(response)
+        this.changePasswordDialog = false
+        this.resetPasswordDialog()
+        await this.fetchTableDataByFilters()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      this.$destroyLoading()
+      this.loading = false
     },
     editSelectedRow (id) {
       this.$router.push(`/personal/edit/${this.$encode(id)}`)
@@ -197,6 +288,14 @@ export default {
         }
       }
       return rolName
+    },
+    resetPasswordDialog () {
+      this.selectedRow = {
+        id: null,
+        firstName: null,
+        email: null
+      }
+      this.password = null
     }
   }
 }

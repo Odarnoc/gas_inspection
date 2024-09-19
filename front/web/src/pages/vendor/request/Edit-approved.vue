@@ -236,6 +236,7 @@ export default {
         const response = await self.create(params)
         this.$showNotifySuccess(response)
         await this.fetchTableDataByFilters()
+        self.$refs.materialForm.resetFields()
       } catch (error) {
         this.$showNotifyError(error)
       }

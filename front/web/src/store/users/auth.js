@@ -54,6 +54,10 @@ export default {
       const response = await api.put(`${apiRoot}/update`, payload)
       return response
     },
+    updatePasswordByUserId: async (context, payload) => {
+      const response = await api.patch(`${apiRoot}/update-password`, payload)
+      return response
+    },
     delete: async ({ commit, dispatch }, id) => {
       const response = await api.delete(`${apiRoot}/delete/${id}`)
       return response
