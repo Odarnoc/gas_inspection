@@ -8,24 +8,7 @@
         <div class="col-12">
           <form-request-approved ref="documentForm" edit_flag />
         </div>
-        <div class="col-12" v-if="isometric || floorPlan || materials">
-          <q-carousel swipeable animated arrows v-model="slide" infinite>
-            <q-carousel-slide class="uncropped-image" :name="1" :img-src="isometric" />
-            <q-carousel-slide class="uncropped-image" :name="2" :img-src="floorPlan" />
-            <q-carousel-slide class="uncropped-image" :name="3" :img-src="materials" />
-
-            <template v-slot:control>
-              <q-carousel-control
-                position="bottom"
-                :offset="[16, 8]"
-                class="text-white text-center rounded-borders"
-                style="background: rgba(0, 0, 0, .4); padding: 4px 8px;"
-              >{{ slide == 1 ? $t('fields.isometric') : slide == 2 ? $t('fields.floorPlan') : $t('fields.materials') }}</q-carousel-control>
-            </template>
-          </q-carousel>
-          <br />
-        </div>
-        <div class="col-12">
+        <div class="col-12 q-mb-md">
           <q-btn color="warning" icon="photo_camera" @click="showExtraDocuments" />
           <q-btn
             v-if="status == statusOrder.inspectionAproved"
@@ -44,8 +27,68 @@
             @click="save"
           />
         </div>
+        <div class="col-12" v-if="isometric || floorPlan || materials">
+          <q-carousel swipeable animated arrows v-model="slide" infinite>
+            <q-carousel-slide class="uncropped-image" :name="1" :img-src="isometric" />
+            <q-carousel-slide class="uncropped-image" :name="2" :img-src="floorPlan" />
+            <q-carousel-slide class="uncropped-image" :name="3" :img-src="materials" />
+
+            <template v-slot:control>
+              <q-carousel-control
+                position="bottom"
+                :offset="[16, 8]"
+                class="text-white text-center rounded-borders"
+                style="background: rgba(0, 0, 0, .4); padding: 4px 8px;"
+              >{{ slide == 1 ? $t('fields.isometric') : slide == 2 ? $t('fields.floorPlan') : $t('fields.materials') }}</q-carousel-control>
+            </template>
+          </q-carousel>
+          <br />
+        </div>
+        <div class="col-12">
+          <form-request-material ref="materialForm" />
+        </div>
+        <div class="col-12">
+          <div class="row q-mb-sm q-mt-md">
+            <div class="col-12">
+              <div class="row q-col-gutter-xs q-mb-md">
+                <div class="col-12">
+                  <q-btn
+                    class="float-right"
+                    color="secondary"
+                    icon="add"
+                    :label="$t('buttons.addMaterial')"
+                    @click="addMaterial"
+                  />
+                </div>
+              </div>
+              <base-table
+                ref="table"
+                :columns="columnsServices"
+                :fetchData="getTable"
+                :pag="pagination"
+              >
+                <template v-slot:body="props">
+                  <q-tr :props="props">
+                    <q-td key="material" :props="props">{{ props.row.material }}</q-td>
+                    <q-td key="quantity" :props="props">{{ props.row.quantity }}</q-td>
+                    <q-td key="actions" :props="props">
+                      <q-btn
+                        color="negative"
+                        icon="fas fa-trash"
+                        flat
+                        @click="deleteSelectedRow(props.row.id)"
+                        size="10px"
+                      />
+                    </q-td>
+                  </q-tr>
+                </template>
+              </base-table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <q-dialog v-model="extraDocumentsDialog">
       <q-card class="q-dialog-plugin">
         <q-carousel
@@ -105,12 +148,38 @@ export default {
   },
   computed: {
     breadCrumRoutes () {
-      return [self.$t('menus.requests'), self.$t('buttons.approved')]
+      return [self.$t('menus.requests'), self.$t('menus.approved')]
+    },
+    columnsServices () {
+      return [
+        {
+          name: 'material',
+          align: 'left',
+          label: this.$t('fields.material'),
+          field: 'material',
+          sortable: true
+        },
+        {
+          name: 'quantity',
+          align: 'left',
+          label: this.$t('fields.quantity'),
+          field: 'quantity',
+          sortable: true
+        },
+        {
+          name: 'actions',
+          align: 'center',
+          label: this.$t('buttons.actions'),
+          field: 'actions',
+          sortable: false
+        }
+      ]
     }
   },
   methods: {
     ...mapActions('vendor/requestPetition', ['get', 'update']),
     ...mapActions('vendor/requestDocuments', ['getDocuments']),
+    ...mapActions('vendor/requestMaterials', ['create', 'getTable', 'delete']),
     showExtraDocuments () {
       this.extraDocumentsDialog = true
     },
@@ -152,6 +221,51 @@ export default {
       }
       self.$destroyLoading()
       self.loading = false
+    },
+    async addMaterial () {
+      self.loading = true
+      self.$showLoading()
+      const formResult = await self.$refs.materialForm.getData()
+      if (!formResult.isValid) {
+        self.loading = false
+        self.$destroyLoading()
+        return
+      }
+      const params = { ...formResult.params }
+      try {
+        const response = await self.create(params)
+        this.$showNotifySuccess(response)
+        await this.fetchTableDataByFilters()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      self.$destroyLoading()
+      self.loading = false
+    },
+    async deleteSelectedRow (id) {
+      if (!(await this.$confirmDialog(this.$t('dialogs.deleteProyectType')))) {
+        return
+      }
+      this.loading = true
+      this.$showLoading()
+      try {
+        const response = await this.delete(id)
+        this.$showNotifySuccess(response)
+        await this.fetchTableDataByFilters()
+      } catch (error) {
+        console.log(error)
+        this.$showNotifyError(error)
+      }
+      this.$destroyLoading()
+      this.loading = false
+    },
+    async fetchTableDataByFilters () {
+      this.$showLoading()
+      await this.$refs.table.onRequest({
+        pagination: this.$refs.table.pagination,
+        filter: undefined
+      })
+      this.$destroyLoading()
     },
     async saveAndAssign () {
       self.loading = true

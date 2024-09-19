@@ -16,6 +16,7 @@ import { Location } from 'src/common/interfaces/location.interface';
 import { User } from 'src/auth/entities/user.entity';
 import { StatusOrder } from 'src/common/glob/status';
 import { RequestDocuments } from 'src/vendor/requestDocuments/entities/requestDocuments.entity';
+import { RequestMaterials } from 'src/vendor/requestMaterials/entities/requestMaterials.entity';
 
 @Entity()
 export class RequestPetition {
@@ -134,6 +135,16 @@ export class RequestPetition {
     },
   )
   requestDocuments?: RequestDocuments[];
+
+  @OneToMany(
+    () => RequestDocuments,
+    (requestMaterials) => requestMaterials.requestPetition,
+    {
+      cascade: true,
+      eager: false,
+    },
+  )
+  requestMaterials?: RequestMaterials[];
 
   @CreateDateColumn({
     nullable: true,
