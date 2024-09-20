@@ -60,11 +60,21 @@
                     @click="addMaterial"
                   />
                 </div>
+                <div class="col-12">
+                  <q-btn
+                    class="float-right"
+                    color="primary"
+                    icon="download"
+                    :label="$t('buttons.download_material_list')"
+                    @click="getMaterialsPdf"
+                  />
+                </div>
               </div>
               <base-table
                 ref="table"
                 :columns="columnsServices"
                 :fetchData="getTable"
+                :fetchParams="where"
                 :pag="pagination"
               >
                 <template v-slot:body="props">
@@ -136,12 +146,20 @@ export default {
       statusOrder: {
         ...statusOrder
       },
-      extraDouments: []
+      extraDouments: [],
+      where: {
+        where: {
+          requestPetition: {
+            id: null
+          }
+        }
+      }
     }
   },
   created () {
     self = this
     self.id = this.$decode(this.$route.params.id)
+    self.where.where.requestPetition.id = self.id
   },
   mounted () {
     self.fetchFromServer()
@@ -180,6 +198,14 @@ export default {
     ...mapActions('vendor/requestPetition', ['get', 'update']),
     ...mapActions('vendor/requestDocuments', ['getDocuments']),
     ...mapActions('vendor/requestMaterials', ['create', 'getTable', 'delete']),
+    ...mapActions('pdf/materials', ['getAllByRequestPdf']),
+    async getMaterialsPdf () {
+      const params = {
+        id: self.id,
+        name: `proyecto-${self.id}.pdf`
+      }
+      await this.getAllByRequestPdf(params)
+    },
     showExtraDocuments () {
       this.extraDocumentsDialog = true
     },
@@ -231,7 +257,12 @@ export default {
         self.$destroyLoading()
         return
       }
-      const params = { ...formResult.params }
+      const params = {
+        ...formResult.params,
+        requestPetition: {
+          id: self.id
+        }
+      }
       try {
         const response = await self.create(params)
         this.$showNotifySuccess(response)

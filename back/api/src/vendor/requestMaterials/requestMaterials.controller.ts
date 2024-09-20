@@ -56,6 +56,6 @@ export class RequestMaterialsController {
   @Get('getDocuments/:id')
   @Auth()
   getInternalInspections(@Param('id', ParseIntPipe) id: number) {
-    return this.proyectTypeService.getDocuments(id);
+    return this.proyectTypeService.getMaterialsByRequest(id);
   }
 }

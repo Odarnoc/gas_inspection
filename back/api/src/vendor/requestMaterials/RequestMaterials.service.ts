@@ -122,7 +122,7 @@ export class RequestMaterialsService {
       .getRawMany();
   }
 
-  async getDocuments(id: number) {
+  async getMaterialsByRequest(id: number) {
     const data = await this.requestDocumentsRepository.find({
       relations: {
         requestPetition: true,

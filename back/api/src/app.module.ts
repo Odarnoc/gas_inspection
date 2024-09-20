@@ -19,6 +19,7 @@ import { RequestDocumentsModule } from './vendor/requestDocuments/requestDocumen
 import { RequestPetitionLogsModule } from './log/request-petition/request-petition-logs.module';
 import { CovergeLinesModule } from './admin/coverage-map/covergeLines.module';
 import { RequestMaterialsModule } from './vendor/requestMaterials/requestMaterials.module';
+import { PdfModule } from './pdf/pdf.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { RequestMaterialsModule } from './vendor/requestMaterials/requestMateria
     RequestPetitionLogsModule,
     CovergeLinesModule,
     RequestMaterialsModule,
+    PdfModule,
   ],
   providers: [],
 })

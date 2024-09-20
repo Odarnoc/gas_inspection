@@ -91,7 +91,8 @@
     "saveAndassign": "Guardar y asignar",
     "reject": "Rechazar",
     "delete": "Eliminar",
-    "addMaterial": "Agregar material"
+    "addMaterial": "Agregar material",
+    "download_material_list": "Descargar lista de materiales"
   },
   "dialogs": {
     "loading": "Cargando",

@@ -6,6 +6,7 @@ import system from './system'
 import admin from './admin'
 import vendor from './vendor'
 import logs from './logs'
+import pdf from './pdf'
 
 /*
  * If not building with SSR mode, you can
@@ -23,7 +24,8 @@ export default store(function (/* { ssrContext } */) {
       system,
       admin,
       vendor,
-      logs
+      logs,
+      pdf
     },
 
     // enable strict mode (adds overhead!)
