@@ -100,6 +100,21 @@ export class RequestPetition {
   @Column('bool', { default: false })
   rapidAeration: boolean;
 
+  @Column('bool', { default: false })
+  pressureCheck: boolean;
+
+  @Column('bool', { default: false })
+  valvuleCheck: boolean;
+
+  @Column('bool', { default: false })
+  leakCheck: boolean;
+
+  @Column('bool', { default: false })
+  ventilation: boolean;
+
+  @Column('bool', { default: false })
+  areaCleaning: boolean;
+
   @Column('date', { nullable: true })
   startDate: Date;
 

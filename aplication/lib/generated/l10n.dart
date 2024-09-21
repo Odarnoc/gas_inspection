@@ -749,6 +749,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Verificación de presión`
+  String get qPressureCheck {
+    return Intl.message(
+      'Verificación de presión',
+      name: 'qPressureCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verificación de válvulas`
+  String get qValvuleCheck {
+    return Intl.message(
+      'Verificación de válvulas',
+      name: 'qValvuleCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verificación de fugas`
+  String get qLeakCheck {
+    return Intl.message(
+      'Verificación de fugas',
+      name: 'qLeakCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ventilación`
+  String get qVentilation {
+    return Intl.message(
+      'Ventilación',
+      name: 'qVentilation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limpieza de área`
+  String get qAreaCleaning {
+    return Intl.message(
+      'Limpieza de área',
+      name: 'qAreaCleaning',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

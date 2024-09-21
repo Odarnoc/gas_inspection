@@ -6,7 +6,13 @@
       <div class="row bg-white border-panel q-pa-md">
         <div class="col-3" />
         <div class="col-12">
-          <form-user ref="documentForm" edit />
+          <form-user
+            ref="documentForm"
+            edit
+            @onupdateProfessionalTitleImage="save"
+            @onupdateCVImage="save"
+            @onupdateProfileImage="save"
+          />
         </div>
         <div class="col-12">
           <q-btn

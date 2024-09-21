@@ -7,6 +7,7 @@ import 'package:mikinder/constants/status_constant.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons2.dart';
+import 'package:mikinder/src/screens/inspection/widgets/internal_proyect_infomation_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_specific_files_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspection/widgets/proyect_infomation_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/specific_files_accion_buttons.dart';
@@ -81,14 +82,20 @@ class InspectionScreen extends StatelessWidget {
                       // FloatingMyLocationButton(demoController: demoController),
                     ],
                   ),
-                  ProyectInformationCard(
-                      inspectionController: inspectionController),
                   Visibility(
                     visible: inspectionController.requestPetition.status ==
                         StatusProyect.assigned,
-                    child: SpecificActionsActionButtons(
-                      inspectionController: inspectionController,
-                    ),
+                    child: ProyectInformationCard(
+                        inspectionController: inspectionController),
+                  ),
+                  Visibility(
+                    visible: inspectionController.requestPetition.status ==
+                        StatusProyect.interrnalInspection,
+                    child: InternalProyectInformationCard(
+                        inspectionController: inspectionController),
+                  ),
+                  SpecificActionsActionButtons(
+                    inspectionController: inspectionController,
                   ),
                   Visibility(
                     visible: inspectionController.requestPetition.status ==
@@ -98,13 +105,13 @@ class InspectionScreen extends StatelessWidget {
                       inspectionsController: inspectionsController,
                     ),
                   ),
-                  Visibility(
+                  /* Visibility(
                     visible: inspectionController.requestPetition.status ==
                         StatusProyect.interrnalInspection,
                     child: InternalSpecificActionsActionButtons(
                       inspectionController: inspectionController,
                     ),
-                  ),
+                  ), */
                   Visibility(
                     visible: inspectionController.requestPetition.status ==
                         StatusProyect.interrnalInspection,

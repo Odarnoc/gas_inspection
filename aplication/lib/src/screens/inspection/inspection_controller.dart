@@ -97,6 +97,51 @@ class InspectionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _checkbox5 = false;
+
+  bool get checkbox5 => _checkbox5;
+
+  set checkbox5(bool checkbox5) {
+    _checkbox5 = checkbox5;
+    notifyListeners();
+  }
+
+  bool _checkbox6 = false;
+
+  bool get checkbox6 => _checkbox6;
+
+  set checkbox6(bool checkbox6) {
+    _checkbox6 = checkbox6;
+    notifyListeners();
+  }
+
+  bool _checkbox7 = false;
+
+  bool get checkbox7 => _checkbox7;
+
+  set checkbox7(bool checkbox7) {
+    _checkbox7 = checkbox7;
+    notifyListeners();
+  }
+
+  bool _checkbox8 = false;
+
+  bool get checkbox8 => _checkbox8;
+
+  set checkbox8(bool checkbox8) {
+    _checkbox8 = checkbox8;
+    notifyListeners();
+  }
+
+  bool _checkbox9 = false;
+
+  bool get checkbox9 => _checkbox9;
+
+  set checkbox9(bool checkbox9) {
+    _checkbox9 = checkbox9;
+    notifyListeners();
+  }
+
   double get distance => _distance;
 
   set distance(double distance) {
@@ -111,6 +156,11 @@ class InspectionController extends ChangeNotifier {
     checkbox2 = _requestPetition.airSupply;
     checkbox3 = _requestPetition.airOutlet;
     checkbox4 = _requestPetition.rapidAeration;
+    checkbox5 = _requestPetition.pressureCheck;
+    checkbox6 = _requestPetition.valvuleCheck;
+    checkbox7 = _requestPetition.leakCheck;
+    checkbox8 = _requestPetition.ventilation;
+    checkbox9 = _requestPetition.areaCleaning;
     initialCameraPosition = CameraPosition(
         target: LatLng(requestPetition.location.x, requestPetition.location.y),
         zoom: 16);
@@ -210,20 +260,22 @@ class InspectionController extends ChangeNotifier {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel =
         await requestPetitionService.updateRequestPetition({
-      'minimumVolume': checkbox1,
-      'airSupply': checkbox2,
-      'airOutlet': checkbox3,
-      'rapidAeration': checkbox4,
+      'pressureCheck': checkbox5,
+      'valvuleCheck': checkbox6,
+      'leakCheck': checkbox7,
+      'ventilation': checkbox8,
+      'areaCleaning': checkbox9,
       'status': StatusProyect.inspectionAproved,
       'id': id,
       'log': 'Se aprobó inspección'
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;
-      _requestPetition.minimumVolume = checkbox1;
-      _requestPetition.airSupply = checkbox2;
-      _requestPetition.airOutlet = checkbox3;
-      _requestPetition.rapidAeration = checkbox4;
+      _requestPetition.pressureCheck = checkbox5;
+      _requestPetition.valvuleCheck = checkbox6;
+      _requestPetition.leakCheck = checkbox7;
+      _requestPetition.ventilation = checkbox8;
+      _requestPetition.areaCleaning = checkbox9;
       notifyListeners();
     }
     inAsyncCall = false;
@@ -233,8 +285,13 @@ class InspectionController extends ChangeNotifier {
   Future<bool> internalApproveProyect(BuildContext context, int id) async {
     bool isSuccess = false;
     inAsyncCall = true;
-    RequestPetitionModel? newRequestPetitionModel = await requestPetitionService
-        .updateRequestPetition({
+    RequestPetitionModel? newRequestPetitionModel =
+        await requestPetitionService.updateRequestPetition({
+      'pressureCheck': checkbox5,
+      'valvuleCheck': checkbox6,
+      'leakCheck': checkbox7,
+      'ventilation': checkbox8,
+      'areaCleaning': checkbox9,
       'status': StatusProyect.done,
       'id': id,
       'log': 'Se finalizo el proyecto'
@@ -256,18 +313,20 @@ class InspectionController extends ChangeNotifier {
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel =
         await requestPetitionService.updateRequestPetition({
-      'minimumVolume': checkbox1,
-      'airSupply': checkbox2,
-      'airOutlet': checkbox3,
-      'rapidAeration': checkbox4,
+      'pressureCheck': checkbox5,
+      'valvuleCheck': checkbox6,
+      'leakCheck': checkbox7,
+      'ventilation': checkbox8,
+      'areaCleaning': checkbox9,
       'id': requestPetition.id,
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;
-      _requestPetition.minimumVolume = checkbox1;
-      _requestPetition.airSupply = checkbox2;
-      _requestPetition.airOutlet = checkbox3;
-      _requestPetition.rapidAeration = checkbox4;
+      _requestPetition.pressureCheck = checkbox5;
+      _requestPetition.valvuleCheck = checkbox6;
+      _requestPetition.leakCheck = checkbox7;
+      _requestPetition.ventilation = checkbox8;
+      _requestPetition.areaCleaning = checkbox9;
       notifyListeners();
     }
     inAsyncCall = false;

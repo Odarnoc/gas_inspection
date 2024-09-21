@@ -68,5 +68,10 @@
   "lObservations": "Observaciones",
   "bReload": "Refrescar",
   "bRequestInspection": "Solicitar inspección",
-  "bUpdate": "Actualizar"
+  "bUpdate": "Actualizar",
+  "qPressureCheck": "Verificación de presión",
+  "qValvuleCheck": "Verificación de válvulas",
+  "qLeakCheck": "Verificación de fugas",
+  "qVentilation": "Ventilación",
+  "qAreaCleaning": "Limpieza de área"
 }

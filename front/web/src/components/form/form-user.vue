@@ -60,7 +60,7 @@
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="tel"
-          mask="##########"
+          mask="########"
           v-model="user.fields.phone"
           :rules="rules.phone"
           :label="$t('fields.phone')"
@@ -74,7 +74,7 @@
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="tel"
-          mask="##########"
+          mask="########"
           v-model="user.fields.cellphone"
           :rules="rules.cellphone"
           :label="$t('fields.cellphone')"
@@ -381,8 +381,12 @@ export default {
             self.$t('validations.invalid_format.field_numeric')
           ),
           self.$rules.minLength(
-            10,
-            self.$t('validations.length.field_10_number')
+            7,
+            self.$t('validations.length.field_7_or_8_number')
+          ),
+          self.$rules.maxLength(
+            8,
+            self.$t('validations.length.field_7_or_8_number')
           )
         ],
         cellphone: [
@@ -391,8 +395,12 @@ export default {
             self.$t('validations.invalid_format.field_numeric')
           ),
           self.$rules.minLength(
-            10,
-            self.$t('validations.length.field_10_number')
+            7,
+            self.$t('validations.length.field_7_or_8_number')
+          ),
+          self.$rules.maxLength(
+            8,
+            self.$t('validations.length.field_7_or_8_number')
           )
         ],
         address: [self.$rules.required(self.$t('validations.required.field'))],
@@ -449,12 +457,15 @@ export default {
     },
     async updateProfileImage (updateUrlImage) {
       this.user.fields.image = updateUrlImage
+      this.$emit('onupdateProfileImage')
     },
     async updateCVImage (updateUrlImage) {
       this.user.fields.cv = updateUrlImage
+      this.$emit('onupdateCVImage')
     },
     async updateProfessionalTitleImage (updateUrlImage) {
       this.user.fields.professionalTitleFile = updateUrlImage
+      this.$emit('onupdateProfessionalTitleImage')
     },
     showFile (url) {
       window.open(url, '_blank')

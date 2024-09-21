@@ -129,7 +129,7 @@ export class AuthService {
     try {
       const systemDocument = await this.userRepository.save({
         ...updateUserDto,
-        roles: [updateUserDto.rol],
+        ...(!updateUserDto.rol ? {} : { roles: [updateUserDto.rol] }),
         updated_by: user.id,
       });
       return {

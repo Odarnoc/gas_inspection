@@ -9,6 +9,7 @@ class UserModel {
     required this.maternalName,
     required this.phone,
     required this.cellphone,
+    required this.address,
     required this.image,
     required this.roles,
     required this.token,
@@ -21,6 +22,7 @@ class UserModel {
   String maternalName;
   String phone;
   String cellphone;
+  String address;
   String image;
   List<String> roles;
   String token;
@@ -33,6 +35,7 @@ class UserModel {
         maternalName: json["maternalName"],
         phone: json["phone"] ?? 's/n',
         cellphone: json["cellphone"] ?? 's/n',
+        address: json["address"] ?? 'n/a',
         image: json["image"].toString().length <= 10
             ? kImageClientDefault
             : json["image"],
@@ -48,6 +51,7 @@ class UserModel {
         "maternalName": maternalName,
         "phone": phone,
         "cellphone": cellphone,
+        "address": address,
         "image": image,
         "roles": List<dynamic>.from(roles.map((x) => x)),
         "token": token,

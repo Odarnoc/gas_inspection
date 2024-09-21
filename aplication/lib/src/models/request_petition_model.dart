@@ -22,6 +22,11 @@ class RequestPetitionModel {
   bool airSupply;
   bool airOutlet;
   bool rapidAeration;
+  bool pressureCheck;
+  bool valvuleCheck;
+  bool leakCheck;
+  bool ventilation;
+  bool areaCleaning;
   DateTime startDate;
   DateTime limitDate;
   DateTime createdAt;
@@ -48,6 +53,11 @@ class RequestPetitionModel {
     required this.airSupply,
     required this.airOutlet,
     required this.rapidAeration,
+    required this.pressureCheck,
+    required this.valvuleCheck,
+    required this.leakCheck,
+    required this.ventilation,
+    required this.areaCleaning,
     required this.startDate,
     required this.limitDate,
     required this.createdAt,
@@ -76,6 +86,11 @@ class RequestPetitionModel {
         airSupply: json["airSupply"],
         airOutlet: json["airOutlet"],
         rapidAeration: json["rapidAeration"],
+        pressureCheck: json["pressureCheck"],
+        valvuleCheck: json["valvuleCheck"],
+        leakCheck: json["leakCheck"],
+        ventilation: json["ventilation"],
+        areaCleaning: json["areaCleaning"],
         startDate: DateTime.parse(json["startDate"]),
         limitDate: DateTime.parse(json["limitDate"]),
         createdAt: DateTime.parse(json["createdAt"]),

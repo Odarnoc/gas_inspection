@@ -34,7 +34,8 @@ const routes = [
       { path: 'request/edit/:id', component: () => import('pages/vendor/request/Edit.vue') },
       { path: 'request/approved/:id', component: () => import('pages/vendor/request/Edit-approved.vue') },
       { path: 'logs/request', component: () => import('pages/admin/logs/request/Index.vue') },
-      { path: 'coverageMap', component: () => import('pages/admin/coverrage_map/Index.vue') }
+      { path: 'coverageMap', component: () => import('pages/admin/coverrage_map/Index.vue') },
+      { path: 'profile', component: () => import('pages/Profile') }
     ]
   },
 

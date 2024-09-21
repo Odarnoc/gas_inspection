@@ -115,6 +115,26 @@ export class CreateRequestPetitionDto {
   @IsOptional()
   rapidAeration?: boolean;
 
+  @IsBoolean()
+  @IsOptional()
+  pressureCheck: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  valvuleCheck: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  leakCheck: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  ventilation: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  areaCleaning: boolean;
+
   @IsDateString()
   @IsOptional()
   startDate?: Date;

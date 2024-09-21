@@ -6,6 +6,7 @@ import 'package:mikinder/src/screens/inspections/inspections_controller.dart';
 import 'package:mikinder/src/screens/inspections/widgets/inspections_table.dart';
 import 'package:mikinder/src/screens/inspections/widgets/internal_inspections_table.dart';
 import 'package:mikinder/src/screens/login/login_screen.dart';
+import 'package:mikinder/src/screens/profile/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class InspectionsScreen extends StatelessWidget {
@@ -46,6 +47,24 @@ class InspectionsScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                         Text(S.of(context).bReload),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      final navigator = Navigator.of(context);
+                      navigator.push(
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
+                        Text(S.of(context).lProfile),
                       ],
                     ),
                   ),

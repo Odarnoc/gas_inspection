@@ -11,4 +11,20 @@ export class CreateCovergeLinesDto {
   @IsString()
   @IsOptional()
   color?: string;
+
+  @IsString()
+  @IsOptional()
+  city: string;
+
+  @IsString()
+  @IsOptional()
+  zone: string;
+
+  @IsString()
+  @IsOptional()
+  avenue: string;
+
+  @IsString()
+  @IsOptional()
+  streets: string;
 }

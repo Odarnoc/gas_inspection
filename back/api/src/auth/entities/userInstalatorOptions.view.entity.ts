@@ -6,7 +6,8 @@ const query = `
       u."firstName" as label
 	  FROM public.user AS u
     where 
-      u.roles = '{instalator}'
+      u.roles = '{instalator}' and
+      u."deletedAt" is null
     `;
 
 @ViewEntity({

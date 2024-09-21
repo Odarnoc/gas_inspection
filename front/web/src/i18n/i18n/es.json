@@ -44,6 +44,7 @@
     "city": "Ciudad",
     "avenue": "Avenida",
     "street": "Calle",
+    "streets": "Calles",
     "zone": "Zona",
     "door": "Puerta",
     "references": "Referencias",
@@ -92,7 +93,8 @@
     "reject": "Rechazar",
     "delete": "Eliminar",
     "addMaterial": "Agregar material",
-    "download_material_list": "Descargar lista de materiales"
+    "download_material_list": "Descargar lista de materiales",
+    "changePassword": "Cambiar contraseña"
   },
   "dialogs": {
     "loading": "Cargando",
@@ -130,6 +132,7 @@
       "field_integer": "El campo solo debe tener números enteros"
     },
     "length": {
+      "field_7_or_8_number": "El campo debe tener 7 u 8 dígitos",
       "field_10_number": "El campo debe tener 10 dígitos",
       "field_13_number": "El campo debe tener 13 dígitos"
     },

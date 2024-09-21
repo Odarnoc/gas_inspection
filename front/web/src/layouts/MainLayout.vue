@@ -23,11 +23,11 @@
         <div>
           <q-btn-dropdown color="white" flat icon="fas fa-user">
             <q-list>
-              <!-- <q-item clickable @click="driverProfile(userid)" v-close-popup>
+              <q-item clickable @click="this.$router.push('/profile')" v-close-popup>
                 <q-item-section>
                   <q-item-label>{{$t('menus.profile')}}</q-item-label>
                 </q-item-section>
-              </q-item>-->
+              </q-item>
 
               <q-item clickable v-close-popup @click="logOut()">
                 <q-item-section>

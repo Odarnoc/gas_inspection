@@ -2,17 +2,27 @@
   <q-form ref="refForm" class="q-gutter-md">
     <div class="row q-col-gutter-xs">
       <div class="col-md-3 col-xs-6 col-12">
-        <q-input
+        <q-select
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
-          type="text"
+          filled
           v-model="state.fields.material"
           :rules="rules.material"
+          use-input
+          input-debounce="0"
+          :options="materialOptionFiltered"
+          @filter="filterFn"
           :label="$t('fields.material')"
-        />
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">No results</q-item-section>
+            </q-item>
+          </template>
+        </q-select>
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
@@ -44,7 +54,25 @@ export default {
           material: '',
           quantity: 1
         }
-      }
+      },
+      materialOptions: [
+        'Válvulas - 1/2"',
+        'Codo reductor - 3/4" a 1/2"',
+        'Codo 90° - 3/4"',
+        'Tee - 3/4"',
+        'Cupla - 3/4"',
+        'Tapón macho - 3/4"',
+        'Codo M-H 90° de 3/4"',
+        'Niple - 3/4"',
+        'Codo M-H 90° - 1/2"',
+        'Rejillas',
+        'Funda',
+        'Regulador - 1/2"',
+        'Gasolina 1lt',
+        'Teflón',
+        'Carburo'
+      ],
+      materialOptionFiltered: this.materialOptions
     }
   },
   props: { edit_flag: Boolean },
@@ -61,6 +89,14 @@ export default {
   },
   mounted () {},
   methods: {
+    filterFn (val, update, abort) {
+      update(() => {
+        const needle = val.toLowerCase()
+        this.materialOptionFiltered = this.materialOptions.filter(
+          (v) => v.toLowerCase().indexOf(needle) > -1
+        )
+      })
+    },
     async getData () {
       const isValid = await self.$refs.refForm.validate()
       const params = {

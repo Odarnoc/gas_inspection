@@ -4,35 +4,97 @@
 
     <div class="q-pa-md bg-grey-3">
       <div class="row bg-white border-panel q-pa-md">
-        <div class="col-md-3 col-xs-6 col-12" v-if="isCreating || isEditing">
-          <q-form ref="linesForm">
-            <q-input
-              outlined
-              bg-color="primary-input-color"
-              color="border-primary-input-color"
-              label-color="primary-input-color"
-              input-class="value-primary-input-color"
-              v-model="color"
-              :rules="rules.color"
-            >
-              <template v-slot:append>
-                <q-icon name="colorize" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-color v-model="color" />
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-          </q-form>
+        <div class="col-12 q-mb-md">
+          <div class="row q-col-gutter-xs" v-if="!isCreating && !isEditing">
+            <div class="col-12">
+              <q-btn
+                class="float-right"
+                color="secondary"
+                icon="add"
+                :label="$t('buttons.new')"
+                @click="startCreation"
+              />
+            </div>
+          </div>
         </div>
-        <div class="col-12 q-mb-md" v-if="!isCreating && !isEditing">
-          <q-btn
-            class="float-right"
-            color="secondary"
-            icon="add"
-            :label="$t('buttons.new')"
-            @click="startCreation"
-          />
+        <div class="col-12">
+          <q-form ref="linesForm" v-if="isCreating || isEditing">
+            <div class="row q-col-gutter-xs">
+              <div class="col-md-3 col-xs-6 col-12">
+                <q-input
+                  outlined
+                  bg-color="primary-input-color"
+                  color="border-primary-input-color"
+                  label-color="primary-input-color"
+                  input-class="value-primary-input-color"
+                  v-model="color"
+                  :rules="rules.color"
+                >
+                  <template v-slot:append>
+                    <q-icon name="colorize" class="cursor-pointer">
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-color v-model="color" />
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+              </div>
+              <div class="col-md-3 col-xs-6 col-12">
+                <q-input
+                  outlined
+                  bg-color="primary-input-color"
+                  color="border-primary-input-color"
+                  label-color="primary-input-color"
+                  input-class="value-primary-input-color"
+                  type="text"
+                  v-model="city"
+                  :rules="rules.city"
+                  :label="$t('fields.city')"
+                />
+              </div>
+              <div class="col-md-3 col-xs-6 col-12">
+                <q-input
+                  outlined
+                  bg-color="primary-input-color"
+                  color="border-primary-input-color"
+                  label-color="primary-input-color"
+                  input-class="value-primary-input-color"
+                  type="text"
+                  v-model="zone"
+                  :rules="rules.zone"
+                  :label="$t('fields.zone')"
+                />
+              </div>
+              <div class="col-md-3 col-xs-6 col-12">
+                <q-input
+                  :readonly="readonlyByStatus"
+                  outlined
+                  bg-color="primary-input-color"
+                  color="border-primary-input-color"
+                  label-color="primary-input-color"
+                  input-class="value-primary-input-color"
+                  type="text"
+                  v-model="avenue"
+                  :rules="rules.avenue"
+                  :label="$t('fields.avenue')"
+                />
+              </div>
+              <div class="col-md-3 col-xs-6 col-12">
+                <q-input
+                  :readonly="readonlyByStatus"
+                  outlined
+                  bg-color="primary-input-color"
+                  color="border-primary-input-color"
+                  label-color="primary-input-color"
+                  input-class="value-primary-input-color"
+                  type="text"
+                  v-model="streets"
+                  :rules="rules.streets"
+                  :label="$t('fields.streets')"
+                />
+              </div>
+            </div>
+          </q-form>
         </div>
         <div class="col-12">
           <GMapMap
@@ -138,6 +200,10 @@ export default {
     return {
       center: { lat: -16.49798820086203, lng: -68.13029845308486 },
       color: '#00d600',
+      city: '',
+      zone: '',
+      avenue: '',
+      streets: '',
       newPath: [],
       editedPath: [],
       existentPolylines: [],
@@ -158,7 +224,11 @@ export default {
           (val) =>
             /^#[0-9A-F]{6}$/i.test(val) ||
             this.$t('validations.invalid_format.color')
-        ]
+        ],
+        city: [this.$rules.required(this.$t('validations.required.field'))],
+        avenue: [this.$rules.required(this.$t('validations.required.field'))],
+        zone: [this.$rules.required(this.$t('validations.required.field'))],
+        streets: [this.$rules.required(this.$t('validations.required.field'))]
       }
     }
   },
@@ -184,6 +254,10 @@ export default {
     startEdit () {
       this.existentPolylines[this.selectedLineIndex].editable = true
       this.color = this.existentPolylines[this.selectedLineIndex].color
+      this.city = this.existentPolylines[this.selectedLineIndex].city
+      this.zone = this.existentPolylines[this.selectedLineIndex].zone
+      this.avenue = this.existentPolylines[this.selectedLineIndex].avenue
+      this.streets = this.existentPolylines[this.selectedLineIndex].streets
       this.showing = false
       this.isEditing = true
     },
@@ -227,7 +301,11 @@ export default {
       const line = latLngToLineParser(this.newPath)
       const params = {
         line,
-        color: this.color
+        color: this.color,
+        city: this.city,
+        zone: this.zone,
+        avenue: this.avenue,
+        streets: this.streets
       }
       try {
         const response = await this.create(params)
@@ -271,7 +349,11 @@ export default {
       const params = {
         id,
         line,
-        color: this.color
+        color: this.color,
+        city: this.city,
+        zone: this.zone,
+        avenue: this.avenue,
+        streets: this.streets
       }
       try {
         const response = await this.update(params)

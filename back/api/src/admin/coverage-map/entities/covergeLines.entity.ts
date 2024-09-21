@@ -26,6 +26,18 @@ export class CovergeLines {
   @Column('text', { nullable: false, default: '#00d600' })
   color: string;
 
+  @Column('text', { default: '', nullable: false })
+  city: string;
+
+  @Column('text', { default: '', nullable: false })
+  zone: string;
+
+  @Column('text', { default: '', nullable: false })
+  avenue: string;
+
+  @Column('text', { default: '', nullable: false })
+  streets: string;
+
   @CreateDateColumn({
     nullable: true,
     type: 'timestamptz',

@@ -73,7 +73,7 @@
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="tel"
-          mask="##########"
+          mask="########"
           v-model="user.fields.phone"
           :rules="rules.phone"
           :label="$t('fields.phone')"
@@ -88,7 +88,7 @@
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="tel"
-          mask="##########"
+          mask="########"
           v-model="user.fields.cellphone"
           :rules="rules.cellphone"
           :label="$t('fields.cellphone')"
@@ -445,6 +445,16 @@
             :draggable="!readonlyByStatus"
             @dragend="updateMarker($event)"
           />
+          <GMapPolyline
+            v-for="(polyline, index) in lines"
+            v-bind:key="polyline.id"
+            :path="polyline.line"
+            :options="{
+                strokeColor: getColorOfPolyline(polyline, index),
+                strokeOpacity: 1.0,
+                strokeWeight: 7,
+              }"
+          />
         </GMapMap>
       </div>
     </div>
@@ -478,6 +488,7 @@ export default {
   name: 'base-table',
   data () {
     return {
+      lines: [],
       center: { lat: -16.49798820086203, lng: -68.13029845308486 },
       marker: { lat: -16.49798820086203, lng: -68.13029845308486 },
       user: {
@@ -556,8 +567,12 @@ export default {
             self.$t('validations.invalid_format.field_numeric')
           ),
           self.$rules.minLength(
-            10,
-            self.$t('validations.length.field_10_number')
+            7,
+            self.$t('validations.length.field_7_or_8_number')
+          ),
+          self.$rules.maxLength(
+            8,
+            self.$t('validations.length.field_7_or_8_number')
           )
         ],
         cellphone: [
@@ -566,8 +581,12 @@ export default {
             self.$t('validations.invalid_format.field_numeric')
           ),
           self.$rules.minLength(
-            10,
-            self.$t('validations.length.field_10_number')
+            7,
+            self.$t('validations.length.field_7_or_8_number')
+          ),
+          self.$rules.maxLength(
+            8,
+            self.$t('validations.length.field_7_or_8_number')
           )
         ],
         proyectType: [
@@ -594,9 +613,11 @@ export default {
     self = this
     this.setProyectTypeOptions()
     this.setInspectorOptions()
+    this.setLines()
   },
   mounted () {},
   methods: {
+    ...mapActions('admin/covergeLines', { getAllLines: 'getAll' }),
     ...mapActions('admin/proyectTypes', ['getOptions']),
     ...mapActions('users/auth', ['getInspectorOptions']),
     async getData () {
@@ -672,6 +693,10 @@ export default {
       const response = await self.getOptions()
       self.options.proyectTypes = response.data
     },
+    async setLines () {
+      const response = await self.getAllLines()
+      self.lines = response.data.data
+    },
     async setInspectorOptions () {
       const response = await self.getInspectorOptions()
       self.options.inspectors = response.data
@@ -681,6 +706,12 @@ export default {
         lat: locationEvent.latLng.lat(),
         lng: locationEvent.latLng.lng()
       }
+    },
+    getColorOfPolyline (polyline, index) {
+      if (this.isEditing && this.selectedLineIndex === index) {
+        return `${this.color}`
+      }
+      return `${polyline.color}`
     }
   }
 }

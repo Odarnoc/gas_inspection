@@ -111,10 +111,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "qAirOutlet": MessageLookupByLibrary.simpleMessage("Salida de aire"),
         "qAirSupply":
             MessageLookupByLibrary.simpleMessage("Alimentación de aire"),
+        "qAreaCleaning":
+            MessageLookupByLibrary.simpleMessage("Limpieza de área"),
+        "qLeakCheck":
+            MessageLookupByLibrary.simpleMessage("Verificación de fugas"),
         "qMinimumVolume":
             MessageLookupByLibrary.simpleMessage("Volumen mínimo"),
+        "qPressureCheck":
+            MessageLookupByLibrary.simpleMessage("Verificación de presión"),
         "qRapidAeration":
             MessageLookupByLibrary.simpleMessage("Aireación rápida"),
+        "qValvuleCheck":
+            MessageLookupByLibrary.simpleMessage("Verificación de válvulas"),
+        "qVentilation": MessageLookupByLibrary.simpleMessage("Ventilación"),
         "signOut": MessageLookupByLibrary.simpleMessage("Cerrar sesión"),
         "tAbout": MessageLookupByLibrary.simpleMessage("Acerca de"),
         "tNotifications": MessageLookupByLibrary.simpleMessage("Notificaciones")

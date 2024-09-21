@@ -36,6 +36,7 @@ class PreferencesProvider {
     preferences!.setString('image', user.image);
     preferences!.setString('phone', user.phone);
     preferences!.setString('cellphone', user.cellphone);
+    preferences!.setString('address', user.address);
     preferences!.setStringList('roles', user.roles);
   }
 
@@ -49,6 +50,7 @@ class PreferencesProvider {
           'guest@${kNameApp.toLowerCase()}.com',
       phone: preferences!.getString('phone') ?? 's/n',
       cellphone: preferences!.getString('cellphone') ?? 's/n',
+      address: preferences!.getString('address') ?? 'n/a',
       image: preferences!.getString('image') ?? kImageDeliveryManDefault,
       roles: preferences!.getStringList('roles') ?? [],
       token: preferences!.getString('token') ?? '',
@@ -65,6 +67,7 @@ class PreferencesProvider {
       maternalName: kPhonePrefix,
       phone: 's/n',
       cellphone: 's/n',
+      address: 'n/a',
       image: kImageDeliveryManDefault,
       roles: [],
       token: '',

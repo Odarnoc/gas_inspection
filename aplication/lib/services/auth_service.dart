@@ -11,6 +11,8 @@ import 'package:mikinder/src/models/user_model.dart';
 import 'package:mikinder/src/providers/preferences_provider.dart';
 
 const _urlLogin = 'auth/loginApp';
+const _urlUpdate = 'auth/update';
+const _urlUpdatePassword = 'auth/update-password';
 const _urlLogOut = 'auth/log-out';
 const _urlGetProfile = 'auth/profile';
 
@@ -62,6 +64,71 @@ class AuthService {
       showErrorUknown();
       if (kDebugMode) {
         print('AuthService login: $err');
+      }
+    } finally {
+      client.close();
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> updatePasswordByUserId(
+      int userId, String password) async {
+    final client = InterceptedClient.build(interceptors: [
+      GeneralInterceptor(),
+      LoggerInterceptor(),
+    ]);
+    try {
+      final resp = await client.patch(Uri.parse('$kDomain$_urlUpdatePassword'),
+          headers: {
+            'Authorization': 'Bearer ${prefs.token}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "userId": userId,
+            "password": password,
+          }));
+      Map<String, dynamic> decodedResp = json.decode(resp.body);
+      return decodedResp;
+    } on BadRequestException {
+      if (kDebugMode) {
+        print('AuthService updatePasswordByUserId: BadRequestException');
+      }
+    } catch (err) {
+      showErrorUknown();
+      if (kDebugMode) {
+        print('AuthService updatePasswordByUserId: $err');
+      }
+    } finally {
+      client.close();
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> changeImage(int userId, String image) async {
+    final client = InterceptedClient.build(interceptors: [
+      GeneralInterceptor(),
+      LoggerInterceptor(),
+    ]);
+    try {
+      final resp = await client.put(Uri.parse('$kDomain$_urlUpdate'),
+          headers: {
+            'Authorization': 'Bearer ${prefs.token}',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "id": userId,
+            "image": image,
+          }));
+      Map<String, dynamic> decodedResp = json.decode(resp.body);
+      return decodedResp;
+    } on BadRequestException {
+      if (kDebugMode) {
+        print('AuthService changeImage: BadRequestException');
+      }
+    } catch (err) {
+      showErrorUknown();
+      if (kDebugMode) {
+        print('AuthService changeImage: $err');
       }
     } finally {
       client.close();

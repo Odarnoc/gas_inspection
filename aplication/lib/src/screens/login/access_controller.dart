@@ -44,9 +44,11 @@ class AccessController with ChangeNotifier {
       user = UserModel.fromJson(decodedResp!);
       prefs.user = user;
       prefs.token = user.token;
+      inAsyncCall = false;
       return user;
     } catch (e) {
       print(e);
+      inAsyncCall = false;
       return null;
     }
   }

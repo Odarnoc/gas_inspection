@@ -3,52 +3,59 @@
     <p class="text-h5 text-bold">{{ $t('fields.personalInfo') }}</p>
 
     <div class="row q-col-gutter-xs">
+      <div class="col-12 q-mt-md" align="center">
+        <image-profile :imageUrl="user.fields.image" />
+        <br />
+        <image-upload
+          :route="createProfileFileRoute"
+          @onUploadFile="updateProfileImage"
+          :isProfileView="true"
+        />
+        <br />
+      </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="text"
           v-model="user.fields.firstName"
-          :rules="rules.firstName"
           :label="$t('fields.firstName')"
         />
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="text"
           v-model="user.fields.paternalName"
-          :rules="rules.paternalName"
           :label="$t('fields.paternalName')"
         />
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
           type="text"
           v-model="user.fields.maternalName"
-          :rules="rules.maternalName"
           :label="$t('fields.maternalName')"
         />
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
@@ -56,14 +63,13 @@
           type="tel"
           mask="########"
           v-model="user.fields.phone"
-          :rules="rules.phone"
           :label="$t('fields.phone')"
         />
       </div>
       <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
@@ -71,106 +77,79 @@
           type="tel"
           mask="########"
           v-model="user.fields.cellphone"
-          :rules="rules.cellphone"
           :label="$t('fields.cellphone')"
         />
       </div>
-    </div>
-    <p class="text-h5 text-bold">{{ $t('fields.assignment') }}</p>
-    <div class="row q-col-gutter-xs">
-      <div class="col-md-6 col-xs-6 col-12">
-        <q-select
-          outlined
-          bg-color="primary-input-color"
-          color="border-primary-input-color"
-          label-color="primary-input-color"
-          input-class="value-primary-input-color"
-          :options="options.instalators"
-          v-model="user.fields.instalator"
-          map-options
-          emit-value
-          :label="$t('roles.instalator')"
-          :rules="rules.instalator"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-xs" v-if="user.fields.observations">
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
-          readonly
           outlined
+          readonly
           bg-color="primary-input-color"
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
-          type="textarea"
-          v-model="user.fields.observations"
-          :label="$t('fields.observations')"
+          type="email"
+          :disable="edit"
+          v-model="user.fields.email"
+          :label="$t('fields.email')"
         />
       </div>
     </div>
-    <br />
     <slot name="actions"></slot>
   </q-form>
 </template>
 
 <script>
 import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
-import { mapActions } from 'vuex'
 
 let self
 export default {
   name: 'base-table',
   data () {
     return {
-      center: { lat: -16.49798820086203, lng: -68.13029845308486 },
-      marker: { lat: -16.49798820086203, lng: -68.13029845308486 },
       user: {
         fields: {
           id: null,
+          image: '',
+          rol: '',
+          email: '',
+          password: '',
           firstName: '',
-          paternalName: '',
           maternalName: '',
+          paternalName: '',
           phone: '',
           cellphone: '',
-          zone: '',
+          roles: '',
           address: '',
-          avenue: '',
-          street: '',
-          door: '',
-          references: '',
-          location: null,
-          identityCard: '',
-          waterBill: '',
-          electricityBill: '',
-          realFolio: '',
-          startDate: '',
-          limitDate: '',
-          proyectType: null,
-          instalator: null,
-          status: null,
-          observations: ''
+          professionalTitle: '',
+          professionalTitleFile: '',
+          cv: '',
+          incomeDate: '',
+          conclusionDate: ''
         }
       },
       isPwd: true,
-      options: { proyectTypes: [], instalators: [] }
+      roles: [
+        { value: this.$typesRol.admin, label: this.$t('roles.admin') },
+        { value: this.$typesRol.vendor, label: this.$t('roles.vendor') },
+        { value: this.$typesRol.inspector, label: this.$t('roles.inspector') },
+        { value: this.$typesRol.instalator, label: this.$t('roles.instalator') }
+      ]
     }
   },
   props: {
-    edit: Boolean
+    edit: Boolean,
+    isProfile: Boolean
   },
   computed: {
-    createIdentityCardFileRoute () {
-      return `${GENERAL_ROUTES.user}identityCard/${new Date().getTime()}/`
+    createProfileFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/profile/`
     },
-    createWaterBillFileRoute () {
-      return `${GENERAL_ROUTES.user}waterBill/${new Date().getTime()}/`
+    createProfessionalTitleFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/professionalTitle/`
     },
-    createElectricityBillFileRoute () {
-      return `${GENERAL_ROUTES.user}electricityBill/${new Date().getTime()}/`
-    },
-    createRealFolioFileRoute () {
-      return `${GENERAL_ROUTES.user}realFolio/${new Date().getTime()}/`
+    createCVFileRoute () {
+      return `${GENERAL_ROUTES.user}${this.user.fields.id}/cv/`
     },
     computedOptions () {
       return (options) => [
@@ -180,6 +159,7 @@ export default {
     },
     rules () {
       return {
+        roles: [self.$rules.required(self.$t('validations.required.field'))],
         firstName: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
@@ -189,6 +169,11 @@ export default {
         maternalName: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
+        email: [
+          self.$rules.required(self.$t('validations.required.email')),
+          self.$rules.email(self.$t('validations.invalid_format.email'))
+        ],
+        password: [self.$rules.required(self.$t('validations.required.field'))],
         phone: [
           self.$rules.required(self.$t('validations.required.field')),
           self.$rules.numeric(
@@ -217,48 +202,26 @@ export default {
             self.$t('validations.length.field_7_or_8_number')
           )
         ],
-        proyectType: [
+        address: [self.$rules.required(self.$t('validations.required.field'))],
+        professionalTitle: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
-        instalator: [
+        incomeDate: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
-        zone: [self.$rules.required(self.$t('validations.required.field'))],
-        avenue: [self.$rules.required(self.$t('validations.required.field'))],
-        street: [self.$rules.required(self.$t('validations.required.field'))],
-        door: [self.$rules.required(self.$t('validations.required.field'))],
-        references: [
+        conclusionDate: [
           self.$rules.required(self.$t('validations.required.field'))
-        ],
-        startDate: [
-          self.$rules.required(self.$t('validations.required.field'))
-        ],
-        limitDate: [self.$rules.required(self.$t('validations.required.field'))]
+        ]
       }
     }
   },
   created () {
     self = this
-    this.setInstalatorOptions()
   },
   mounted () {},
   methods: {
-    ...mapActions('admin/proyectTypes', ['getOptions']),
-    ...mapActions('users/auth', ['getInstalatorOptions']),
     async getData () {
-      const params = {
-        ...self.user.fields,
-        proyectType: {
-          id: self.user.fields.proyectType
-        },
-        instalator: {
-          id: self.user.fields.instalator
-        },
-        location: {
-          x: this.marker.lat,
-          y: this.marker.lng
-        }
-      }
+      const params = { ...self.user.fields }
       const isValid = await self.$refs.regForm.validate()
       return {
         isValid: isValid,
@@ -266,19 +229,9 @@ export default {
       }
     },
     setData (data) {
-      const { location, proyectType, inspector, instalator } = data
+      const { roles } = data
       self.user.fields = data
-      self.user.fields.proyectType = proyectType?.id
-      self.user.fields.inspector = inspector?.id
-      self.user.fields.instalator = instalator?.id
-      this.marker = {
-        lat: location.x,
-        lng: location.y
-      }
-      this.center = {
-        lat: location.x,
-        lng: location.y
-      }
+      self.user.fields.rol = roles[0]
     },
     resetFields () {
       self.user.fields = {
@@ -291,6 +244,7 @@ export default {
         paternalName: '',
         phone: '',
         cellphone: '',
+        roles: '',
         address: '',
         professionalTitle: '',
         professionalTitleFile: '',
@@ -300,30 +254,17 @@ export default {
       }
       self.$refs.regForm.resetValidation()
     },
-    async updateIdentityCardImage (updateUrlImage) {
-      this.user.fields.identityCard = updateUrlImage
+    async updateProfileImage (updateUrlImage) {
+      this.user.fields.image = updateUrlImage
     },
-    async updateWaterBillImage (updateUrlImage) {
-      this.user.fields.waterBill = updateUrlImage
+    async updateCVImage (updateUrlImage) {
+      this.user.fields.cv = updateUrlImage
     },
-    async updateElectricityBillImage (updateUrlImage) {
-      this.user.fields.electricityBill = updateUrlImage
-    },
-    async updateRealFolioImage (updateUrlImage) {
-      this.user.fields.realFolio = updateUrlImage
+    async updateProfessionalTitleImage (updateUrlImage) {
+      this.user.fields.professionalTitleFile = updateUrlImage
     },
     showFile (url) {
       window.open(url, '_blank')
-    },
-    async setInstalatorOptions () {
-      const response = await self.getInstalatorOptions()
-      self.options.instalators = response.data
-    },
-    updateMarker (locationEvent) {
-      this.marker = {
-        lat: locationEvent.latLng.lat(),
-        lng: locationEvent.latLng.lng()
-      }
     }
   }
 }
