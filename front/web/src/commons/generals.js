@@ -9,8 +9,7 @@ const generals = {
 export default generals
 
 export const accepteFiles = {
-  images: 'image/*',
-  docuemnts: '.pdf'
+  images: '.jpg,.jpeg,.png'
 }
 
 export const sizeFiles = 10485760

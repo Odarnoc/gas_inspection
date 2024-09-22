@@ -32,6 +32,10 @@ const module = {
       const response = await api.post(`${apiRoot}/getTableDone`, pagination)
       return response
     },
+    getTableStore: async ({ commit, dispatch }, pagination) => {
+      const response = await api.post(`${apiRoot}/getTableStore`, pagination)
+      return response
+    },
     get: async ({ commit, dispatch }, id) => {
       const response = await api.post(`${apiRoot}/get/${id}`)
       return response

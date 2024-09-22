@@ -333,6 +333,9 @@ export default boot(({ app, ssrContext, store }) => {
     if (status === statusOrder.done) {
       return i18n.global.t('requestPetitionStatus.done')
     }
+    if (status === statusOrder.store) {
+      return i18n.global.t('requestPetitionStatus.stored')
+    }
     if (status === statusOrder.rejected) {
       return i18n.global.t('requestPetitionStatus.rejected')
     }

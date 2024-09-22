@@ -10,7 +10,7 @@
               <base-table
                 ref="table"
                 :columns="columnsServices"
-                :fetchData="getTableDone"
+                :fetchData="getTableStore"
                 :pag="pagination"
               >
                 <template v-slot:body="props">
@@ -118,7 +118,7 @@ export default {
     this.fetchFromServer()
   },
   methods: {
-    ...mapActions('vendor/requestPetition', ['getTableDone', 'delete']),
+    ...mapActions('vendor/requestPetition', ['getTableStore', 'delete']),
     async fetchFromServer () {
       this.$showLoading()
       this.$destroyLoading()

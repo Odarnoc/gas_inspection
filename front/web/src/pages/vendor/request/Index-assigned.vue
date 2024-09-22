@@ -41,6 +41,13 @@
                         @click="editSelectedRow(props.row.id)"
                         size="10px"
                       />
+                      <q-btn
+                        color="negative"
+                        icon="fas fa-trash"
+                        flat
+                        @click="deleteSelectedRow(props.row.id)"
+                        size="10px"
+                      />
                     </q-td>
                   </q-tr>
                 </template>

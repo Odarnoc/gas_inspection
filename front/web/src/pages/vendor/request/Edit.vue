@@ -6,7 +6,14 @@
       <div class="row bg-white border-panel q-pa-md">
         <div class="col-3" />
         <div class="col-12">
-          <form-request ref="documentForm" edit_flag />
+          <form-request
+            ref="documentForm"
+            edit_flag
+            @onupdateIdentityCard="updateFile"
+            @onupdateWaterBillImage="updateFile"
+            @onupdateElectricityBillImage="updateFile"
+            @onupdateRealFolioImage="updateFile"
+          />
         </div>
         <div class="col-12" v-if="isometric || floorPlan || materials">
           <q-carousel swipeable animated arrows v-model="slide" infinite>
@@ -150,6 +157,27 @@ export default {
         return
       }
       const params = { ...formResult.params }
+      try {
+        const response = await self.update(params)
+        this.$showNotifySuccess(response)
+        await self.fetchFromServer()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      self.$destroyLoading()
+      self.loading = false
+    },
+    async updateFile () {
+      self.loading = true
+      self.$showLoading()
+      const formResult = await self.$refs.documentForm.getData()
+      const params = {
+        id: formResult.params.id,
+        identityCard: formResult.params.identityCard,
+        waterBill: formResult.params.waterBill,
+        electricityBill: formResult.params.electricityBill,
+        realFolio: formResult.params.realFolio
+      }
       try {
         const response = await self.update(params)
         this.$showNotifySuccess(response)

@@ -9,9 +9,9 @@
           <form-user
             ref="documentForm"
             edit
-            @onupdateProfessionalTitleImage="save"
-            @onupdateCVImage="save"
-            @onupdateProfileImage="save"
+            @onupdateProfessionalTitleImage="saveFiles"
+            @onupdateCVImage="saveFiles"
+            @onupdateProfileImage="saveFiles"
           />
         </div>
         <div class="col-12">
@@ -71,6 +71,26 @@ export default {
         return
       }
       const params = { ...formResult.params }
+      try {
+        const response = await self.update(params)
+        this.$showNotifySuccess(response)
+        await self.fetchFromServer()
+      } catch (error) {
+        this.$showNotifyError(error)
+      }
+      self.$destroyLoading()
+      self.loading = false
+    },
+    async saveFiles () {
+      self.loading = true
+      self.$showLoading()
+      const formResult = await self.$refs.documentForm.getData()
+      const params = {
+        id: formResult.params.id,
+        image: formResult.params.image,
+        cv: formResult.params.cv,
+        professionalTitleFile: formResult.params.professionalTitleFile
+      }
       try {
         const response = await self.update(params)
         this.$showNotifySuccess(response)

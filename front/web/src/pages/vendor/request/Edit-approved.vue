@@ -8,26 +8,7 @@
         <div class="col-12">
           <form-request-approved ref="documentForm" edit_flag />
         </div>
-        <div class="col-12 q-mb-md">
-          <q-btn color="warning" icon="photo_camera" @click="showExtraDocuments" />
-          <q-btn
-            v-if="status == statusOrder.inspectionAproved"
-            class="float-right q-mr-md"
-            color="primary"
-            icon="save"
-            :label="$t('buttons.saveAndassign')"
-            @click="saveAndAssign"
-          />
-          <q-btn
-            v-if="status == statusOrder.inspectionAproved"
-            class="float-right q-mr-md"
-            color="secondary"
-            icon="save"
-            :label="$t('buttons.update')"
-            @click="save"
-          />
-        </div>
-        <div class="col-12" v-if="isometric || floorPlan || materials">
+        <div class="col-md-6 col-xs-12" v-if="isometric || floorPlan || materials">
           <q-carousel swipeable animated arrows v-model="slide" infinite>
             <q-carousel-slide class="uncropped-image" :name="1" :img-src="isometric" />
             <q-carousel-slide class="uncropped-image" :name="2" :img-src="floorPlan" />
@@ -44,10 +25,8 @@
           </q-carousel>
           <br />
         </div>
-        <div class="col-12">
+        <div class="col-md-6 col-xs-12">
           <form-request-material ref="materialForm" />
-        </div>
-        <div class="col-12">
           <div class="row q-mb-sm q-mt-md">
             <div class="col-12">
               <div class="row q-col-gutter-xs q-mb-md">
@@ -95,6 +74,25 @@
               </base-table>
             </div>
           </div>
+        </div>
+        <div class="col-12 q-mb-md">
+          <q-btn color="warning" icon="photo_camera" @click="showExtraDocuments" />
+          <q-btn
+            v-if="status == statusOrder.inspectionAproved"
+            class="float-right q-mr-md"
+            color="primary"
+            icon="save"
+            :label="$t('buttons.saveAndassign')"
+            @click="saveAndAssign"
+          />
+          <q-btn
+            v-if="status == statusOrder.inspectionAproved"
+            class="float-right q-mr-md"
+            color="secondary"
+            icon="save"
+            :label="$t('buttons.update')"
+            @click="save"
+          />
         </div>
       </div>
     </div>

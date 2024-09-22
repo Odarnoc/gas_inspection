@@ -252,16 +252,11 @@ export default {
         incomeDate: '',
         conclusionDate: ''
       }
-      self.$refs.regForm.resetValidation()
+      self.$refs.regForm.reset()
     },
     async updateProfileImage (updateUrlImage) {
       this.user.fields.image = updateUrlImage
-    },
-    async updateCVImage (updateUrlImage) {
-      this.user.fields.cv = updateUrlImage
-    },
-    async updateProfessionalTitleImage (updateUrlImage) {
-      this.user.fields.professionalTitleFile = updateUrlImage
+      this.$emit('onupdateProfileImage')
     },
     showFile (url) {
       window.open(url, '_blank')

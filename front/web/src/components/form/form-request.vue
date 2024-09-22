@@ -672,19 +672,23 @@ export default {
         incomeDate: '',
         conclusionDate: ''
       }
-      self.$refs.regForm.resetValidation()
+      self.$refs.regForm.reset()
     },
     async updateIdentityCardImage (updateUrlImage) {
       this.user.fields.identityCard = updateUrlImage
+      this.$emit('onupdateIdentityCard')
     },
     async updateWaterBillImage (updateUrlImage) {
       this.user.fields.waterBill = updateUrlImage
+      this.$emit('onupdateWaterBillImage')
     },
     async updateElectricityBillImage (updateUrlImage) {
       this.user.fields.electricityBill = updateUrlImage
+      this.$emit('onupdateElectricityBillImage')
     },
     async updateRealFolioImage (updateUrlImage) {
       this.user.fields.realFolio = updateUrlImage
+      this.$emit('onupdateRealFolioImage')
     },
     showFile (url) {
       window.open(url, '_blank')

@@ -453,7 +453,7 @@ export default {
         incomeDate: '',
         conclusionDate: ''
       }
-      self.$refs.regForm.resetValidation()
+      self.$refs.regForm.reset()
     },
     async updateProfileImage (updateUrlImage) {
       this.user.fields.image = updateUrlImage

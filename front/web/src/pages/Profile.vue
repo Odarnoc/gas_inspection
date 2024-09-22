@@ -7,7 +7,7 @@
             <q-card class="justify-center q-pa-md" flat bordered round>
               <div class="row">
                 <div class="col-12 q-pt-md">
-                  <form-user-profile ref="regForm" />
+                  <form-user-profile ref="regForm" @onupdateProfileImage="saveFiles" />
                 </div>
                 <div class="col-sm-12 col-md-12 col-xs-12 q-pa-md" align="center">
                   <q-btn
@@ -130,31 +130,21 @@ export default {
       await self.$showNotifyMessage(data)
       await self.$destroyLoading()
     },
-    async updateUrlImage (updateUrlImage) {
-      await self.$showLoading()
+    async saveFiles () {
+      self.$showLoading()
+      const formResult = await self.$refs.regForm.getData()
       const params = {
-        image: updateUrlImage,
-        isImageRequested: false,
-        isImageUpdate: true
+        id: formResult.params.id,
+        image: formResult.params.image
       }
-      let data = {}
       try {
         const response = await self.update(params)
-        data = {
-          message: self.$t(`messages.success.${response.data.message}`),
-          result: response.data.result
-        }
+        this.$showNotifySuccess(response)
         await self.fetchFromServer()
       } catch (error) {
-        data = {
-          message: self.$t(
-            `messages.errorCode.${error.response.data.codeError}`
-          ),
-          result: false
-        }
+        this.$showNotifyError(error)
       }
-      await self.$showNotifyMessage(data)
-      await self.$destroyLoading()
+      self.$destroyLoading()
     }
   }
 }

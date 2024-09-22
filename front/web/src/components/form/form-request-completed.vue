@@ -76,39 +76,6 @@
         />
       </div>
     </div>
-    <p class="text-h5 text-bold">{{ $t('fields.assignment') }}</p>
-    <div class="row q-col-gutter-xs">
-      <div class="col-md-6 col-xs-6 col-12">
-        <q-select
-          outlined
-          bg-color="primary-input-color"
-          color="border-primary-input-color"
-          label-color="primary-input-color"
-          input-class="value-primary-input-color"
-          :options="options.instalators"
-          v-model="user.fields.instalator"
-          map-options
-          emit-value
-          :label="$t('roles.instalator')"
-          :rules="rules.instalator"
-        />
-      </div>
-    </div>
-    <div class="row q-col-gutter-xs" v-if="user.fields.observations">
-      <div class="col-12">
-        <q-input
-          readonly
-          outlined
-          bg-color="primary-input-color"
-          color="border-primary-input-color"
-          label-color="primary-input-color"
-          input-class="value-primary-input-color"
-          type="textarea"
-          v-model="user.fields.observations"
-          :label="$t('fields.observations')"
-        />
-      </div>
-    </div>
     <br />
     <slot name="actions"></slot>
   </q-form>

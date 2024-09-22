@@ -1,7 +1,7 @@
 <template>
   <q-form ref="refForm" class="q-gutter-md">
     <div class="row q-col-gutter-xs">
-      <div class="col-md-3 col-xs-6 col-12">
+      <div class="col-md-6 col-xs-6 col-12">
         <q-select
           outlined
           bg-color="primary-input-color"
@@ -24,7 +24,7 @@
           </template>
         </q-select>
       </div>
-      <div class="col-md-3 col-xs-6 col-12">
+      <div class="col-md-6 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
@@ -117,7 +117,7 @@ export default {
         material: '',
         quantity: 1
       }
-      self.$refs.refForm.resetValidation()
+      self.$refs.refForm.reset()
     }
   }
 }

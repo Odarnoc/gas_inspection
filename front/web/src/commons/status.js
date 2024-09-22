@@ -5,6 +5,7 @@ export const statusOrder = {
   instalationAssigned: 120,
   interrnalInspection: 130,
   done: 200,
+  store: 201,
   rejected: 400
 }
 

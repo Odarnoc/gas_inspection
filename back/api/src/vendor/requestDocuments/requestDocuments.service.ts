@@ -132,6 +132,9 @@ export class RequestDocumentsService {
           id,
         },
       },
+      order: {
+        id: 'ASC',
+      },
     });
     return {
       data,

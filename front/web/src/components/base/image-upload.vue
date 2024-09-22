@@ -1,6 +1,21 @@
 
 <template>
-  <div class="row">
+  <q-btn v-if="!isProfileView" :color="color" :icon="icon" :label="buttonText" @click="pickFiles">
+    <q-file
+      class="hidden"
+      ref="docInput"
+      v-model="file.fields.document"
+      filled
+      rounded
+      multiple
+      :accept="`${accepteFiles.images}`"
+      max-files="1"
+      :max-file-size="sizeFiles"
+      @rejected="onRejected"
+      @update:model-value="previewValidation"
+    />
+  </q-btn>
+  <div v-else class="row">
     <div class="col-xs-12 col-sm-3" />
     <div class="col-xs-12 col-sm-6">
       <div class="row justify-center">
@@ -20,8 +35,9 @@
               @update:model-value="previewValidation"
             />
             <q-btn
+              v-if="isProfileView"
               push
-              color="primary"
+              :color="color"
               @click="pickFiles"
               :round="round"
               :icon="icon"
@@ -34,29 +50,6 @@
         </div>
       </div>
     </div>
-
-    <q-dialog v-model="flags.preview">
-      <q-card style="min-width: 50wv">
-        <q-field
-          class="q-ma-lg"
-          filled
-          readonly
-          v-bind:key="filePrev"
-          v-for="filePrev in file.fields.document"
-        >
-          <template v-slot:control>
-            <div class="self-center full-width no-outline">{{ filePrev.name }}</div>
-          </template>
-        </q-field>
-
-        <q-separator />
-
-        <q-card-actions align="right">
-          <q-btn v-close-popup color="negative" :label="$t('buttons.cancel')" />
-          <q-btn @click="uploadFile()" color="positive" :label="$t('buttons.confirm')" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
@@ -87,6 +80,7 @@ export default {
   props: {
     route: String,
     icon: { type: String, default: 'create' },
+    color: { type: String, default: 'primary' },
     buttonText: { type: String, default: '' },
     round: { type: Boolean, default: true },
     needPreview: { type: Boolean, default: false },

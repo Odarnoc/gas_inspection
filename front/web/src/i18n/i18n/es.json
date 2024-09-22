@@ -8,6 +8,7 @@
   "rows_per_page_label": "Registros por página",
   "no_results": "No se encontraron resultados",
   "no_documents": "No se encontraron documentos",
+  "extra_document": "Documento extra",
   "menus": {
     "menu": "Menú",
     "profile": "Perfil",
@@ -22,6 +23,7 @@
     "observed": "Observadas",
     "rejected": "Rechazadas",
     "completed": "Completadas",
+    "stored": "Archivadas",
     "chageHistory": "Historial de cambios"
   },
   "fields": {
@@ -94,7 +96,9 @@
     "delete": "Eliminar",
     "addMaterial": "Agregar material",
     "download_material_list": "Descargar lista de materiales",
-    "changePassword": "Cambiar contraseña"
+    "changePassword": "Cambiar contraseña",
+    "store": "Archivar",
+    "addDocument": "Agregar documento"
   },
   "dialogs": {
     "loading": "Cargando",
@@ -121,6 +125,7 @@
     "instalationAssigned": "Asignada para instalación",
     "interrnalInspection": "Solicitud de inspección interna",
     "done": "Solicitud finalizada",
+    "stored": "Solicitud archivada",
     "rejected": "Inspección rechazada"
   },
   "validations": {

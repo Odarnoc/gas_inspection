@@ -6,5 +6,6 @@ export enum StatusOrder {
   instalationReassigned = 121,
   interrnalInspection = 130,
   done = 200,
+  store = 201,
   rejected = 400,
 }

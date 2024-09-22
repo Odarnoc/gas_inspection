@@ -79,7 +79,7 @@ export default {
       self.state.fields = {
         name: ''
       }
-      self.$refs.refForm.resetValidation()
+      self.$refs.refForm.reset()
     }
   }
 }
