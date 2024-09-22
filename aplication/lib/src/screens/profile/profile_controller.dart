@@ -119,7 +119,8 @@ class ProfileController with ChangeNotifier {
     try {
       bool result = decodedResp?['result'] ?? false;
       if (result) {
-        showSuccessSnackBar(S.of(navigatorKey.currentContext!).lUpdateSuccess);
+        showSuccessCenterSnackBar(
+            S.of(navigatorKey.currentContext!).lUpdateSuccess);
       }
       return true;
     } catch (e) {
@@ -138,7 +139,8 @@ class ProfileController with ChangeNotifier {
     try {
       bool result = decodedResp?['result'] ?? false;
       if (result) {
-        showSuccessSnackBar(S.of(navigatorKey.currentContext!).lUpdateSuccess);
+        showSuccessCenterSnackBar(
+            S.of(navigatorKey.currentContext!).lUpdateSuccess);
         getProfile();
       }
       return true;

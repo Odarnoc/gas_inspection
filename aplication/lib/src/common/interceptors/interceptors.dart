@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:mikinder/constants/constants.dart';
@@ -49,7 +50,6 @@ class GeneralInterceptor extends InterceptorContract {
     required BaseResponse response,
   }) {
     final context = navigatorKey.currentContext!;
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     if (response is Response) {
       if (response.statusCode < 200 || response.statusCode > 299) {
@@ -57,7 +57,18 @@ class GeneralInterceptor extends InterceptorContract {
         if (decodedResp['message'] != null) {
           String message = decodedResp['message'];
 
-          scaffoldMessenger
+          // AnimatedSnackBar.removeAll();
+
+          AnimatedSnackBar.rectangle(
+            S.of(navigatorKey.currentContext!).lWarnig,
+            message,
+            type: AnimatedSnackBarType.warning,
+            mobileSnackBarPosition: MobileSnackBarPosition.top,
+            desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+            brightness: Brightness.dark,
+          ).show(context);
+
+          /* scaffoldMessenger
             ..removeCurrentSnackBar()
             ..showSnackBar(SnackBar(
               content: Text(message),
@@ -65,7 +76,7 @@ class GeneralInterceptor extends InterceptorContract {
               duration: const Duration(milliseconds: 4500),
               behavior: SnackBarBehavior.floating,
               margin: const EdgeInsets.all(20),
-            ));
+            )); */
           throw BadRequestException(message);
         }
       }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/constants/glob_keys.dart';
@@ -56,41 +57,55 @@ showSuccessSnackBar(String message) {
 
 showSuccessCenterSnackBar(String message) {
   final context = navigatorKey.currentContext!;
-  final scaffoldMessenger = ScaffoldMessenger.of(context);
 
-  scaffoldMessenger.showSnackBar(SnackBar(
-    duration: const Duration(seconds: 5),
-    backgroundColor: Colors.transparent,
-    content: Align(
-      alignment: Alignment.center,
-      child: Container(
-        padding: const EdgeInsets.all(kDefaultPadding * .7),
-        width: double.maxFinite,
-        decoration: const BoxDecoration(
-          color: kPrimaryColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15),
+  // AnimatedSnackBar.removeAll();
+
+  AnimatedSnackBar.rectangle(
+    S.of(navigatorKey.currentContext!).lSuccess,
+    message,
+    type: AnimatedSnackBarType.success,
+    mobileSnackBarPosition: MobileSnackBarPosition.top,
+    desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+    brightness: Brightness.dark,
+  ).show(context);
+
+  /* scaffoldMessenger
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(
+      behavior: SnackBarBehavior.floating,
+      elevation: 100,
+      duration: const Duration(seconds: 5),
+      backgroundColor: Colors.transparent,
+      content: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: const EdgeInsets.all(kDefaultPadding * .7),
+          width: double.maxFinite,
+          decoration: const BoxDecoration(
+            color: kPositiveColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+          child: Text(
+            message,
           ),
         ),
-        child: Text(
-          message,
-        ),
       ),
-    ),
-  ));
+    )); */
 }
 
 showErrorUknown() {
   final context = navigatorKey.currentContext!;
-  final scaffoldMessenger = ScaffoldMessenger.of(context);
 
-  scaffoldMessenger
-    ..removeCurrentSnackBar()
-    ..showSnackBar(SnackBar(
-      content: Text(S.of(context).errUnknown),
-      backgroundColor: kErrorColor,
-      duration: const Duration(milliseconds: 4500),
-      behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.all(20),
-    ));
+  // AnimatedSnackBar.removeAll();
+
+  AnimatedSnackBar.rectangle(
+    S.of(navigatorKey.currentContext!).lWarnig,
+    S.of(context).errUnknown,
+    type: AnimatedSnackBarType.warning,
+    mobileSnackBarPosition: MobileSnackBarPosition.top,
+    desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+    brightness: Brightness.dark,
+  ).show(context);
 }

@@ -31,6 +31,8 @@ class ProyectInformationCard extends StatelessWidget {
               padding: const EdgeInsets.all(kDefaultPadding),
               child: Column(
                 children: [
+                  filaDistancia(context),
+                  const SizedBox(height: kDefaultPadding * .3),
                   fila1(context),
                   const SizedBox(height: kDefaultPadding * .3),
                   fila2(context),
@@ -41,6 +43,22 @@ class ProyectInformationCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  filaDistancia(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        children: <Widget>[
+          CustomFieldExpanded(
+              text: S.of(context).lDistance,
+              backgroundColor: kTableFieldsBackgroundColor),
+          const SizedBox(width: 10),
+          CustomFieldExpanded(
+              text: inspectionController.distance.toStringAsFixed(2),
+              backgroundColor: kFourthColor),
+        ],
       ),
     );
   }

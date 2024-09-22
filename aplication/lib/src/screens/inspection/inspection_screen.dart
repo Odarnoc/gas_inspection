@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mikinder/constants/status_constant.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
+import 'package:mikinder/src/screens/inspection/widgets/floating_my_location_button.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons2.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_proyect_infomation_card.dart';
@@ -63,9 +64,28 @@ class InspectionScreen extends StatelessWidget {
                           mapToolbarEnabled: false,
                           mapType: MapType.normal,
                           buildingsEnabled: false,
-                          markers: inspectionController.markers,
+                          markers: {
+                            ...inspectionController.markers,
+                            Marker(
+                              markerId: const MarkerId('cliente'),
+                              position: LatLng(
+                                requestPetition.location.x,
+                                requestPetition.location.y,
+                              ),
+                            )
+                          },
                           polylines: {
                             ...inspectionController.polylines,
+                            Polyline(
+                              polylineId:
+                                  const PolylineId('new_polyline_update'),
+                              consumeTapEvents: true,
+                              color: Colors.green,
+                              width: 5,
+                              points: inspectionController.markers
+                                  .map((marker) => marker.position)
+                                  .toList(),
+                            )
                           },
                           initialCameraPosition:
                               inspectionController.initialCameraPosition,
@@ -77,9 +97,16 @@ class InspectionScreen extends StatelessWidget {
                           compassEnabled: false,
                           myLocationButtonEnabled: false,
                           zoomControlsEnabled: false,
+                          onTap: (LatLng point) {
+                            if (inspectionController.requestPetition.status ==
+                                StatusProyect.assigned) {
+                              inspectionController.addMarker(point);
+                            }
+                          },
                         ),
                       ),
-                      // FloatingMyLocationButton(demoController: demoController),
+                      FloatingMyLocationButton(
+                          inspectionController: inspectionController),
                     ],
                   ),
                   Visibility(

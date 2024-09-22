@@ -32,10 +32,10 @@ const kImageClientDefault =
 const kImageCategoryAll =
     'https://firebasestorage.googleapis.com/v0/b/resources-a24a1.appspot.com/o/category%2F113.png?alt=media';
 
-// String kSokect = 'https://gasinspection-production.up.railway.app';
-// String kDomain = 'https://gasinspection-production.up.railway.app/api/';
-String kSokect = 'http://192.168.3.3:67';
-String kDomain = 'http://192.168.3.3:67/api/';
+String kSokect = 'https://gasinspection-production.up.railway.app';
+String kDomain = 'https://gasinspection-production.up.railway.app/api/';
+// String kSokect = 'http://192.168.3.3:67';
+// String kDomain = 'http://192.168.3.3:67/api/';
 String kDomainWeb = '';
 
 const kPhonePrefix = '+52';

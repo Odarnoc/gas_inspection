@@ -73,5 +73,8 @@
   "qValvuleCheck": "Verificación de válvulas",
   "qLeakCheck": "Verificación de fugas",
   "qVentilation": "Ventilación",
-  "qAreaCleaning": "Limpieza de área"
+  "qAreaCleaning": "Limpieza de área",
+  "lDistance": "Distancia total en mts.",
+  "lSuccess": "Éxito",
+  "lWarnig": "Advertencia"
 }

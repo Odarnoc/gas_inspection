@@ -799,6 +799,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Distancia total en mts.`
+  String get lDistance {
+    return Intl.message(
+      'Distancia total en mts.',
+      name: 'lDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Éxito`
+  String get lSuccess {
+    return Intl.message(
+      'Éxito',
+      name: 'lSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advertencia`
+  String get lWarnig {
+    return Intl.message(
+      'Advertencia',
+      name: 'lWarnig',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

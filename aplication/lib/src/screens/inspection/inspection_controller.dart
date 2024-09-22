@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +14,7 @@ import 'package:mikinder/src/common/extensions/HexColor.dart';
 import 'package:mikinder/src/models/coverage_lines_model.dart';
 import 'package:mikinder/src/models/request_document_model.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
+import 'package:maps_toolkit/maps_toolkit.dart' as mptk;
 
 class InspectionController extends ChangeNotifier {
   final RequestPetitionService requestPetitionService =
@@ -32,6 +34,9 @@ class InspectionController extends ChangeNotifier {
 
   final Map<MarkerId, Marker> _markers = {};
   Set<Marker> get markers => _markers.values.toSet();
+
+  late Marker _markerClient;
+  Marker get markerClient => _markerClient;
 
   Future<GoogleMapController> getController() async => await _completer.future;
 
@@ -164,7 +169,8 @@ class InspectionController extends ChangeNotifier {
     initialCameraPosition = CameraPosition(
         target: LatLng(requestPetition.location.x, requestPetition.location.y),
         zoom: 16);
-    addMarker(LatLng(requestPetition.location.x, requestPetition.location.y));
+    // addMarkerClient(
+    //    LatLng(requestPetition.location.x, requestPetition.location.y));
     loadLines();
   }
 
@@ -183,6 +189,13 @@ class InspectionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  cleanMeditions() {
+    _markers.clear();
+    _markerIdCounter = 1;
+    distance = 0;
+    notifyListeners();
+  }
+
   void addPolylines(CoverageLinesModel line) {
     PolylineId polylineId = PolylineId('polyline_id_${line.id}');
 
@@ -198,10 +211,90 @@ class InspectionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  addMarker(LatLng position) {
-    final String polylineIdVal = 'Punto $_markerIdCounter';
+  addMarker(LatLng position) async {
+    final int markerCount = markers.length;
+    final icon = await createCustonMarkerIcon();
+
+    String polylineIdVal = 'Punto $_markerIdCounter';
     _markerIdCounter++;
-    final MarkerId markerId = MarkerId(polylineIdVal);
+    MarkerId markerId = MarkerId(polylineIdVal);
+    Marker market = Marker(
+      markerId: markerId,
+      position: position,
+      icon: icon,
+      draggable: true,
+      onDragEnd: (value) {
+        updateMarkers(markerId, value);
+      },
+    );
+    _markers[markerId] = market;
+    notifyListeners();
+    if ((markerCount + 1) > 1) {
+      calculateDistance();
+    }
+  }
+
+  updateMarkers(MarkerId markerId, LatLng position) async {
+    final icon = await createCustonMarkerIcon();
+    final int markerCount = markers.length;
+    Marker market = Marker(
+      markerId: markerId,
+      position: position,
+      icon: icon,
+      draggable: true,
+      onDragEnd: (value) {
+        updateMarkers(markerId, value);
+      },
+    );
+    _markers[markerId] = market;
+    notifyListeners();
+    if ((markerCount + 1) > 1) {
+      calculateDistance();
+    }
+  }
+
+  Future<BitmapDescriptor> createCustonMarkerIcon() async {
+    const iconData = Icons.location_on;
+    final pictureRecorder = PictureRecorder();
+    final canvas = Canvas(pictureRecorder);
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
+    final iconStr = String.fromCharCode(iconData.codePoint);
+    textPainter.text = TextSpan(
+        text: iconStr,
+        style: TextStyle(
+          letterSpacing: 0.0,
+          fontSize: 48.0,
+          fontFamily: iconData.fontFamily,
+          color: Colors.red,
+        ));
+    textPainter.layout();
+    textPainter.paint(canvas, const Offset(0.0, 0.0));
+    final picture = pictureRecorder.endRecording();
+    final image = await picture.toImage(48, 48);
+    final bytes = await image.toByteData(format: ImageByteFormat.png);
+    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
+  }
+
+  calculateDistance() {
+    double distanceTemp = 0;
+    List<Marker> listOfMArkers = markers.toList();
+    print(listOfMArkers.length);
+    for (var i = 1; i < listOfMArkers.length; i++) {
+      print('marcador');
+      mptk.LatLng from = mptk.LatLng(listOfMArkers[i - 1].position.latitude,
+          listOfMArkers[i - 1].position.longitude);
+      mptk.LatLng to = mptk.LatLng(listOfMArkers[i].position.latitude,
+          listOfMArkers[i].position.longitude);
+      distanceTemp += mptk.SphericalUtil.computeDistanceBetween(from, to);
+    }
+    print(distanceTemp);
+    distance = distanceTemp;
+  }
+
+  addMarkerClient(LatLng position) {
+    const String polylineIdVal = 'Punto cliente';
+    _markerIdCounter++;
+    const MarkerId markerId = MarkerId(polylineIdVal);
     final market = Marker(markerId: markerId, position: position);
     _markers[markerId] = market;
     notifyListeners();
@@ -216,7 +309,8 @@ class InspectionController extends ChangeNotifier {
       'log': 'Se cargo isométrico'
     });
     if (newRequestPetitionModel != null) {
-      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
+      showSuccessCenterSnackBar(
+          S.of(navigatorKey.currentContext!).lLoadSuccess);
       _requestPetition.isometric = imageUploadUrl;
       notifyListeners();
     }
@@ -232,7 +326,8 @@ class InspectionController extends ChangeNotifier {
       'log': 'Se cargo foto de materiales'
     });
     if (newRequestPetitionModel != null) {
-      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
+      showSuccessCenterSnackBar(
+          S.of(navigatorKey.currentContext!).lLoadSuccess);
       _requestPetition.materials = imageUploadUrl;
       notifyListeners();
     }
@@ -248,7 +343,8 @@ class InspectionController extends ChangeNotifier {
       'log': 'Se cargo plano de planta'
     });
     if (newRequestPetitionModel != null) {
-      showSuccessSnackBar(S.of(navigatorKey.currentContext!).lLoadSuccess);
+      showSuccessCenterSnackBar(
+          S.of(navigatorKey.currentContext!).lLoadSuccess);
       _requestPetition.floorPlan = imageUploadUrl;
       notifyListeners();
     }

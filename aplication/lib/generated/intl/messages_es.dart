@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lAssignedDate":
             MessageLookupByLibrary.simpleMessage("Fecha de asignación"),
         "lClient": MessageLookupByLibrary.simpleMessage("Cliente"),
+        "lDistance":
+            MessageLookupByLibrary.simpleMessage("Distancia total en mts."),
         "lFloorPlan": MessageLookupByLibrary.simpleMessage("Plano de planta"),
         "lForgetYourPassword":
             MessageLookupByLibrary.simpleMessage("¿Olvidaste tu contraseña?"),
@@ -105,9 +107,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "lReasignedProyects":
             MessageLookupByLibrary.simpleMessage("Proyectos reasignados"),
         "lSearch": MessageLookupByLibrary.simpleMessage("Buscar"),
+        "lSuccess": MessageLookupByLibrary.simpleMessage("Éxito"),
         "lUpdateSuccess":
             MessageLookupByLibrary.simpleMessage("Actualización exitosa"),
         "lUserInfo": MessageLookupByLibrary.simpleMessage("Datos del usuario"),
+        "lWarnig": MessageLookupByLibrary.simpleMessage("Advertencia"),
         "qAirOutlet": MessageLookupByLibrary.simpleMessage("Salida de aire"),
         "qAirSupply":
             MessageLookupByLibrary.simpleMessage("Alimentación de aire"),
