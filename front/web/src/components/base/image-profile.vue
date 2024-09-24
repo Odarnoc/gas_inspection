@@ -12,7 +12,7 @@ export default {
     return {
       imageError: false,
       defaultImage:
-        'https://firebasestorage.googleapis.com/v0/b/mikmic-3a9c2.appspot.com/o/system%2Fuser.png?alt=media&token=f06051ce-7999-4b80-a98c-5360ad8af46a'
+        'https://firebasestorage.googleapis.com/v0/b/livgas-cfd9d.appspot.com/o/user.png?alt=media&token=2c6d7c07-6dae-4a55-bc70-36f414302dfd'
     }
   },
   props: {

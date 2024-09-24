@@ -20,5 +20,5 @@ export const SPECIFIC_ROUTES_SYSTEM = {
 }
 
 export const SPECIFIC_ROUTES_IMAGES_DEFAULT = {
-  companyImageDefault: 'https://firebasestorage.googleapis.com/v0/b/mikmic-3a9c2.appspot.com/o/system%2FLogo.png?alt=media&token=01d40ed2-d84f-49fc-996b-db7dd7d2a478'
+  companyImageDefault: 'https://firebasestorage.googleapis.com/v0/b/livgas-cfd9d.appspot.com/o/WhatsApp%20Image%202024-09-16%20at%209.51.07%20AM.png?alt=media&token=928fe055-656b-44d9-b46a-4bafd76acf26'
 }

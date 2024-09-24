@@ -5,7 +5,7 @@ import axios from 'axios'
 import { TypesRol } from '../commons/roles.js'
 import { i18n } from 'src/boot/i18n'
 import { statusOrder } from 'src/commons/status.js'
-import { imageCompressionType, manualsUrl } from 'src/commons/generals.js'
+import { imageCompressionType } from 'src/commons/generals.js'
 
 export default boot(({ app, ssrContext, store }) => {
   app.config.globalProperties.$initLanguaje = () => {
@@ -481,6 +481,4 @@ export default boot(({ app, ssrContext, store }) => {
   app.config.globalProperties.$clearStorageTable = (storageName) => {
     localStorage.removeItem(storageName)
   }
-
-  app.config.globalProperties.$manualsUrl = manualsUrl
 })
