@@ -98,7 +98,8 @@
     "download_material_list": "Descargar lista de materiales",
     "changePassword": "Cambiar contraseña",
     "store": "Archivar",
-    "addDocument": "Agregar documento"
+    "addDocument": "Agregar documento",
+    "accept": "Aceptar"
   },
   "dialogs": {
     "loading": "Cargando",

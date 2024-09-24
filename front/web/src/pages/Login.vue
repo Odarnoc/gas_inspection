@@ -150,11 +150,6 @@ export default defineComponent({
         type: this.type
       }
       this.loading = true
-      try {
-        const res = await this.estimateDeliveryCost(this.estimateParams)
-        this.confirmData = res.data
-        this.confirmDialog = true
-      } catch (error) {}
       api
         .post('/auth/loginWeb', this.type == null ? params : params2)
         .then(({ data }) => {

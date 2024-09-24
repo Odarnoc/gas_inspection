@@ -105,8 +105,12 @@ class InspectionScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      FloatingMyLocationButton(
-                          inspectionController: inspectionController),
+                      Visibility(
+                        visible: inspectionController.requestPetition.status ==
+                            StatusProyect.assigned,
+                        child: FloatingMyLocationButton(
+                            inspectionController: inspectionController),
+                      ),
                     ],
                   ),
                   Visibility(

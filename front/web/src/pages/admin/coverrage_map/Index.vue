@@ -248,6 +248,12 @@ export default {
       this.existentPolylines = response.data.data
     },
     polyLineOptions (index) {
+      if (this.isEditing) {
+        return
+      }
+      if (this.isCreating) {
+        return
+      }
       this.selectedLineIndex = index
       this.showing = true
     },
@@ -298,6 +304,14 @@ export default {
         this.$destroyLoading()
         return
       }
+      if (this.newPath.length < 2) {
+        this.$destroyLoading()
+        this.$showMessage(
+          'Advertencia',
+          'Seleccione al menos 2 coordenadas para la creación de la línea de cobertura'
+        )
+        return
+      }
       const line = latLngToLineParser(this.newPath)
       const params = {
         line,
@@ -343,8 +357,16 @@ export default {
         this.$destroyLoading()
         return
       }
-      const id = this.existentPolylines[this.selectedLineIndex].id
       const editedPath = this.existentPolylines[this.selectedLineIndex].line
+      if (editedPath < 2) {
+        this.$destroyLoading()
+        this.$showMessage(
+          'Advertencia',
+          'Seleccione al menos 2 coordenadas para la actualización de la línea de cobertura'
+        )
+        return
+      }
+      const id = this.existentPolylines[this.selectedLineIndex].id
       const line = latLngToLineParser(editedPath)
       const params = {
         id,
