@@ -33,6 +33,9 @@ export class RequestPetition {
   @Column('text')
   maternalName: string;
 
+  @Column('text', { default: '', nullable: true })
+  ci: string;
+
   @Column('text', { nullable: true })
   phone: string;
 

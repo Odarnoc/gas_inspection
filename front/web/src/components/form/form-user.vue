@@ -59,6 +59,19 @@
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.ci"
+          :rules="rules.ci"
+          :label="$t('fields.ci')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="tel"
           mask="########"
           v-model="user.fields.phone"
@@ -324,6 +337,7 @@ export default {
           roles: '',
           address: '',
           professionalTitle: '',
+          ci: '',
           professionalTitleFile: '',
           cv: '',
           incomeDate: '',
@@ -407,6 +421,7 @@ export default {
         professionalTitle: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
+        ci: [self.$rules.required(self.$t('validations.required.field'))],
         incomeDate: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
@@ -448,6 +463,7 @@ export default {
         roles: '',
         address: '',
         professionalTitle: '',
+        ci: '',
         professionalTitleFile: '',
         cv: '',
         incomeDate: '',

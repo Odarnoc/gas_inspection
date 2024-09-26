@@ -53,6 +53,20 @@
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.ci"
+          :rules="rules.ci"
+          :label="$t('fields.ci')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          readonly
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="tel"
           mask="########"
           v-model="user.fields.phone"
@@ -98,6 +112,7 @@ export default {
           firstName: '',
           paternalName: '',
           maternalName: '',
+          ci: '',
           phone: '',
           cellphone: '',
           zone: '',
@@ -156,6 +171,7 @@ export default {
         maternalName: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
+        ci: [self.$rules.required(self.$t('validations.required.field'))],
         phone: [
           self.$rules.required(self.$t('validations.required.field')),
           self.$rules.numeric(
@@ -256,6 +272,7 @@ export default {
         firstName: '',
         maternalName: '',
         paternalName: '',
+        ci: '',
         phone: '',
         cellphone: '',
         address: '',

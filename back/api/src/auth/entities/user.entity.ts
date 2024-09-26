@@ -52,6 +52,9 @@ export class User {
   professionalTitle: string;
 
   @Column('text', { default: '', nullable: true })
+  ci: string;
+
+  @Column('text', { default: '', nullable: true })
   professionalTitleFile: string;
 
   @Column('text', { default: '', nullable: true })

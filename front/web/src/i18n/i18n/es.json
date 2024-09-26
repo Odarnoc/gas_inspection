@@ -17,13 +17,13 @@
     "proyect_type": "Tipos de proyecto",
     "coverage_map": "Mapa de cobertura",
     "reports": "Reportes",
-    "requests": "Solicitudes",
-    "assigned": "Asignadas",
-    "approved": "Aprobadas",
-    "observed": "Observadas",
-    "rejected": "Rechazadas",
-    "completed": "Completadas",
-    "stored": "Archivadas",
+    "requests": "Proyectos",
+    "assigned": "Asignados",
+    "approved": "Aprobados",
+    "observed": "Observados",
+    "rejected": "Rechazados",
+    "completed": "Completados",
+    "stored": "Archivados",
     "chageHistory": "Historial de cambios"
   },
   "fields": {
@@ -74,7 +74,8 @@
     "floorPlan": "Plano de planta",
     "materials": "Materiales",
     "material": "Material",
-    "quantity": "Cantidad"
+    "quantity": "Cantidad",
+    "ci": "CI"
   },
   "buttons": {
     "log_in": "Iniciar sesión",
@@ -105,7 +106,8 @@
     "loading": "Cargando",
     "page_not_found": "No se encontro la pagina",
     "deleteProyectType": "¿Eliminar el registro seleccionado?",
-    "changePassword": "Se cambiará la contraseña de: {0} con el correo: {1}"
+    "changePassword": "Se cambiará la contraseña de: {0} con el correo: {1}",
+    "confirmClientNotification": "Recuerda llamar al cliente para brindar información sobre el proceso del proyecto antes de confirmar la asignación para instalación"
   },
   "messages": {
     "errorSpecific": {

@@ -298,6 +298,13 @@ export default {
       this.$destroyLoading()
     },
     async saveAndAssign () {
+      if (
+        !(await this.$confirmDialog(
+          this.$t('dialogs.confirmClientNotification')
+        ))
+      ) {
+        return
+      }
       self.loading = true
       self.$showLoading()
       const formResult = await self.$refs.documentForm.getData()

@@ -6,6 +6,7 @@ import 'package:mikinder/src/screens/instalations/instalations_controller.dart';
 import 'package:mikinder/src/screens/instalations/widgets/instalations_table.dart';
 import 'package:mikinder/src/screens/instalations/widgets/reasigned_instalations_table.dart';
 import 'package:mikinder/src/screens/login/login_screen.dart';
+import 'package:mikinder/src/screens/profile/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class InstalationsScreen extends StatelessWidget {
@@ -22,9 +23,22 @@ class InstalationsScreen extends StatelessWidget {
       child: Consumer<InstalationsController>(
         builder: (context, instalationsController, child) => Scaffold(
           appBar: AppBar(
-            title: Image.asset(
-              'assets/screen/icon.png',
-              height: 40,
+            automaticallyImplyLeading: false,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/screen/icon.png',
+                  height: 40,
+                ),
+                Expanded(child: Container()),
+                Text(
+                  'BIENVENIDO ${pref.user.firstName.toUpperCase()}',
+                  style: const TextStyle(fontSize: 17),
+                ),
+                Expanded(child: Container()),
+              ],
             ),
             actions: [
               PopupMenuButton(
@@ -46,6 +60,24 @@ class InstalationsScreen extends StatelessWidget {
                           color: Colors.black,
                         ),
                         Text(S.of(context).bReload),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem(
+                    onTap: () {
+                      final navigator = Navigator.of(context);
+                      navigator.push(
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        ),
+                        Text(S.of(context).lProfile),
                       ],
                     ),
                   ),

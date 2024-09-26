@@ -35,6 +35,10 @@ export class CreateRequestPetitionDto {
 
   @IsString()
   @IsOptional()
+  ci?: string;
+
+  @IsString()
+  @IsOptional()
   phone?: string;
 
   @IsString()

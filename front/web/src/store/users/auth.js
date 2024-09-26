@@ -68,6 +68,7 @@ export default {
       if (data.result) {
         context.commit('setId', data.id)
         context.commit('setRole', data.roles)
+        context.commit('setFirstName', data.firstName)
         context.commit('setRox', data.email)
         context.commit('setWasLoaded', true)
       }

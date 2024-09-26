@@ -23,9 +23,22 @@ class InspectionsScreen extends StatelessWidget {
       child: Consumer<InspectionsController>(
         builder: (context, inspectionsController, child) => Scaffold(
           appBar: AppBar(
-            title: Image.asset(
-              'assets/screen/icon.png',
-              height: 40,
+            automaticallyImplyLeading: false,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/screen/icon.png',
+                  height: 40,
+                ),
+                Expanded(child: Container()),
+                Text(
+                  'BIENVENIDO ${pref.user.firstName.toUpperCase()}',
+                  style: const TextStyle(fontSize: 17),
+                ),
+                Expanded(child: Container()),
+              ],
             ),
             actions: [
               PopupMenuButton(

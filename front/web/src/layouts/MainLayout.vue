@@ -18,7 +18,7 @@
             style="height: 42px;vertical-align: bottom;"
           />
         </q-toolbar-title>
-
+        <div>BIENVENIDO {{ firstName?.toUpperCase() }}</div>
         <!--<translationSelect />-->
         <div>
           <q-btn-dropdown color="white" flat icon="fas fa-user">
@@ -108,63 +108,54 @@
             </q-item-section>
           </q-item>
         </q-expansion-item>
-        <q-separator />
-        <q-expansion-item
-          :content-inset-level="0.5"
-          expand-separator
-          :label="$t('menus.requests')"
-          icon="format_list_bulleted"
-          v-if="$hasRoles([$typesRol.vendor])"
-        >
-          <q-item to="/request">
-            <q-item-section avatar>
-              <q-icon name="assignment" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.assigned')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/observed">
-            <q-item-section avatar>
-              <q-icon name="assignment_late" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.observed')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/approved">
-            <q-item-section avatar>
-              <q-icon name="assignment_turned_in" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.approved')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/rejected">
-            <q-item-section avatar>
-              <q-icon name="assignment_returned" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.rejected')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/done">
-            <q-item-section avatar>
-              <q-icon name="assignment_returned" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.completed')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item to="/stored">
-            <q-item-section avatar>
-              <q-icon name="assignment_returned" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.stored')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-expansion-item>
+        <q-item to="/request" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.requests')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/observed" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment_late" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.observed')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/approved" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment_turned_in" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.approved')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/rejected" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment_returned" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.rejected')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/done" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment_returned" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.completed')}}</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item to="/stored" v-if="$hasRoles([$typesRol.vendor])">
+          <q-item-section avatar>
+            <q-icon name="assignment_returned" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.stored')}}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-separator />
       </q-list>
     </q-drawer>
@@ -189,7 +180,7 @@ export default defineComponent({
     }
   },
   computed: {
-    ...mapGetters('users/auth', { role: 'role' })
+    ...mapGetters('users/auth', { role: 'role', firstName: 'firstName' })
   },
   created () {},
   methods: {

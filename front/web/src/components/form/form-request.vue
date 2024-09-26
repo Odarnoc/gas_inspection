@@ -72,6 +72,20 @@
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
+          type="text"
+          v-model="user.fields.ci"
+          :rules="rules.ci"
+          :label="$t('fields.ci')"
+        />
+      </div>
+      <div class="col-md-3 col-xs-6 col-12">
+        <q-input
+          :readonly="readonlyByStatus"
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           type="tel"
           mask="########"
           v-model="user.fields.phone"
@@ -130,6 +144,7 @@
         >
           <template v-slot:append>
             <q-btn round dense flat icon="fa fa-file">
+              <q-badge v-if="!user.fields.identityCard" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
                   <q-item>
@@ -176,6 +191,7 @@
         >
           <template v-slot:append>
             <q-btn round dense flat icon="fa fa-file">
+              <q-badge v-if="!user.fields.waterBill" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
                   <q-item>
@@ -222,6 +238,7 @@
         >
           <template v-slot:append>
             <q-btn round dense flat icon="fa fa-file">
+              <q-badge v-if="!user.fields.electricityBill" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
                   <q-item>
@@ -268,6 +285,7 @@
         >
           <template v-slot:append>
             <q-btn round dense flat icon="fa fa-file">
+              <q-badge v-if="!user.fields.realFolio" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
                   <q-item>
@@ -497,6 +515,7 @@ export default {
           firstName: '',
           paternalName: '',
           maternalName: '',
+          ci: '',
           phone: '',
           cellphone: '',
           zone: '',
@@ -561,6 +580,7 @@ export default {
         maternalName: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
+        ci: [self.$rules.required(self.$t('validations.required.field'))],
         phone: [
           self.$rules.required(self.$t('validations.required.field')),
           self.$rules.numeric(

@@ -50,6 +50,10 @@ export class CreateUserDto {
 
   @IsString()
   @IsOptional()
+  ci?: string;
+
+  @IsString()
+  @IsOptional()
   professionalTitleFile?: string;
 
   @IsString()

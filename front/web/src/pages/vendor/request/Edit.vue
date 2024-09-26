@@ -156,6 +156,19 @@ export default {
         self.$destroyLoading()
         return
       }
+      if (
+        !formResult.params.identityCard ||
+        !formResult.params.waterBill ||
+        !formResult.params.electricityBill ||
+        !formResult.params.realFolio
+      ) {
+        this.$destroyLoading()
+        this.$showMessage(
+          'Advertencia',
+          'Asegúrate de subir todos los documentos solicitados para poder continuar'
+        )
+        return
+      }
       const params = { ...formResult.params }
       try {
         const response = await self.update(params)

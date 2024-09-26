@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     breadCrumRoutes () {
-      return [this.$t('menus.requests'), this.$t('menus.assigned')]
+      return [this.$t('menus.requests')]
     },
     columnsServices () {
       return [
