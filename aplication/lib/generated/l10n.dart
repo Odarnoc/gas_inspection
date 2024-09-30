@@ -480,6 +480,16 @@ class S {
     );
   }
 
+  /// `Teléfono / Celular`
+  String get lPhoneCellphone {
+    return Intl.message(
+      'Teléfono / Celular',
+      name: 'lPhoneCellphone',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dirección`
   String get lAdrreess {
     return Intl.message(
@@ -490,30 +500,30 @@ class S {
     );
   }
 
-  /// `Datos del usuario`
+  /// `Datos del cliente`
   String get lUserInfo {
     return Intl.message(
-      'Datos del usuario',
+      'Datos del cliente',
       name: 'lUserInfo',
       desc: '',
       args: [],
     );
   }
 
-  /// `Datos del proyecto`
+  /// `Proyecto`
   String get lProyectInfo {
     return Intl.message(
-      'Datos del proyecto',
+      'Proyecto',
       name: 'lProyectInfo',
       desc: '',
       args: [],
     );
   }
 
-  /// `Tipo de proyecto`
+  /// `Tipo de servicio requerido`
   String get lProyectType {
     return Intl.message(
-      'Tipo de proyecto',
+      'Tipo de servicio requerido',
       name: 'lProyectType',
       desc: '',
       args: [],
@@ -730,10 +740,10 @@ class S {
     );
   }
 
-  /// `Solicitar inspección`
+  /// `Solicitar inspección interna`
   String get bRequestInspection {
     return Intl.message(
-      'Solicitar inspección',
+      'Solicitar inspección interna',
       name: 'bRequestInspection',
       desc: '',
       args: [],
@@ -800,10 +810,10 @@ class S {
     );
   }
 
-  /// `Distancia total en mts.`
+  /// `Distancia estimada en metros`
   String get lDistance {
     return Intl.message(
-      'Distancia total en mts.',
+      'Distancia estimada en metros',
       name: 'lDistance',
       desc: '',
       args: [],
@@ -825,6 +835,36 @@ class S {
     return Intl.message(
       'Advertencia',
       name: 'lWarnig',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Es necesario que el proyecto cumpla con todos los requerimientos`
+  String get lAllRequirementsValidation {
+    return Intl.message(
+      'Es necesario que el proyecto cumpla con todos los requerimientos',
+      name: 'lAllRequirementsValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Es necesario cargar isométrico, plano de planta y materiales`
+  String get lAllDocumentsValidation {
+    return Intl.message(
+      'Es necesario cargar isométrico, plano de planta y materiales',
+      name: 'lAllDocumentsValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Requerimientos técnicos`
+  String get lTechnicalRequirements {
+    return Intl.message(
+      'Requerimientos técnicos',
+      name: 'lTechnicalRequirements',
       desc: '',
       args: [],
     );

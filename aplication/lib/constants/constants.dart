@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color.fromRGBO(0, 77, 128, 1);
 const kSecondaryColor = Color.fromRGBO(2, 113, 1, 1);
-const kThridColor = Color.fromRGBO(2, 133, 183, 1);
-const kFourthColor = Color.fromRGBO(145, 145, 145, 1);
+const kThridColor = Color.fromRGBO(66, 110, 145, 1);
+const kFourthColor = Color.fromRGBO(91, 150, 198, 1);
+const kFivethColor = Color.fromRGBO(81, 163, 153, 1);
 
-const kCardsBackgroundColor = Color.fromRGBO(213, 213, 213, 1);
+const kCardsBackgroundColor = Color.fromRGBO(91, 150, 198, 1);
 const kTableHeadersBackgroundColor = Color.fromRGBO(0, 76, 127, 1);
-const kTableFieldsBackgroundColor = Color.fromRGBO(0, 171, 142, 1);
-const kTableFieldsBackgroundColor2 = Color.fromRGBO(242, 113, 0, 1);
+const kTableButtonsBackgroundColor = Color.fromRGBO(0, 171, 142, 1);
+const kTableFieldsBackgroundColor = Color.fromRGBO(200, 207, 198, 1);
+const kTableFieldsBackgroundColor2 = Color.fromRGBO(164, 194, 221, 1);
 const kFieldsBackgroundColor = Color.fromARGB(255, 255, 255, 255);
 
 const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);
 
-const kPositiveColor = Color.fromRGBO(136, 249, 78, 1);
-const kWarninngColor = Color.fromRGBO(253, 173, 0, 1);
-const kErrorColor = Color.fromRGBO(164, 61, 51, 1);
+const kPositiveColor = Color.fromRGBO(2, 113, 1, 1);
+const kWarninngColor = Color.fromRGBO(242, 113, 0, 1);
+const kErrorColor = Color.fromRGBO(180, 23, 0, 1);
 const kDefaultPadding = 8.0;
 
 const kVersion = '1.0.0';

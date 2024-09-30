@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mikinder/constants/glob_keys.dart';
@@ -54,6 +55,15 @@ class InspectionController extends ChangeNotifier {
 
   set inAsyncCall(bool asyncCall) {
     _inAsyncCall = asyncCall;
+    notifyListeners();
+  }
+
+  MapType _mapType = MapType.normal;
+
+  MapType get mapType => _mapType;
+
+  set mapType(MapType mapType) {
+    _mapType = mapType;
     notifyListeners();
   }
 
@@ -352,26 +362,49 @@ class InspectionController extends ChangeNotifier {
   }
 
   Future<bool> approveProyect(BuildContext context, int id) async {
+    if (!checkbox1 || !checkbox2 || !checkbox3 || !checkbox4) {
+      AnimatedSnackBar.rectangle(
+        S.of(navigatorKey.currentContext!).lWarnig,
+        S.of(navigatorKey.currentContext!).lAllRequirementsValidation,
+        type: AnimatedSnackBarType.warning,
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
+        desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+        brightness: Brightness.dark,
+      ).show(context);
+      return false;
+    }
+
+    if (requestPetition.isometric.isEmpty ||
+        requestPetition.floorPlan.isEmpty ||
+        requestPetition.materials.isEmpty) {
+      AnimatedSnackBar.rectangle(
+        S.of(navigatorKey.currentContext!).lWarnig,
+        S.of(navigatorKey.currentContext!).lAllDocumentsValidation,
+        type: AnimatedSnackBarType.warning,
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
+        desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+        brightness: Brightness.dark,
+      ).show(context);
+      return false;
+    }
     bool isSuccess = false;
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel =
         await requestPetitionService.updateRequestPetition({
-      'pressureCheck': checkbox5,
-      'valvuleCheck': checkbox6,
-      'leakCheck': checkbox7,
-      'ventilation': checkbox8,
-      'areaCleaning': checkbox9,
+      'minimumVolume': checkbox1,
+      'airSupply': checkbox2,
+      'airOutlet': checkbox3,
+      'rapidAeration': checkbox4,
       'status': StatusProyect.inspectionAproved,
       'id': id,
       'log': 'Se aprobó inspección'
     });
     if (newRequestPetitionModel != null) {
       isSuccess = true;
-      _requestPetition.pressureCheck = checkbox5;
-      _requestPetition.valvuleCheck = checkbox6;
-      _requestPetition.leakCheck = checkbox7;
-      _requestPetition.ventilation = checkbox8;
-      _requestPetition.areaCleaning = checkbox9;
+      _requestPetition.minimumVolume = checkbox1;
+      _requestPetition.airSupply = checkbox2;
+      _requestPetition.airOutlet = checkbox3;
+      _requestPetition.rapidAeration = checkbox4;
       notifyListeners();
     }
     inAsyncCall = false;
@@ -379,6 +412,17 @@ class InspectionController extends ChangeNotifier {
   }
 
   Future<bool> internalApproveProyect(BuildContext context, int id) async {
+    if (!checkbox5 || !checkbox6 || !checkbox7 || !checkbox8 || !checkbox9) {
+      AnimatedSnackBar.rectangle(
+        S.of(navigatorKey.currentContext!).lWarnig,
+        S.of(navigatorKey.currentContext!).lAllRequirementsValidation,
+        type: AnimatedSnackBarType.warning,
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
+        desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+        brightness: Brightness.dark,
+      ).show(context);
+      return false;
+    }
     bool isSuccess = false;
     inAsyncCall = true;
     RequestPetitionModel? newRequestPetitionModel =
@@ -498,5 +542,13 @@ class InspectionController extends ChangeNotifier {
     _documents = await requestDocumentService.getDocuments(requestPetition.id);
     inAsyncCall = false;
     notifyListeners();
+  }
+
+  changeMapType() {
+    if (mapType == MapType.normal) {
+      mapType = MapType.satellite;
+    } else {
+      mapType = MapType.normal;
+    }
   }
 }

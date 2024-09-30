@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mikinder/constants/constants.dart';
 import 'package:mikinder/generated/l10n.dart';
-import 'package:mikinder/src/screens/inspection/inspection_controller.dart';
 import 'package:mikinder/src/screens/inspection/widgets/custom_field_expanded.dart';
-import 'package:mikinder/src/screens/inspection/widgets/rounded_checkbox.dart';
+import 'package:mikinder/src/screens/instalation/instalation_controller.dart';
 
 class ProyectInformationCard extends StatelessWidget {
-  const ProyectInformationCard({super.key, required this.inspectionController});
+  const ProyectInformationCard(
+      {super.key, required this.instalationController});
 
-  final InspectionController inspectionController;
+  final InstalationController instalationController;
 
   final Color textColor = Colors.white;
   final Color fieldsTextColor = Colors.black;
@@ -63,7 +63,7 @@ class ProyectInformationCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           CustomFieldExpanded(
-              text: inspectionController.requestPetition.proyectType.name,
+              text: instalationController.requestPetition.proyectType.name,
               textColor: fieldsTextColor,
               backgroundColor: kTableFieldsBackgroundColor2),
         ],

@@ -216,7 +216,7 @@ export default {
       try {
         const response = await self.update(params)
         this.$showNotifySuccess(response)
-        await self.fetchFromServer()
+        this.$router.push('/stored')
       } catch (error) {
         this.$showNotifyError(error)
       }

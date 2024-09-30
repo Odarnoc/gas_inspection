@@ -4,10 +4,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
-import 'package:mikinder/src/screens/instalation/widgets/specific_files_accion_buttons.dart';
+import 'package:mikinder/src/screens/instalation/widgets/actions_card.dart';
+import 'package:mikinder/src/screens/instalation/widgets/proyect_infomation_card.dart';
 import 'package:mikinder/src/screens/instalation/widgets/user_infomation_card.dart';
 import 'package:mikinder/src/screens/instalation/instalation_controller.dart';
-import 'package:mikinder/src/screens/instalation/widgets/bottom_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
 import 'package:mikinder/src/screens/instalations/instalations_screen.dart';
 import 'package:provider/provider.dart';
@@ -45,49 +45,61 @@ class InstalationScreen extends StatelessWidget {
                 children: [
                   UserInformationCard(
                       instalationController: instalationController),
-                  Stack(
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.only(
-                          left: kDefaultPadding * 1.3,
-                          right: kDefaultPadding * 1.3,
-                        ),
-                        height: 350,
-                        width: double.infinity - 10,
-                        child: GoogleMap(
-                          gestureRecognizers: <Factory<
-                              OneSequenceGestureRecognizer>>{
-                            Factory<OneSequenceGestureRecognizer>(
-                              () => EagerGestureRecognizer(),
-                            ),
-                          },
-                          mapToolbarEnabled: false,
-                          mapType: MapType.normal,
-                          buildingsEnabled: false,
-                          markers: instalationController.markers,
-                          polylines: {
-                            ...instalationController.polylines,
-                          },
-                          initialCameraPosition:
-                              instalationController.initialCameraPosition,
-                          onMapCreated: (googleMapController) async {
-                            await instalationController.onMapCreated(
-                                googleMapController, context);
-                          },
-                          myLocationEnabled: false,
-                          compassEnabled: false,
-                          myLocationButtonEnabled: false,
-                          zoomControlsEnabled: false,
+                      SizedBox(
+                        width: 400,
+                        child: Column(
+                          children: [
+                            ProyectInformationCard(
+                                instalationController: instalationController),
+                            ActionsCard(
+                                instalationController: instalationController)
+                          ],
                         ),
                       ),
-                      // FloatingMyLocationButton(demoController: demoController),
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: kDefaultPadding * 1.3,
+                                right: kDefaultPadding * 1.3,
+                              ),
+                              height: 350,
+                              width: double.infinity - 10,
+                              child: GoogleMap(
+                                gestureRecognizers: <Factory<
+                                    OneSequenceGestureRecognizer>>{
+                                  Factory<OneSequenceGestureRecognizer>(
+                                    () => EagerGestureRecognizer(),
+                                  ),
+                                },
+                                mapToolbarEnabled: false,
+                                mapType: MapType.normal,
+                                buildingsEnabled: false,
+                                markers: instalationController.markers,
+                                polylines: {
+                                  ...instalationController.polylines,
+                                },
+                                initialCameraPosition:
+                                    instalationController.initialCameraPosition,
+                                onMapCreated: (googleMapController) async {
+                                  await instalationController.onMapCreated(
+                                      googleMapController, context);
+                                },
+                                myLocationEnabled: false,
+                                compassEnabled: false,
+                                myLocationButtonEnabled: false,
+                                zoomControlsEnabled: false,
+                              ),
+                            ),
+                            // FloatingMyLocationButton(demoController: demoController),
+                          ],
+                        ),
+                      ),
                     ],
-                  ),
-                  SpecificActionsActionButtons(
-                    instalationController: instalationController,
-                  ),
-                  BottomActionButtons(
-                    instalationController: instalationController,
                   ),
                 ],
               ),

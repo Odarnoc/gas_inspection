@@ -40,6 +40,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 12),
+        ),
+        iconTheme: const IconThemeData(
+          size: 20.0,
+        ),
       ),
       initialRoute: getInitialRoute(),
       routes: {

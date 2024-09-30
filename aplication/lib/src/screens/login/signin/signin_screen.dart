@@ -19,7 +19,7 @@ class SigninScreen extends StatelessWidget {
     return ChangeNotifierProvider<AccessController>.value(
       value: AccessController(),
       child: Scaffold(
-        backgroundColor: kThridColor,
+        backgroundColor: kFourthColor,
         body: LayoutBuilder(
           builder: (context, constraints) {
             if (constraints.maxWidth > 600) {

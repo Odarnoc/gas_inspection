@@ -43,8 +43,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recuperar cuenta"),
         "bReject": MessageLookupByLibrary.simpleMessage("Rechazar"),
         "bReload": MessageLookupByLibrary.simpleMessage("Refrescar"),
-        "bRequestInspection":
-            MessageLookupByLibrary.simpleMessage("Solicitar inspección"),
+        "bRequestInspection": MessageLookupByLibrary.simpleMessage(
+            "Solicitar inspección interna"),
         "bReturn": MessageLookupByLibrary.simpleMessage("Regresar"),
         "bSaveChanges": MessageLookupByLibrary.simpleMessage("Guardar"),
         "bSelectPhoto":
@@ -75,13 +75,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Verifica la contraseña"),
         "lActions": MessageLookupByLibrary.simpleMessage("Acciones"),
         "lAdrreess": MessageLookupByLibrary.simpleMessage("Dirección"),
+        "lAllDocumentsValidation": MessageLookupByLibrary.simpleMessage(
+            "Es necesario cargar isométrico, plano de planta y materiales"),
+        "lAllRequirementsValidation": MessageLookupByLibrary.simpleMessage(
+            "Es necesario que el proyecto cumpla con todos los requerimientos"),
         "lAsignedProyects":
             MessageLookupByLibrary.simpleMessage("Proyectos asignados"),
         "lAssignedDate":
             MessageLookupByLibrary.simpleMessage("Fecha de asignación"),
         "lClient": MessageLookupByLibrary.simpleMessage("Cliente"),
-        "lDistance":
-            MessageLookupByLibrary.simpleMessage("Distancia total en mts."),
+        "lDistance": MessageLookupByLibrary.simpleMessage(
+            "Distancia estimada en metros"),
         "lFloorPlan": MessageLookupByLibrary.simpleMessage("Plano de planta"),
         "lForgetYourPassword":
             MessageLookupByLibrary.simpleMessage("¿Olvidaste tu contraseña?"),
@@ -97,20 +101,23 @@ class MessageLookup extends MessageLookupByLibrary {
             "¿Es tu primera vez en Mikinder?"),
         "lObservations": MessageLookupByLibrary.simpleMessage("Observaciones"),
         "lPhone": MessageLookupByLibrary.simpleMessage("Teléfono"),
+        "lPhoneCellphone":
+            MessageLookupByLibrary.simpleMessage("Teléfono / Celular"),
         "lPreinspections":
             MessageLookupByLibrary.simpleMessage("Preinspecciones"),
         "lProfile": MessageLookupByLibrary.simpleMessage("Perfil"),
-        "lProyectInfo":
-            MessageLookupByLibrary.simpleMessage("Datos del proyecto"),
+        "lProyectInfo": MessageLookupByLibrary.simpleMessage("Proyecto"),
         "lProyectType":
-            MessageLookupByLibrary.simpleMessage("Tipo de proyecto"),
+            MessageLookupByLibrary.simpleMessage("Tipo de servicio requerido"),
         "lReasignedProyects":
             MessageLookupByLibrary.simpleMessage("Proyectos reasignados"),
         "lSearch": MessageLookupByLibrary.simpleMessage("Buscar"),
         "lSuccess": MessageLookupByLibrary.simpleMessage("Éxito"),
+        "lTechnicalRequirements":
+            MessageLookupByLibrary.simpleMessage("Requerimientos técnicos"),
         "lUpdateSuccess":
             MessageLookupByLibrary.simpleMessage("Actualización exitosa"),
-        "lUserInfo": MessageLookupByLibrary.simpleMessage("Datos del usuario"),
+        "lUserInfo": MessageLookupByLibrary.simpleMessage("Datos del cliente"),
         "lWarnig": MessageLookupByLibrary.simpleMessage("Advertencia"),
         "qAirOutlet": MessageLookupByLibrary.simpleMessage("Salida de aire"),
         "qAirSupply":

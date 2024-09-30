@@ -75,7 +75,7 @@ class InternalSpecificActionsActionButtons extends StatelessWidget {
                     style: ButtonStyle(
                       padding: const WidgetStatePropertyAll(EdgeInsets.all(10)),
                       backgroundColor:
-                          const WidgetStatePropertyAll(kPrimaryColor),
+                          const WidgetStatePropertyAll(kFivethColor),
                       shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),

@@ -3,104 +3,131 @@
     <header-pages :breadCrumRoutes="breadCrumRoutes" />
 
     <div class="q-pa-md bg-grey-3">
-      <div class="row bg-white border-panel q-pa-md">
-        <div class="col-12 q-mb-md">
-          <div class="row q-col-gutter-xs" v-if="!isCreating && !isEditing">
-            <div class="col-12">
+      <div class="row q-col-gutter-xs bg-white border-panel q-pa-md">
+        <div class="col-md-2 col-12 q-mb-md">
+          <div class="row q-col-gutter-xs">
+            <div class="col-12" v-if="!isCreating && !isEditing">
               <q-btn
-                class="float-right"
+                class="float-left"
                 color="secondary"
                 icon="add"
                 :label="$t('buttons.new')"
                 @click="startCreation"
               />
             </div>
+            <div class="col-12" v-if="isCreating || isEditing">
+              <q-form ref="linesForm">
+                <div class="row q-col-gutter-xs">
+                  <div class="col-12">
+                    <q-input
+                      outlined
+                      bg-color="primary-input-color"
+                      color="border-primary-input-color"
+                      label-color="primary-input-color"
+                      input-class="value-primary-input-color"
+                      v-model="color"
+                      :rules="rules.color"
+                    >
+                      <template v-slot:append>
+                        <q-icon name="colorize" class="cursor-pointer">
+                          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                            <q-color v-model="color" />
+                          </q-popup-proxy>
+                        </q-icon>
+                      </template>
+                    </q-input>
+                  </div>
+                  <div class="col-12">
+                    <q-input
+                      outlined
+                      bg-color="primary-input-color"
+                      color="border-primary-input-color"
+                      label-color="primary-input-color"
+                      input-class="value-primary-input-color"
+                      type="text"
+                      v-model="city"
+                      :rules="rules.city"
+                      :label="$t('fields.city')"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <q-input
+                      outlined
+                      bg-color="primary-input-color"
+                      color="border-primary-input-color"
+                      label-color="primary-input-color"
+                      input-class="value-primary-input-color"
+                      type="text"
+                      v-model="zone"
+                      :rules="rules.zone"
+                      :label="$t('fields.zone')"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <q-input
+                      :readonly="readonlyByStatus"
+                      outlined
+                      bg-color="primary-input-color"
+                      color="border-primary-input-color"
+                      label-color="primary-input-color"
+                      input-class="value-primary-input-color"
+                      type="text"
+                      v-model="avenue"
+                      :rules="rules.avenue"
+                      :label="$t('fields.avenue')"
+                    />
+                  </div>
+                  <div class="col-12">
+                    <q-input
+                      :readonly="readonlyByStatus"
+                      outlined
+                      bg-color="primary-input-color"
+                      color="border-primary-input-color"
+                      label-color="primary-input-color"
+                      input-class="value-primary-input-color"
+                      type="text"
+                      v-model="streets"
+                      :rules="rules.streets"
+                      :label="$t('fields.streets')"
+                    />
+                  </div>
+                </div>
+              </q-form>
+            </div>
+            <div class="col-12" v-if="isEditing">
+              <q-btn
+                class="float-right"
+                color="primary"
+                icon="save"
+                :label="$t('buttons.save')"
+                @click="updateSelectedLine"
+              />
+            </div>
+            <div class="col-12" v-if="isCreating">
+              <q-btn
+                class="float-right"
+                color="primary"
+                icon="save"
+                :label="$t('buttons.save')"
+                @click="save"
+              />
+            </div>
+            <div class="col-12" v-if="isEditing || isCreating">
+              <q-btn
+                class="float-right"
+                color="negative"
+                icon="fas fa-trash"
+                :label="$t('buttons.cancel')"
+                @click="cancel"
+              />
+            </div>
           </div>
         </div>
-        <div class="col-12">
-          <q-form ref="linesForm" v-if="isCreating || isEditing">
-            <div class="row q-col-gutter-xs">
-              <div class="col-md-3 col-xs-6 col-12">
-                <q-input
-                  outlined
-                  bg-color="primary-input-color"
-                  color="border-primary-input-color"
-                  label-color="primary-input-color"
-                  input-class="value-primary-input-color"
-                  v-model="color"
-                  :rules="rules.color"
-                >
-                  <template v-slot:append>
-                    <q-icon name="colorize" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-color v-model="color" />
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-              </div>
-              <div class="col-md-3 col-xs-6 col-12">
-                <q-input
-                  outlined
-                  bg-color="primary-input-color"
-                  color="border-primary-input-color"
-                  label-color="primary-input-color"
-                  input-class="value-primary-input-color"
-                  type="text"
-                  v-model="city"
-                  :rules="rules.city"
-                  :label="$t('fields.city')"
-                />
-              </div>
-              <div class="col-md-3 col-xs-6 col-12">
-                <q-input
-                  outlined
-                  bg-color="primary-input-color"
-                  color="border-primary-input-color"
-                  label-color="primary-input-color"
-                  input-class="value-primary-input-color"
-                  type="text"
-                  v-model="zone"
-                  :rules="rules.zone"
-                  :label="$t('fields.zone')"
-                />
-              </div>
-              <div class="col-md-3 col-xs-6 col-12">
-                <q-input
-                  :readonly="readonlyByStatus"
-                  outlined
-                  bg-color="primary-input-color"
-                  color="border-primary-input-color"
-                  label-color="primary-input-color"
-                  input-class="value-primary-input-color"
-                  type="text"
-                  v-model="avenue"
-                  :rules="rules.avenue"
-                  :label="$t('fields.avenue')"
-                />
-              </div>
-              <div class="col-md-3 col-xs-6 col-12">
-                <q-input
-                  :readonly="readonlyByStatus"
-                  outlined
-                  bg-color="primary-input-color"
-                  color="border-primary-input-color"
-                  label-color="primary-input-color"
-                  input-class="value-primary-input-color"
-                  type="text"
-                  v-model="streets"
-                  :rules="rules.streets"
-                  :label="$t('fields.streets')"
-                />
-              </div>
-            </div>
-          </q-form>
-        </div>
-        <div class="col-12">
+        <div class="col-md-10 col-12">
           <GMapMap
             :center="center"
             :zoom="15"
-            style="width: auto; height: 500px"
+            style="width: auto; height: 78vh"
             :options="{
               clickableIcons: false,
               zoomControl: true,
@@ -155,32 +182,6 @@
               </q-list>
             </q-menu>
           </GMapMap>
-        </div>
-        <div class="col-12 q-mt-md">
-          <q-btn
-            v-if="isEditing"
-            class="float-right"
-            color="primary"
-            icon="save"
-            :label="$t('buttons.save')"
-            @click="updateSelectedLine"
-          />
-          <q-btn
-            v-if="isCreating"
-            class="float-right"
-            color="primary"
-            icon="save"
-            :label="$t('buttons.save')"
-            @click="save"
-          />
-          <q-btn
-            v-if="isEditing || isCreating"
-            class="float-right q-mr-md"
-            color="negative"
-            icon="fas fa-trash"
-            :label="$t('buttons.cancel')"
-            @click="cancel"
-          />
         </div>
       </div>
     </div>

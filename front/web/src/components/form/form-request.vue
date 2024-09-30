@@ -461,6 +461,7 @@
           <GMapMarker
             :position="marker"
             :draggable="!readonlyByStatus"
+            @click="showCoordinatesDialog"
             @dragend="updateMarker($event)"
           />
           <GMapPolyline
@@ -493,6 +494,44 @@
     </div>
     <br />
     <slot name="actions"></slot>
+    <q-dialog v-model="setCoordinatesDialog">
+      <q-card class="q-dialog-plugin">
+        <q-card-section>
+          <q-form ref="coordinatesForm" class="q-gutter-md">
+            <q-input
+              outlined
+              bg-color="primary-input-color"
+              color="border-primary-input-color"
+              label-color="primary-input-color"
+              input-class="value-primary-input-color"
+              type="number"
+              v-model="latitude"
+              :rules="rules.latitude"
+              :label="$t('fields.latitude')"
+            />
+            <q-input
+              outlined
+              bg-color="primary-input-color"
+              color="border-primary-input-color"
+              label-color="primary-input-color"
+              input-class="value-primary-input-color"
+              type="number"
+              v-model="longitude"
+              :rules="rules.longitude"
+              :label="$t('fields.longitude')"
+            />
+          </q-form>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn color="negative" :label="$t('buttons.cancel')" @click="hideCoordinatesDialog" />
+          <q-btn
+            color="primary"
+            :label="$t('buttons.setCoordinates')"
+            @click="setCoordinatesToMap"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-form>
 </template>
 
@@ -507,8 +546,11 @@ export default {
   data () {
     return {
       lines: [],
+      latitude: null,
+      longitude: null,
       center: { lat: -16.49798820086203, lng: -68.13029845308486 },
       marker: { lat: -16.49798820086203, lng: -68.13029845308486 },
+      setCoordinatesDialog: false,
       user: {
         fields: {
           id: null,
@@ -619,6 +661,28 @@ export default {
         avenue: [self.$rules.required(self.$t('validations.required.field'))],
         street: [self.$rules.required(self.$t('validations.required.field'))],
         door: [self.$rules.required(self.$t('validations.required.field'))],
+        latitude: [
+          self.$rules.between(
+            -90,
+            90,
+            self.$t('validations.invalid_format.latitude_incorrect')
+          ),
+          self.$rules.numeric(
+            self.$t('validations.invalid_format.field_numeric')
+          ),
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
+        longitude: [
+          self.$rules.between(
+            -180,
+            180,
+            self.$t('validations.invalid_format.longitude_incorrect')
+          ),
+          self.$rules.numeric(
+            self.$t('validations.invalid_format.field_numeric')
+          ),
+          self.$rules.required(self.$t('validations.required.field'))
+        ],
         references: [
           self.$rules.required(self.$t('validations.required.field'))
         ],
@@ -640,6 +704,25 @@ export default {
     ...mapActions('admin/covergeLines', { getAllLines: 'getAll' }),
     ...mapActions('admin/proyectTypes', ['getOptions']),
     ...mapActions('users/auth', ['getInspectorOptions']),
+    showCoordinatesDialog () {
+      if (this.readonlyByStatus) {
+        return
+      }
+      this.setCoordinatesDialog = true
+    },
+    hideCoordinatesDialog () {
+      this.setCoordinatesDialog = false
+    },
+    async setCoordinatesToMap () {
+      const isValid = await self.$refs.coordinatesForm.validate()
+      if (!isValid) {
+        return
+      }
+
+      this.center = { lat: +this.latitude, lng: +this.longitude }
+      this.marker = { lat: +this.latitude, lng: +this.longitude }
+      this.setCoordinatesDialog = false
+    },
     async getData () {
       const params = {
         ...self.user.fields,

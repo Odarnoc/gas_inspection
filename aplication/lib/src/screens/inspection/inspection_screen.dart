@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mikinder/constants/status_constant.dart';
 import 'package:mikinder/src/models/request_petition_model.dart';
+import 'package:mikinder/src/screens/inspection/widgets/floating_map_type_button.dart';
 import 'package:mikinder/src/screens/inspection/widgets/floating_my_location_button.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons.dart';
 import 'package:mikinder/src/screens/inspection/widgets/internal_bottom_accion_buttons2.dart';
-import 'package:mikinder/src/screens/inspection/widgets/internal_proyect_infomation_card.dart';
-import 'package:mikinder/src/screens/inspection/widgets/internal_specific_files_accion_buttons.dart';
+import 'package:mikinder/src/screens/inspection/widgets/internal_technical_requirements_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/proyect_infomation_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/specific_files_accion_buttons.dart';
+import 'package:mikinder/src/screens/inspection/widgets/technical_requirements_card.dart';
 import 'package:mikinder/src/screens/inspection/widgets/user_infomation_card.dart';
 import 'package:mikinder/src/screens/inspections/inspections_controller.dart';
 import 'package:mikinder/src/screens/inspections/inspections_screen.dart';
@@ -45,96 +46,110 @@ class InspectionScreen extends StatelessWidget {
                 children: [
                   UserInformationCard(
                       inspectionController: inspectionController),
-                  Stack(
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.only(
-                          left: kDefaultPadding * 1.3,
-                          right: kDefaultPadding * 1.3,
-                        ),
-                        height: 350,
-                        width: double.infinity - 10,
-                        child: GoogleMap(
-                          gestureRecognizers: <Factory<
-                              OneSequenceGestureRecognizer>>{
-                            Factory<OneSequenceGestureRecognizer>(
-                              () => EagerGestureRecognizer(),
+                      SizedBox(
+                        width: 400,
+                        child: Column(
+                          children: [
+                            ProyectInformationCard(
+                                inspectionController: inspectionController),
+                            Visibility(
+                              visible:
+                                  inspectionController.requestPetition.status ==
+                                      StatusProyect.assigned,
+                              child: TechnicalRequirementsCard(
+                                  inspectionController: inspectionController),
                             ),
-                          },
-                          mapToolbarEnabled: false,
-                          mapType: MapType.normal,
-                          buildingsEnabled: false,
-                          markers: {
-                            ...inspectionController.markers,
-                            Marker(
-                              markerId: const MarkerId('cliente'),
-                              position: LatLng(
-                                requestPetition.location.x,
-                                requestPetition.location.y,
-                              ),
+                            Visibility(
+                              visible:
+                                  inspectionController.requestPetition.status ==
+                                      StatusProyect.interrnalInspection,
+                              child: InternalTechnicalRequirementsCard(
+                                  inspectionController: inspectionController),
                             )
-                          },
-                          polylines: {
-                            ...inspectionController.polylines,
-                            Polyline(
-                              polylineId:
-                                  const PolylineId('new_polyline_update'),
-                              consumeTapEvents: true,
-                              color: Colors.green,
-                              width: 5,
-                              points: inspectionController.markers
-                                  .map((marker) => marker.position)
-                                  .toList(),
-                            )
-                          },
-                          initialCameraPosition:
-                              inspectionController.initialCameraPosition,
-                          onMapCreated: (googleMapController) async {
-                            await inspectionController.onMapCreated(
-                                googleMapController, context);
-                          },
-                          myLocationEnabled: false,
-                          compassEnabled: false,
-                          myLocationButtonEnabled: false,
-                          zoomControlsEnabled: false,
-                          onTap: (LatLng point) {
-                            if (inspectionController.requestPetition.status ==
-                                StatusProyect.assigned) {
-                              inspectionController.addMarker(point);
-                            }
-                          },
+                          ],
                         ),
                       ),
-                      Visibility(
-                        visible: inspectionController.requestPetition.status ==
-                            StatusProyect.assigned,
-                        child: FloatingMyLocationButton(
-                            inspectionController: inspectionController),
+                      Expanded(
+                        child: Stack(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(
+                                left: kDefaultPadding * 1.3,
+                                right: kDefaultPadding * 1.3,
+                              ),
+                              height: 420,
+                              width: double.infinity - 10,
+                              child: GoogleMap(
+                                gestureRecognizers: <Factory<
+                                    OneSequenceGestureRecognizer>>{
+                                  Factory<OneSequenceGestureRecognizer>(
+                                    () => EagerGestureRecognizer(),
+                                  ),
+                                },
+                                mapToolbarEnabled: false,
+                                mapType: inspectionController.mapType,
+                                buildingsEnabled: false,
+                                markers: {
+                                  ...inspectionController.markers,
+                                  Marker(
+                                    markerId: const MarkerId('cliente'),
+                                    position: LatLng(
+                                      requestPetition.location.x,
+                                      requestPetition.location.y,
+                                    ),
+                                  )
+                                },
+                                polylines: {
+                                  ...inspectionController.polylines,
+                                  Polyline(
+                                    polylineId:
+                                        const PolylineId('new_polyline_update'),
+                                    consumeTapEvents: true,
+                                    color: Colors.green,
+                                    width: 5,
+                                    points: inspectionController.markers
+                                        .map((marker) => marker.position)
+                                        .toList(),
+                                  )
+                                },
+                                initialCameraPosition:
+                                    inspectionController.initialCameraPosition,
+                                onMapCreated: (googleMapController) async {
+                                  await inspectionController.onMapCreated(
+                                      googleMapController, context);
+                                },
+                                myLocationEnabled: false,
+                                compassEnabled: false,
+                                myLocationButtonEnabled: false,
+                                zoomControlsEnabled: false,
+                                onTap: (LatLng point) {
+                                  if (inspectionController
+                                          .requestPetition.status ==
+                                      StatusProyect.assigned) {
+                                    inspectionController.addMarker(point);
+                                  }
+                                },
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  inspectionController.requestPetition.status ==
+                                      StatusProyect.assigned,
+                              child: FloatingMyLocationButton(
+                                  inspectionController: inspectionController),
+                            ),
+                            FloatingMapTypeButton(
+                                inspectionController: inspectionController),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.assigned,
-                    child: ProyectInformationCard(
-                        inspectionController: inspectionController),
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalProyectInformationCard(
-                        inspectionController: inspectionController),
-                  ),
                   SpecificActionsActionButtons(
                     inspectionController: inspectionController,
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.assigned,
-                    child: BottomActionButtons(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
                   ),
                   /* Visibility(
                     visible: inspectionController.requestPetition.status ==
@@ -143,22 +158,6 @@ class InspectionScreen extends StatelessWidget {
                       inspectionController: inspectionController,
                     ),
                   ), */
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalBottomActionButtons(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
-                  ),
-                  Visibility(
-                    visible: inspectionController.requestPetition.status ==
-                        StatusProyect.interrnalInspection,
-                    child: InternalBottomActionButtons2(
-                      inspectionController: inspectionController,
-                      inspectionsController: inspectionsController,
-                    ),
-                  ),
                 ],
               ),
             ),

@@ -35,7 +35,7 @@ class InspectionsScreen extends StatelessWidget {
                 Expanded(child: Container()),
                 Text(
                   'BIENVENIDO ${pref.user.firstName.toUpperCase()}',
-                  style: const TextStyle(fontSize: 17),
+                  style: const TextStyle(fontSize: 17, color: Colors.white),
                 ),
                 Expanded(child: Container()),
               ],

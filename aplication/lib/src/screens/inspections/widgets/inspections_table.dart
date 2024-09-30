@@ -15,6 +15,7 @@ class InspectionsTable extends StatelessWidget {
   final InspectionsController inspectionsController;
 
   final Color textColor = Colors.white;
+  final Color fieldsTextColor = Colors.black;
 
   final double padding = 10.0;
   final double borderRadius = 10.0;
@@ -32,7 +33,8 @@ class InspectionsTable extends StatelessWidget {
             ),
             Text(
               S.of(context).lPreinspections.toUpperCase(),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
             ),
             Padding(
               padding: EdgeInsets.all(padding),
@@ -54,7 +56,7 @@ class InspectionsTable extends StatelessWidget {
       child: Row(
         children: <Widget>[
           SizedBox(
-            width: 50,
+            width: 60,
             child: Container(
                 padding: EdgeInsets.all(padding),
                 decoration: BoxDecoration(
@@ -66,7 +68,6 @@ class InspectionsTable extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
-                    fontSize: 16,
                     color: textColor,
                   ),
                 )),
@@ -104,7 +105,8 @@ class InspectionsTable extends StatelessWidget {
                     ),
                   ))),
           SizedBox(width: padding),
-          Expanded(
+          SizedBox(
+              width: 110,
               child: Container(
                   padding: EdgeInsets.all(padding),
                   decoration: BoxDecoration(
@@ -130,20 +132,18 @@ class InspectionsTable extends StatelessWidget {
       child: Row(
         children: <Widget>[
           SizedBox(
-            width: 50,
+            width: 60,
             child: Container(
                 padding: EdgeInsets.all(padding),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-                  color: kTableFieldsBackgroundColor,
+                  color: kTableHeadersBackgroundColor,
                 ),
                 child: Text(
                   c1,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 16,
-                      color: textColor),
+                  style:
+                      TextStyle(fontWeight: FontWeight.w900, color: textColor),
                 )),
           ),
           SizedBox(width: padding),
@@ -159,7 +159,7 @@ class InspectionsTable extends StatelessWidget {
                     c2,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: textColor,
+                      color: fieldsTextColor,
                     ),
                   ))),
           SizedBox(width: padding),
@@ -175,11 +175,12 @@ class InspectionsTable extends StatelessWidget {
                     c3,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: textColor,
+                      color: fieldsTextColor,
                     ),
                   ))),
           SizedBox(width: padding),
-          Expanded(
+          SizedBox(
+            width: 110,
             child: ElevatedButton(
               onPressed: () async {
                 Navigator.push(
@@ -193,7 +194,7 @@ class InspectionsTable extends StatelessWidget {
               },
               style: ButtonStyle(
                 backgroundColor:
-                    const WidgetStatePropertyAll(kTableFieldsBackgroundColor),
+                    const WidgetStatePropertyAll(kTableButtonsBackgroundColor),
                 shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius:
@@ -201,9 +202,9 @@ class InspectionsTable extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Text(
-                S.of(context).bView.toUpperCase(),
-                style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+              child: const Icon(
+                Icons.remove_red_eye,
+                color: Colors.white,
               ),
             ),
           )

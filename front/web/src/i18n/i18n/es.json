@@ -75,7 +75,9 @@
     "materials": "Materiales",
     "material": "Material",
     "quantity": "Cantidad",
-    "ci": "CI"
+    "ci": "CI",
+    "latitude": "Latitud",
+    "longitude": "Longitud"
   },
   "buttons": {
     "log_in": "Iniciar sesión",
@@ -100,7 +102,8 @@
     "changePassword": "Cambiar contraseña",
     "store": "Archivar",
     "addDocument": "Agregar documento",
-    "accept": "Aceptar"
+    "accept": "Aceptar",
+    "setCoordinates": "Asignar coordenadas"
   },
   "dialogs": {
     "loading": "Cargando",
@@ -137,7 +140,9 @@
       "email": "Correo electrónico invalido",
       "field_alpha": "El campo sólo permite letras",
       "field_numeric": "El campo solo debe tener números",
-      "field_integer": "El campo solo debe tener números enteros"
+      "field_integer": "El campo solo debe tener números enteros",
+      "latitude_incorrect": "El rango admitido para latitud es de -90 a 90",
+      "longitude_incorrect": "El rango admitido para longitud es de -180 a 180"
     },
     "length": {
       "field_7_or_8_number": "El campo debe tener 7 u 8 dígitos",

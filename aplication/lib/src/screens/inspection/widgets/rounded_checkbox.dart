@@ -14,20 +14,22 @@ class RoundedCheckbox extends StatelessWidget {
         child: InkWell(
       onTap: onPressed,
       child: Container(
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: kFourthColor),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            border: Border.all(color: Colors.black, width: 3)),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(2.0),
           child: value
               ? const Icon(
                   Icons.check,
-                  size: 30.0,
-                  color: Colors.white,
+                  size: 20.0,
+                  color: Colors.black,
                 )
               : const Icon(
                   Icons.check_box_outline_blank,
-                  size: 30.0,
-                  color: kFourthColor,
+                  size: 20.0,
+                  color: Colors.white,
                 ),
         ),
       ),
