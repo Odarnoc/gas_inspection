@@ -1,6 +1,7 @@
 <template>
-  <q-page class="flex flex-center">
-    <img src="statics/Logo.png" style="width: 200px; height: 200px" />
+  <q-page class="q-pa-sm">
+    <admin-dashboard v-if="$hasRoles([$typesRol.admin])" />
+    <vendor-dashboard v-else />
   </q-page>
 </template>
 

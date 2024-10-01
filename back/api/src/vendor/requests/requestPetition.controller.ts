@@ -97,7 +97,7 @@ export class RequestPetitionController {
       user,
       createUserTypeDto,
       createUserTypeDto.log ?? 'Se actualizo la información del proyecto',
-      `id: ${createUserTypeDto?.id}`,
+      `${createUserTypeDto?.id}`,
     );
   }
 
@@ -129,5 +129,17 @@ export class RequestPetitionController {
   @Auth()
   getReasignedInstalations(@GetUser() user: User) {
     return this.userTypeService.getReasignedInstalations(user);
+  }
+
+  @Get('getAdminDashboard')
+  @Auth()
+  getAdminDashboard(@GetUser() user: User) {
+    return this.userTypeService.getAdminDashboard(user);
+  }
+
+  @Get('getVendorDashboard')
+  @Auth()
+  getVendorDashboard(@GetUser() user: User) {
+    return this.userTypeService.getVendorDashboard(user);
   }
 }

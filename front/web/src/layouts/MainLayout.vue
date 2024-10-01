@@ -49,6 +49,14 @@
       :mini="false"
     >
       <q-list class="menu-list">
+        <q-item to="/dashboard" v-ripple>
+          <q-item-section avatar>
+            <q-icon name="dashboard" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.dashboard')}}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-item to="/personal" v-ripple v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="groups" />

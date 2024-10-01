@@ -56,7 +56,7 @@ export default route(function ({ store/*, ssrContext */ }) {
 
     if (to.matched.some(record => record.meta.redirectToDashboard)) {
       if (JWT) {
-        return { path: '/' }
+        return { path: '/dashboard' }
       }
     }
 

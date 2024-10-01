@@ -51,6 +51,14 @@ const module = {
     delete: async ({ commit, dispatch }, id) => {
       const response = await api.delete(`${apiRoot}/delete/${id}`)
       return response
+    },
+    getAdminDashboard: async ({ commit, dispatch }, id) => {
+      const response = await api.get(`${apiRoot}/getAdminDashboard`)
+      return response
+    },
+    getVendorDashboard: async ({ commit, dispatch }, id) => {
+      const response = await api.get(`${apiRoot}/getVendorDashboard`)
+      return response
     }
   },
   getters: {

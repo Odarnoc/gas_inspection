@@ -1,35 +1,34 @@
 <template>
-  <q-page>
-    <header-pages :breadCrumRoutes="breadCrumRoutes" />
-
-    <div class="q-pa-md bg-grey-3">
-      <div class="row bg-white border-panel">
-        <div class="col q-pa-md">
-          <div class="row q-mb-sm q-mt-md">
-            <div class="col-12">
-              <base-table
-                ref="table"
-                :columns="columnsServices"
-                :fetchData="getTable"
-                :pag="pagination"
-              >
-                <template v-slot:body="props">
-                  <q-tr :props="props">
-                    <q-td key="createdAt" :props="props">{{ $toUSADateTime(props.row.createdAt) }}</q-td>
-                    <q-td key="user.firstName" :props="props">{{ props.row.user.firstName }}</q-td>
-                    <q-td key="eventType" :props="props">{{ props.row.eventType }}</q-td>
-                    <q-td key="log" :props="props">{{ props.row.log }}</q-td>
-                    <q-td key="extraDetails" :props="props">{{ props.row.extraDetails }}</q-td>
-                    <q-td key="details" :props="props">{{ props.row.details }}</q-td>
-                  </q-tr>
-                </template>
-              </base-table>
-            </div>
+  <div class="q-pa-md bg-grey-3">
+    <div class="row bg-white border-panel">
+      <div class="col q-pa-md">
+        <card-admin-stats />
+        <br />
+        <p class="text-h5">{{ $t('fields.logsRegistry') }}</p>
+        <div class="row q-mb-sm q-mt-md">
+          <div class="col-12">
+            <base-table
+              ref="table"
+              :columns="columnsServices"
+              :fetchData="getTable"
+              :pag="pagination"
+            >
+              <template v-slot:body="props">
+                <q-tr :props="props">
+                  <q-td key="createdAt" :props="props">{{ $toUSADateTime(props.row.createdAt) }}</q-td>
+                  <q-td key="user.firstName" :props="props">{{ props.row.user.firstName }}</q-td>
+                  <q-td key="eventType" :props="props">{{ props.row.eventType }}</q-td>
+                  <q-td key="log" :props="props">{{ props.row.log }}</q-td>
+                  <q-td key="extraDetails" :props="props">{{ props.row.extraDetails }}</q-td>
+                  <q-td key="details" :props="props">{{ props.row.details }}</q-td>
+                </q-tr>
+              </template>
+            </base-table>
           </div>
         </div>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script>

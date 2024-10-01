@@ -62,7 +62,8 @@ export default {
   data () {
     return {
       pagination: {
-        sortBy: 'id'
+        sortBy: 'id',
+        rowsPerPage: 15
       },
       loading: false,
       filter: '',

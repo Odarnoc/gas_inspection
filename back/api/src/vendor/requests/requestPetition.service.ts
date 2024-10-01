@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import handleDbExceptions from '../../common/exceptions/error.db.exception';
 import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
@@ -21,6 +21,9 @@ export class RequestPetitionService {
   constructor(
     @InjectRepository(RequestPetition)
     private readonly requestPetitionRepository: Repository<RequestPetition>,
+
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
 
     @Inject(RequestPetitionLogsService)
     private readonly requestPetitionLogsService: RequestPetitionLogsService,
@@ -90,7 +93,7 @@ export class RequestPetitionService {
         eventType: TypesEventLogs.create,
         result: TypesResultEventLogs.success,
         log: 'Se creo un nuevo proyecto',
-        extraDetails: `id: ${systemDocument.id}`,
+        extraDetails: `${systemDocument.id}`,
       });
 
       return {
@@ -225,6 +228,83 @@ export class RequestPetitionService {
     });
     return {
       data,
+    };
+  }
+
+  async getAdminDashboard(user: User) {
+    const activeUsers = await this.userRepository.count();
+    const completedProyects = await this.requestPetitionRepository.count({
+      where: {
+        status: In([StatusOrder.done, StatusOrder.store]),
+      },
+    });
+    const activeProyects = await this.requestPetitionRepository.count({
+      where: {
+        status: In([
+          StatusOrder.assigned,
+          StatusOrder.inspectionAproved,
+          StatusOrder.instalationAssigned,
+          StatusOrder.instalationReassigned,
+          StatusOrder.interrnalInspection,
+          StatusOrder.observed,
+        ]),
+      },
+    });
+    const executingProyects = await this.requestPetitionRepository.count({
+      where: {
+        status: In([
+          StatusOrder.instalationAssigned,
+          StatusOrder.instalationReassigned,
+        ]),
+      },
+    });
+    return {
+      activeUsers,
+      completedProyects,
+      activeProyects,
+      executingProyects,
+    };
+  }
+
+  async getVendorDashboard(user: User) {
+    const completedProyects = await this.requestPetitionRepository.count({
+      where: {
+        vendor: {
+          id: user.id,
+        },
+        status: In([StatusOrder.done, StatusOrder.store]),
+      },
+    });
+    const activeProyects = await this.requestPetitionRepository.count({
+      where: {
+        vendor: {
+          id: user.id,
+        },
+        status: In([
+          StatusOrder.assigned,
+          StatusOrder.inspectionAproved,
+          StatusOrder.instalationAssigned,
+          StatusOrder.instalationReassigned,
+          StatusOrder.interrnalInspection,
+          StatusOrder.observed,
+        ]),
+      },
+    });
+    const executingProyects = await this.requestPetitionRepository.count({
+      where: {
+        vendor: {
+          id: user.id,
+        },
+        status: In([
+          StatusOrder.instalationAssigned,
+          StatusOrder.instalationReassigned,
+        ]),
+      },
+    });
+    return {
+      completedProyects,
+      activeProyects,
+      executingProyects,
     };
   }
 }

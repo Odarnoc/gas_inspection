@@ -24,7 +24,8 @@
     "rejected": "Rechazados",
     "completed": "Completados",
     "stored": "Archivados",
-    "chageHistory": "Historial de cambios"
+    "chageHistory": "Historial de cambios",
+    "dashboard": "Inicio"
   },
   "fields": {
     "personalInfo": "Datos personales",
@@ -77,7 +78,12 @@
     "quantity": "Cantidad",
     "ci": "CI",
     "latitude": "Latitud",
-    "longitude": "Longitud"
+    "longitude": "Longitud",
+    "activeUsers": "Usuarios activos",
+    "completedProyects": "Proyectos completados",
+    "activeProyects": "Proyectos activos",
+    "executingProyects": "Proyectos en ejecución",
+    "logsRegistry": "Registro de logs"
   },
   "buttons": {
     "log_in": "Iniciar sesión",

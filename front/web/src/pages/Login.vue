@@ -156,7 +156,7 @@ export default defineComponent({
           this.loading = false
           localStorage.setItem('JWT', data.token)
           axios.defaults.headers.common.Authorization = `Bearer ${data.token}`
-          this.$router.push('/')
+          this.$router.push('/dashboard')
         })
         .catch((error) => {
           this.$showNotifyError(error)
