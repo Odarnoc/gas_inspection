@@ -132,6 +132,12 @@ export class RequestPetition {
   })
   proyectType: ProyectType;
 
+  @ManyToOne(() => User, (user) => user.requestsVendor, {
+    onDelete: 'SET NULL',
+    nullable: true,
+  })
+  vendor: User;
+
   @ManyToOne(() => User, (user) => user.requests, {
     onDelete: 'SET NULL',
     nullable: true,

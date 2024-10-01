@@ -82,6 +82,7 @@ export class RequestPetitionService {
     try {
       const systemDocument = await this.requestPetitionRepository.save({
         ...createUserTypeDto,
+        vendor: { id: user.id },
       });
 
       await this.requestPetitionLogsService.createLog({
