@@ -120,7 +120,7 @@ export class RequestPdfService {
     if (request.isometric) {
       const isometric = await fetchBufferImage(request.isometric);
       doc.addPage().image(isometric, {
-        fit: [500, 400],
+        fit: [doc.page.width - 60, doc.page.height - 60],
         align: 'center',
         valign: 'center',
       });
@@ -129,7 +129,7 @@ export class RequestPdfService {
     if (request.floorPlan) {
       const floorPlan = await fetchBufferImage(request.floorPlan);
       doc.addPage().image(floorPlan, {
-        fit: [500, 400],
+        fit: [doc.page.width - 60, doc.page.height - 60],
         align: 'center',
         valign: 'center',
       });
@@ -138,7 +138,7 @@ export class RequestPdfService {
     if (request.materials) {
       const materials = await fetchBufferImage(request.materials);
       doc.addPage().image(materials, {
-        fit: [500, 400],
+        fit: [doc.page.width - 60, doc.page.height - 60],
         align: 'center',
         valign: 'center',
       });
@@ -154,7 +154,7 @@ export class RequestPdfService {
       if (document.documentUrl) {
         const url = await fetchBufferImage(document.documentUrl);
         doc.addPage().image(url, {
-          fit: [500, 400],
+          fit: [doc.page.width - 60, doc.page.height - 60],
           align: 'center',
           valign: 'center',
         });
