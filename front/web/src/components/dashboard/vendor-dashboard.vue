@@ -10,7 +10,7 @@
             <base-table
               ref="table"
               :columns="columnsServices"
-              :fetchData="getTableAssigned"
+              :fetchData="getTableDashboard"
               :pag="pagination"
             >
               <template v-slot:body="props">
@@ -18,11 +18,16 @@
                   <q-td key="firstName" :props="props">{{ props.row.firstName }}</q-td>
                   <q-td key="proyectType.name" :props="props">{{ props.row.proyectType.name }}</q-td>
                   <q-td key="phone" :props="props">{{ props.row.phone }}</q-td>
+                  <q-td key="inspector.firstName" :props="props">{{ props.row.inspector.firstName }}</q-td>
+                  <q-td
+                    key="instalator.firstName"
+                    :props="props"
+                  >{{ props.row.instalator.firstName }}</q-td>
                   <q-td key="startDate" :props="props">{{ props.row.startDate }}</q-td>
                   <q-td key="limitDate" :props="props">{{ props.row.limitDate }}</q-td>
                   <q-td key="status" :props="props">{{ $translateStatus(props.row.status) }}</q-td>
                   <q-td key="details" :props="props">{{ props.row.details }}</q-td>
-                  <q-td key="actions" :props="props">
+                  <!-- <q-td key="actions" :props="props">
                     <q-btn
                       color="primary"
                       icon="fas fa-edit"
@@ -30,7 +35,7 @@
                       @click="editSelectedRow(props.row.id)"
                       size="10px"
                     />
-                  </q-td>
+                  </q-td>-->
                 </q-tr>
               </template>
             </base-table>
@@ -84,6 +89,20 @@ export default {
           sortable: true
         },
         {
+          name: 'inspector.firstName',
+          align: 'left',
+          label: this.$t('roles.inspector'),
+          field: 'inspector.firstName',
+          sortable: true
+        },
+        {
+          name: 'instalator.firstName',
+          align: 'left',
+          label: this.$t('roles.instalator'),
+          field: 'instalator.firstName',
+          sortable: true
+        },
+        {
           name: 'startDate',
           align: 'left',
           label: this.$t('fields.startDate'),
@@ -103,14 +122,14 @@ export default {
           label: this.$t('fields.proyectStatus'),
           field: 'status',
           sortable: true
-        },
+        } /* ,
         {
           name: 'actions',
           align: 'center',
           label: this.$t('buttons.actions'),
           field: 'actions',
           sortable: false
-        }
+        } */
       ]
     }
   },
@@ -118,7 +137,7 @@ export default {
     this.fetchFromServer()
   },
   methods: {
-    ...mapActions('vendor/requestPetition', ['getTableAssigned', 'delete']),
+    ...mapActions('vendor/requestPetition', ['getTableDashboard', 'delete']),
     async fetchFromServer () {
       this.$showLoading()
       this.$destroyLoading()

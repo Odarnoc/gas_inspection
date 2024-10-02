@@ -14,6 +14,7 @@ import { User } from '../../auth/entities/user.entity';
 import { RequestPetitionService } from './requestPetition.service';
 import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
 import { StatusOrder } from 'src/common/glob/status';
+import { In } from 'typeorm';
 
 @Controller('requestPetition')
 export class RequestPetitionController {
@@ -28,6 +29,21 @@ export class RequestPetitionController {
   getTableAssigned(@Body() paginationDto: PaginationCompleteDto) {
     paginationDto.where = {
       status: StatusOrder.assigned,
+    };
+    return this.userTypeService.getTable(paginationDto);
+  }
+
+  @Post('getTableDashboard')
+  getTableDashboard(@Body() paginationDto: PaginationCompleteDto) {
+    paginationDto.where = {
+      status: In([
+        StatusOrder.assigned,
+        StatusOrder.inspectionAproved,
+        StatusOrder.instalationAssigned,
+        StatusOrder.instalationReassigned,
+        StatusOrder.interrnalInspection,
+        StatusOrder.observed,
+      ]),
     };
     return this.userTypeService.getTable(paginationDto);
   }

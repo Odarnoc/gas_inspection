@@ -37,6 +37,7 @@ const routes = [
       { path: 'request/completed/:id', component: () => import('pages/vendor/request/Edit-completed.vue') },
       { path: 'logs/request', component: () => import('pages/admin/logs/request/Index.vue') },
       { path: 'coverageMap', component: () => import('pages/admin/coverrage_map/Index.vue') },
+      { path: 'reports', component: () => import('pages/admin/reports/Index.vue') },
       { path: 'profile', component: () => import('pages/Profile') }
     ]
   },

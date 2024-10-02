@@ -49,6 +49,8 @@ export class RequestPetitionService {
       await this.requestPetitionRepository.findAndCount({
         relations: {
           proyectType: true,
+          inspector: true,
+          instalator: true,
         },
         where,
         take: limit,

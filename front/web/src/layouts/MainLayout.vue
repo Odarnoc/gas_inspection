@@ -65,7 +65,6 @@
             <q-item-label>{{$t('menus.personal')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator />
         <q-item to="/proyectTypes" v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="person" />
@@ -74,7 +73,6 @@
             <q-item-label>{{$t('menus.proyect_type')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator />
         <q-item to="/coverageMap" v-if="$hasRoles([$typesRol.admin])">
           <q-item-section avatar>
             <q-icon name="map" />
@@ -83,23 +81,14 @@
             <q-item-label>{{$t('menus.coverage_map')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator />
-        <q-expansion-item
-          :content-inset-level="0.5"
-          expand-separator
-          :label="$t('menus.reports')"
-          icon="folder_open"
-          v-if="$hasRoles([$typesRol.admin])"
-        >
-          <q-item to="/reports">
-            <q-item-section avatar>
-              <q-icon name="description" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{$t('menus.reports')}}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-expansion-item>
+        <q-item to="/reports" v-if="$hasRoles([$typesRol.admin])">
+          <q-item-section avatar>
+            <q-icon name="description" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{$t('menus.reports')}}</q-item-label>
+          </q-item-section>
+        </q-item>
         <q-expansion-item
           :content-inset-level="0.5"
           expand-separator
@@ -164,7 +153,6 @@
             <q-item-label>{{$t('menus.stored')}}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-separator />
       </q-list>
     </q-drawer>
 

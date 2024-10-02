@@ -65,6 +65,7 @@
     "proyectStatus": "Estado del proyecto",
     "proyectType": "Tipo de proyecto",
     "createdAt": "Fecha de creación",
+    "endDate": "Fecha fin",
     "user": "Usuario",
     "eventType": "Tipo de evento",
     "log": "Detalles",
