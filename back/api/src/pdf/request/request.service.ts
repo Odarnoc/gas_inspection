@@ -83,6 +83,39 @@ export class RequestPdfService {
     return pdfBuffer;
   }
 
+  async getInProgressReport(): Promise<Buffer> {
+    const pdfBuffer: Buffer = await new Promise(async (resolve) => {
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margin: 30,
+        bufferPages: true,
+      });
+      // aqui comieza edicion de pdf
+
+      await this.generateHeader(doc);
+      doc.moveDown();
+      doc.moveDown();
+      doc.moveDown();
+
+      await this.reportInProgresTable(doc);
+      doc.moveDown();
+
+      await this.generateFooter(doc);
+
+      // aqui finaliza edicion de pdf
+
+      const buffer = [];
+      doc.on('data', buffer.push.bind(buffer));
+      doc.on('end', () => {
+        const data = Buffer.concat(buffer);
+        resolve(data);
+      });
+      doc.end();
+    });
+
+    return pdfBuffer;
+  }
+
   async addSpecificFiles(doc: any, request: RequestPetition) {
     if (request.isometric) {
       const isometric = await fetchBufferImage(request.isometric);
@@ -200,6 +233,45 @@ export class RequestPdfService {
         { label: 'Limpieza de área', property: 'areaCleaning' },
       ],
       datas: [techInfo],
+    };
+
+    await doc.table(table, {
+      prepareHeader: () => doc.fontSize(8),
+      prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+        doc.fontSize(8);
+        indexColumn === 0 && doc.addBackground(rectRow, 'white', 0.15);
+      },
+    });
+  }
+
+  async reportInProgresTable(doc: any) {
+    const table = {
+      headers: [
+        'ID de proyecto',
+        'Tipo de proyecto',
+        'Nombre cliente',
+        'Estado del proyecto',
+        'Vendedor',
+        'Inspector',
+        'Instalador',
+        'Fecha de inicio',
+        'Fecha de finalización',
+        'Observaciones',
+      ],
+      rows: [
+        [
+          '1',
+          'INSTALACION UNIPERSONAL',
+          'Samuel Hernesto Morales Camacho',
+          'Inspección aprobada',
+          'Samuel Hernesto Morales Camacho',
+          'Samuel Hernesto Morales Camacho',
+          'Samuel Hernesto Morales Camacho',
+          '2024-10-31',
+          '2024-10-31',
+          'Dificil acceso al domicilio por construccion de calle',
+        ],
+      ],
     };
 
     await doc.table(table, {

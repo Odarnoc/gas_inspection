@@ -164,13 +164,13 @@ export default {
   },
   mounted () {},
   methods: {
-    ...mapActions('users/auth', [
-      'getTable',
-      'delete',
-      'updatePasswordByUserId'
-    ]),
-    downloadReport1 () {
-      console.log('clie 1')
+    ...mapActions('pdf/request', ['getInProgressReport']),
+    async downloadReport1 () {
+      const params = {
+        id: self.id,
+        name: `proyecto-${self.id}.pdf`
+      }
+      await this.getInProgressReport(params)
     }
   }
 }

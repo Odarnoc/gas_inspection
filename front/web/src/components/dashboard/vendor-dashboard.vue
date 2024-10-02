@@ -22,7 +22,7 @@
                   <q-td
                     key="instalator.firstName"
                     :props="props"
-                  >{{ props.row.instalator.firstName }}</q-td>
+                  >{{ props.row.instalator?.firstName ?? '' }}</q-td>
                   <q-td key="startDate" :props="props">{{ props.row.startDate }}</q-td>
                   <q-td key="limitDate" :props="props">{{ props.row.limitDate }}</q-td>
                   <q-td key="status" :props="props">{{ $translateStatus(props.row.status) }}</q-td>

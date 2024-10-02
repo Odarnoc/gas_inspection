@@ -11,6 +11,10 @@ const module = {
     getProyectPdf: async ({ commit }, params, payload) => {
       const response = await api.downloadPostFile(`${apiRoot}/getProyectPdf/${params.id}`, payload, params.name)
       return response
+    },
+    getInProgressReport: async ({ commit }, params, payload) => {
+      const response = await api.downloadPostFile(`${apiRoot}/getInProgressReport`, payload, params.name)
+      return response
     }
   },
   getters: {
