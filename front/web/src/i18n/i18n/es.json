@@ -137,6 +137,7 @@
     "observed": "Observada",
     "inspectionAproved": "Inspección aprobada",
     "instalationAssigned": "Asignada para instalación",
+    "instalationReAssigned": "Reasignada para instalación",
     "interrnalInspection": "Solicitud de inspección interna",
     "done": "Solicitud finalizada",
     "stored": "Solicitud archivada",

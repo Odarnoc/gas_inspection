@@ -3,6 +3,7 @@ export const statusOrder = {
   observed: 10,
   inspectionAproved: 110,
   instalationAssigned: 120,
+  instalationReAssigned: 121,
   interrnalInspection: 130,
   done: 200,
   store: 201,

@@ -327,6 +327,9 @@ export default boot(({ app, ssrContext, store }) => {
     if (status === statusOrder.instalationAssigned) {
       return i18n.global.t('requestPetitionStatus.instalationAssigned')
     }
+    if (status === statusOrder.instalationReAssigned) {
+      return i18n.global.t('requestPetitionStatus.instalationReAssigned')
+    }
     if (status === statusOrder.interrnalInspection) {
       return i18n.global.t('requestPetitionStatus.interrnalInspection')
     }
