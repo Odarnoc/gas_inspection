@@ -18,7 +18,7 @@
                       input-class="value-primary-input-color"
                       type="text"
                       v-model="start"
-                      :rules="rules.startDate"
+                      :rules="rules.start"
                       :label="$t('fields.startDate')"
                       readonly
                     >
@@ -53,7 +53,7 @@
                       input-class="value-primary-input-color"
                       type="text"
                       v-model="end"
-                      :rules="rules.limitDate"
+                      :rules="rules.end"
                       :label="$t('fields.endDate')"
                       readonly
                     >
@@ -155,12 +155,14 @@ export default {
     },
     rules () {
       return {
-        startDate: [
-          this.$rules.required(this.$t('validations.required.field'))
-        ],
-        limitDate: [this.$rules.required(this.$t('validations.required.field'))]
+        start: [this.$rules.required(this.$t('validations.required.field'))],
+        end: [this.$rules.required(this.$t('validations.required.field'))]
       }
     }
+  },
+  created () {
+    this.start = this.$getFisrtDay()
+    this.end = this.$getLastDay()
   },
   mounted () {},
   methods: {
