@@ -45,6 +45,14 @@
             @onUploadFile="addExtraDocument"
           />
           <q-btn
+            v-if="status == statusOrder.store"
+            class="float-right"
+            color="primary"
+            icon="download"
+            :label="$t('buttons.download_proyect')"
+            @click="getProyectOnPdf"
+          />
+          <q-btn
             v-if="status == statusOrder.done"
             class="float-right q-mr-md"
             color="secondary"
@@ -133,6 +141,14 @@ export default {
   methods: {
     ...mapActions('vendor/requestPetition', ['get', 'update']),
     ...mapActions('vendor/requestDocuments', ['getDocuments', 'create']),
+    ...mapActions('pdf/request', ['getProyectPdf']),
+    async getProyectOnPdf () {
+      const params = {
+        id: self.id,
+        name: `proyecto-${self.id}.pdf`
+      }
+      await this.getProyectPdf(params)
+    },
     async addExtraDocument (url) {
       self.loading = true
       self.$showLoading()

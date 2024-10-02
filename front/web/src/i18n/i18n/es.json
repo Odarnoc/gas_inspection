@@ -109,7 +109,8 @@
     "store": "Archivar",
     "addDocument": "Agregar documento",
     "accept": "Aceptar",
-    "setCoordinates": "Asignar coordenadas"
+    "setCoordinates": "Asignar coordenadas",
+    "download_proyect": "Descargar proyecto"
   },
   "dialogs": {
     "loading": "Cargando",

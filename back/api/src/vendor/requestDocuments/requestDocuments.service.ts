@@ -140,4 +140,23 @@ export class RequestDocumentsService {
       data,
     };
   }
+
+  async getDocumentsForPDF(id: number) {
+    const data = await this.requestDocumentsRepository.find({
+      relations: {
+        requestPetition: true,
+      },
+      where: {
+        requestPetition: {
+          id,
+        },
+      },
+      order: {
+        id: 'ASC',
+      },
+    });
+    return {
+      data,
+    };
+  }
 }
