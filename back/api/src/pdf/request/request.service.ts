@@ -96,9 +96,6 @@ export class RequestPdfService {
       // aqui comieza edicion de pdf
 
       await this.generateHeader(doc);
-      doc.moveDown();
-      doc.moveDown();
-      doc.moveDown();
 
       await this.reportInProgresTable(doc, reportPDFDto);
       //doc.moveDown();
@@ -208,12 +205,11 @@ export class RequestPdfService {
 
   async generateHeader(doc: any) {
     doc
-      .image(this.imageLogo, 50, 45, { width: 50 })
+      .image(this.imageLogo, 30, 18, { width: 50 })
       .fillColor('#444444')
       .fontSize(20)
-      .text('L.I.V GAS', 110, 57)
-      .text('', 30, 57)
-      .moveDown();
+      .text('L.I.V GAS', 90, 37)
+      .text('', 30, 57);
   }
 
   async generateFooter(doc: any) {
@@ -313,6 +309,7 @@ export class RequestPdfService {
     };
 
     await doc.table(table, {
+      y: 100,
       prepareHeader: () => doc.fontSize(8),
       prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
         doc.fontSize(8);
