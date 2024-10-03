@@ -101,7 +101,7 @@ export class RequestPdfService {
       doc.moveDown();
 
       await this.reportInProgresTable(doc, reportPDFDto);
-      doc.moveDown();
+      //doc.moveDown();
 
       await this.generateFooter(doc);
 
