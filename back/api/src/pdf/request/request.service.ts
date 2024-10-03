@@ -11,6 +11,8 @@ import {
   techPDFParser,
 } from 'src/common/helpers/parsers/clientInfoParser';
 import { CreatePDFRequestPetitionDto } from './dto/requestPetition.dto';
+import { ReportPDFDto } from './dto/reports.dto';
+import { exportRejectedPetitionParserMap } from 'src/common/helpers/parsers/petitionParser';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PDFDocument = require('pdfkit-table');
@@ -20,9 +22,6 @@ export class RequestPdfService {
   constructor(
     @Inject(RequestPetitionService)
     private readonly requestPetitionService: RequestPetitionService,
-
-    @Inject(RequestMaterialsService)
-    private readonly requestMaterialsService: RequestMaterialsService,
 
     @Inject(RequestDocumentsService)
     private readonly requestDocumentsService: RequestDocumentsService,
@@ -87,7 +86,7 @@ export class RequestPdfService {
     return pdfBuffer;
   }
 
-  async getInProgressReport(): Promise<Buffer> {
+  async getInProgressReport(reportPDFDto: ReportPDFDto): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
       const doc = new PDFDocument({
         size: 'LETTER',
@@ -101,7 +100,40 @@ export class RequestPdfService {
       doc.moveDown();
       doc.moveDown();
 
-      await this.reportInProgresTable(doc);
+      await this.reportInProgresTable(doc, reportPDFDto);
+      doc.moveDown();
+
+      await this.generateFooter(doc);
+
+      // aqui finaliza edicion de pdf
+
+      const buffer = [];
+      doc.on('data', buffer.push.bind(buffer));
+      doc.on('end', () => {
+        const data = Buffer.concat(buffer);
+        resolve(data);
+      });
+      doc.end();
+    });
+
+    return pdfBuffer;
+  }
+
+  async getRejectedReport(reportPDFDto: ReportPDFDto): Promise<Buffer> {
+    const pdfBuffer: Buffer = await new Promise(async (resolve) => {
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margin: 30,
+        bufferPages: true,
+      });
+      // aqui comieza edicion de pdf
+
+      await this.generateHeader(doc);
+      doc.moveDown();
+      doc.moveDown();
+      doc.moveDown();
+
+      await this.reportRejectedTable(doc, reportPDFDto);
       doc.moveDown();
 
       await this.generateFooter(doc);
@@ -256,34 +288,61 @@ export class RequestPdfService {
     });
   }
 
-  async reportInProgresTable(doc: any) {
+  async reportInProgresTable(doc: any, reportPDFDto: ReportPDFDto) {
+    const { data } = await this.requestPetitionService.getInProgress(
+      reportPDFDto,
+    );
+    const datas = exportRejectedPetitionParserMap(data);
     const table = {
       headers: [
-        'ID de proyecto',
-        'Tipo de proyecto',
-        'Nombre cliente',
-        'Estado del proyecto',
-        'Vendedor',
-        'Inspector',
-        'Instalador',
-        'Fecha de inicio',
-        'Fecha de finalización',
-        'Observaciones',
+        { label: 'ID de proyecto', property: 'id' },
+        {
+          label: 'Tipo de proyecto',
+          property: 'proyectType',
+        },
+        { label: 'Nombre cliente', property: 'client' },
+        { label: 'Estado del proyecto', property: 'status' },
+        { label: 'Vendedor', property: 'vendor' },
+        { label: 'Inspector', property: 'inspector' },
+        { label: 'Instalador', property: 'instalator' },
+        { label: 'Fecha de inicio', property: 'createdAt' },
+        { label: 'Días activos', property: 'activeDays' },
+        { label: 'Observaciones', property: 'observations' },
       ],
-      rows: [
-        [
-          '1',
-          'INSTALACION UNIPERSONAL',
-          'Samuel Hernesto Morales Camacho',
-          'Inspección aprobada',
-          'Samuel Hernesto Morales Camacho',
-          'Samuel Hernesto Morales Camacho',
-          'Samuel Hernesto Morales Camacho',
-          '2024-10-31',
-          '2024-10-31',
-          'Dificil acceso al domicilio por construccion de calle',
-        ],
+      datas,
+    };
+
+    await doc.table(table, {
+      prepareHeader: () => doc.fontSize(8),
+      prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+        doc.fontSize(8);
+        indexColumn === 0 && doc.addBackground(rectRow, 'white', 0.15);
+      },
+    });
+  }
+
+  async reportRejectedTable(doc: any, reportPDFDto: ReportPDFDto) {
+    const { data } = await this.requestPetitionService.getRejected(
+      reportPDFDto,
+    );
+    const datas = exportRejectedPetitionParserMap(data);
+    const table = {
+      headers: [
+        { label: 'ID de proyecto', property: 'id' },
+        {
+          label: 'Tipo de proyecto',
+          property: 'proyectType',
+        },
+        { label: 'Nombre cliente', property: 'client' },
+        { label: 'Estado del proyecto', property: 'status' },
+        { label: 'Vendedor', property: 'vendor' },
+        { label: 'Inspector', property: 'inspector' },
+        { label: 'Instalador', property: 'instalator' },
+        { label: 'Fecha de inicio', property: 'createdAt' },
+        { label: 'Fecha de finalización', property: 'finishDate' },
+        { label: 'Observaciones', property: 'observations' },
       ],
+      datas,
     };
 
     await doc.table(table, {

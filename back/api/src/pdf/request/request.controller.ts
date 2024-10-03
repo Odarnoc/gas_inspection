@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { RequestPdfService } from './request.service';
 import { CreatePDFRequestPetitionDto } from './dto/requestPetition.dto';
+import { ReportPDFDto } from './dto/reports.dto';
 
 @Controller('pdf/request')
 export class RequestPdfController {
@@ -34,8 +35,8 @@ export class RequestPdfController {
   }
 
   @Post('getInProgressReport')
-  async getInProgressReport(@Res() res) {
-    const buffer = await this.userPdfService.getInProgressReport();
+  async getInProgressReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
+    const buffer = await this.userPdfService.getInProgressReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -47,8 +48,8 @@ export class RequestPdfController {
   }
 
   @Post('getEfectivityReport')
-  async getEfectivityReport(@Res() res) {
-    const buffer = await this.userPdfService.getInProgressReport();
+  async getEfectivityReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
+    const buffer = await this.userPdfService.getInProgressReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -60,8 +61,8 @@ export class RequestPdfController {
   }
 
   @Post('getRejectedReport')
-  async getRejectedReport(@Res() res) {
-    const buffer = await this.userPdfService.getInProgressReport();
+  async getRejectedReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
+    const buffer = await this.userPdfService.getRejectedReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -73,8 +74,8 @@ export class RequestPdfController {
   }
 
   @Post('getActorReport')
-  async getActorReport(@Res() res) {
-    const buffer = await this.userPdfService.getInProgressReport();
+  async getActorReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
+    const buffer = await this.userPdfService.getInProgressReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',

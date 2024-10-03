@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
-import { In, Repository } from 'typeorm';
+import { Between, In, Repository } from 'typeorm';
 import handleDbExceptions from '../../common/exceptions/error.db.exception';
 import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
@@ -13,6 +13,7 @@ import { CreateRequestPetitionDto } from './dto/requestPetition.dto';
 import { StatusOrder } from 'src/common/glob/status';
 import { RequestPetitionLogsService } from 'src/log/request-petition/request-petition-logs.service';
 import { TypesEventLogs, TypesResultEventLogs } from 'src/common/glob/types';
+import { ReportPDFDto } from 'src/pdf/request/dto/reports.dto';
 
 @Injectable()
 export class RequestPetitionService {
@@ -83,6 +84,49 @@ export class RequestPetitionService {
     };
   }
 
+  async getRejected(reportPDFDto: ReportPDFDto) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        vendor: true,
+        inspector: true,
+        instalator: true,
+      },
+      where: {
+        status: StatusOrder.rejected,
+        rejectedDate: Between(reportPDFDto.startDate, reportPDFDto.endDate),
+      },
+    });
+    return {
+      data,
+    };
+  }
+
+  async getInProgress(reportPDFDto: ReportPDFDto) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        vendor: true,
+        inspector: true,
+        instalator: true,
+      },
+      where: {
+        status: In([
+          StatusOrder.assigned,
+          StatusOrder.inspectionAproved,
+          StatusOrder.instalationAssigned,
+          StatusOrder.instalationReassigned,
+          StatusOrder.interrnalInspection,
+          StatusOrder.observed,
+        ]),
+        // createdAt: Between(reportPDFDto.startDate, reportPDFDto.endDate),
+      },
+    });
+    return {
+      data,
+    };
+  }
+
   async create(user: User, createUserTypeDto: CreateRequestPetitionDto) {
     try {
       const systemDocument = await this.requestPetitionRepository.save({
@@ -115,9 +159,21 @@ export class RequestPetitionService {
     log: string,
     extraDetails: string,
   ) {
+    let setDateByEvent = {};
+    if (createUserTypeDto.log == 'Se rechazo el proyecto') {
+      setDateByEvent = {
+        rejectedDate: Date.now(),
+      };
+    }
+    if (createUserTypeDto.log == 'Se finalizo el proyecto') {
+      setDateByEvent = {
+        finishDate: Date.now(),
+      };
+    }
     try {
       await this.requestPetitionRepository.save({
         ...createUserTypeDto,
+        ...setDateByEvent,
       });
 
       const systemDocument = await this.requestPetitionRepository.findOne({

@@ -84,10 +84,10 @@
               </q-form>
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12">
-              <q-card class="bg-transparent no-shadow no-border" bordered @click="downloadReport1">
+              <q-card class="bg-transparent no-shadow no-border" bordered>
                 <q-card-section>
                   <div class="row q-col-gutter-sm">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" @click="downloadReport1">
                       <q-item class="q-pa-none bg-primary">
                         <q-item-section side class="q-pa-lg q-mr-none text-white bg-primary">
                           <q-icon name="download" color="white" size="24px"></q-icon>
@@ -97,7 +97,7 @@
                         </q-item-section>
                       </q-item>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" @click="downloadReport2">
                       <q-item class="q-pa-none bg-primary">
                         <q-item-section side class="q-pa-lg q-mr-none text-white bg-primary">
                           <q-icon name="download" color="white" size="24px"></q-icon>
@@ -107,7 +107,7 @@
                         </q-item-section>
                       </q-item>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" @click="downloadReport3">
                       <q-item class="q-pa-none bg-primary">
                         <q-item-section side class="q-pa-lg q-mr-none text-white bg-primary">
                           <q-icon name="download" color="white" size="24px"></q-icon>
@@ -117,7 +117,7 @@
                         </q-item-section>
                       </q-item>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" @click="downloadReport4">
                       <q-item class="q-pa-none bg-primary">
                         <q-item-section side class="q-pa-lg q-mr-none text-white bg-primary">
                           <q-icon name="download" color="white" size="24px"></q-icon>
@@ -166,11 +166,36 @@ export default {
   },
   mounted () {},
   methods: {
-    ...mapActions('pdf/request', ['getInProgressReport']),
+    ...mapActions('pdf/request', ['getInProgressReport', 'getRejectedReport']),
     async downloadReport1 () {
       const params = {
-        id: self.id,
-        name: `proyecto-${self.id}.pdf`
+        startDate: this.start,
+        endDate: this.end,
+        name: 'En proceso.pdf'
+      }
+      await this.getInProgressReport(params)
+    },
+    async downloadReport2 () {
+      const params = {
+        startDate: this.start,
+        endDate: this.end,
+        name: 'Efectividad.pdf'
+      }
+      await this.getInProgressReport(params)
+    },
+    async downloadReport3 () {
+      const params = {
+        startDate: this.start,
+        endDate: this.end,
+        name: 'Rechazados.pdf'
+      }
+      await this.getRejectedReport(params)
+    },
+    async downloadReport4 () {
+      const params = {
+        startDate: this.start,
+        endDate: this.end,
+        name: 'Por actor.pdf'
       }
       await this.getInProgressReport(params)
     }

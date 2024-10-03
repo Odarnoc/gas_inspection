@@ -34,9 +34,9 @@ const kImageClientDefault =
 const kImageCategoryAll =
     'https://firebasestorage.googleapis.com/v0/b/livgas-cfd9d.appspot.com/o/user.png?alt=media&token=2c6d7c07-6dae-4a55-bc70-36f414302dfd';
 
-String kSokect = 'https://gasinspection-production.up.railway.app';
-String kDomain = 'https://gasinspection-production.up.railway.app/api/';
-// String kSokect = 'http://192.168.3.3:67';
-// String kDomain = 'http://192.168.3.3:67/api/';
+// String kSokect = 'https://gasinspection-production.up.railway.app';
+// String kDomain = 'https://gasinspection-production.up.railway.app/api/';
+String kSokect = 'http://192.168.3.3:67';
+String kDomain = 'http://192.168.3.3:67/api/';
 
 const kTargetWidthUser = 220;

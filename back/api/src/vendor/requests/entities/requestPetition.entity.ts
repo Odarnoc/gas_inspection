@@ -124,6 +124,12 @@ export class RequestPetition {
   @Column('date', { nullable: true })
   limitDate: Date;
 
+  @Column('timestamptz', { nullable: true })
+  rejectedDate: Date;
+
+  @Column('timestamptz', { nullable: true })
+  finishDate: Date;
+
   @Column('text', { default: '', nullable: true })
   observations: string;
 

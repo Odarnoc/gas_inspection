@@ -15,6 +15,10 @@ const module = {
     getInProgressReport: async ({ commit }, params) => {
       const response = await api.downloadPostFile(`${apiRoot}/getInProgressReport`, params, params.name)
       return response
+    },
+    getRejectedReport: async ({ commit }, params) => {
+      const response = await api.downloadPostFile(`${apiRoot}/getRejectedReport`, params, params.name)
+      return response
     }
   },
   getters: {
