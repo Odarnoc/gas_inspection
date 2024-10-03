@@ -162,12 +162,12 @@ export class RequestPetitionService {
     let setDateByEvent = {};
     if (createUserTypeDto.log == 'Se rechazo el proyecto') {
       setDateByEvent = {
-        rejectedDate: Date.now(),
+        rejectedDate: new Date(),
       };
     }
     if (createUserTypeDto.log == 'Se finalizo el proyecto') {
       setDateByEvent = {
-        finishDate: Date.now(),
+        finishDate: new Date(),
       };
     }
     try {
