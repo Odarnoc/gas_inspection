@@ -28,7 +28,7 @@
                 <div class="text-subtitle1">
                   {{ element?.name }}
                   <q-btn
-                    v-if="!element?.selected"
+                    v-if="status == statusOrder.store && !element?.selected"
                     color="primary"
                     round
                     icon="check_box_outline_blank"
@@ -36,7 +36,7 @@
                     @click="selectDocument(index)"
                   />
                   <q-btn
-                    v-else
+                    v-if="status == statusOrder.store && element?.selected"
                     color="primary"
                     round
                     icon="check_box"
