@@ -23,15 +23,37 @@
               :name="index"
               class="uncropped-image"
               :img-src="element?.url"
-            />
-            <template v-slot:control>
+            >
+              <div class="absolute-bottom custom-caption">
+                <div class="text-subtitle1">
+                  {{ element?.name }}
+                  <q-btn
+                    v-if="!element?.selected"
+                    color="primary"
+                    round
+                    icon="check_box_outline_blank"
+                    size="18px"
+                    @click="selectDocument(index)"
+                  />
+                  <q-btn
+                    v-else
+                    color="primary"
+                    round
+                    icon="check_box"
+                    size="18px"
+                    @click="unSelectDocument(index)"
+                  />
+                </div>
+              </div>
+            </q-carousel-slide>
+            <!-- <template v-slot:control>
               <q-carousel-control
                 position="bottom"
                 :offset="[16, 8]"
                 class="text-white text-center rounded-borders"
                 style="background: rgba(0, 0, 0, .4); padding: 4px 8px;"
               >{{ allDocumentList[slide]?.name }}</q-carousel-control>
-            </template>
+            </template>-->
           </q-carousel>
           <br />
         </div>
@@ -88,6 +110,10 @@ export default {
       },
       allDocumentList: [],
       extraDouments: [],
+      selectedExtraDocumentIDS: [],
+      isometricSelected: false,
+      floorPlanSelected: false,
+      materialsSelected: false,
       where: {
         where: {
           requestPetition: {
@@ -145,7 +171,11 @@ export default {
     async getProyectOnPdf () {
       const params = {
         id: self.id,
-        name: `proyecto-${self.id}.pdf`
+        name: `proyecto-${self.id}.pdf`,
+        isometricSelected: this.isometricSelected,
+        floorPlanSelected: this.floorPlanSelected,
+        materialsSelected: this.materialsSelected,
+        selectedExtraDocumentIDS: this.selectedExtraDocumentIDS
       }
       await this.getProyectPdf(params)
     },
@@ -186,6 +216,8 @@ export default {
         tempArray.push({
           canDelete: true,
           id: 0,
+          documentType: 'isometric',
+          selected: false,
           url: this.isometric,
           name: this.$t('fields.isometric')
         })
@@ -194,6 +226,8 @@ export default {
         tempArray.push({
           canDelete: true,
           id: 0,
+          documentType: 'floorPlan',
+          selected: false,
           url: this.floorPlan,
           name: this.$t('fields.floorPlan')
         })
@@ -202,6 +236,8 @@ export default {
         tempArray.push({
           canDelete: true,
           id: 0,
+          documentType: 'materials',
+          selected: false,
           url: this.materials,
           name: this.$t('fields.materials')
         })
@@ -210,12 +246,48 @@ export default {
       const resultArray = this.extraDouments.map((document) => ({
         canDelete: true,
         id: document.id,
+        documentType: '',
+        selected: false,
         url: document.documentUrl,
         name: this.$t('extra_document')
       }))
 
       this.allDocumentList = [...tempArray, ...resultArray]
       self.$destroyLoading()
+    },
+    selectDocument (index) {
+      this.allDocumentList[index].selected = true
+      if (this.allDocumentList[index].documentType === 'isometric') {
+        this.isometricSelected = true
+      }
+      if (this.allDocumentList[index].documentType === 'floorPlan') {
+        this.floorPlanSelected = true
+      }
+      if (this.allDocumentList[index].documentType === 'materials') {
+        this.materialsSelected = true
+      }
+      if (this.allDocumentList[index].id > 0) {
+        this.selectedExtraDocumentIDS.push(this.allDocumentList[index].id)
+      }
+    },
+    unSelectDocument (index) {
+      this.allDocumentList[index].selected = false
+      if (this.allDocumentList[index].documentType === 'isometric') {
+        this.isometricSelected = false
+      }
+      if (this.allDocumentList[index].documentType === 'floorPlan') {
+        this.floorPlanSelected = false
+      }
+      if (this.allDocumentList[index].documentType === 'materials') {
+        this.materialsSelected = false
+      }
+      if (this.allDocumentList[index].id > 0) {
+        const id = this.allDocumentList[index].id
+        const newIDArray = this.selectedExtraDocumentIDS.filter(function (e) {
+          return e !== id
+        })
+        this.selectedExtraDocumentIDS = [...newIDArray]
+      }
     },
     async setDocuments () {
       const response = await this.getDocuments(self.id)
@@ -243,5 +315,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="sass" scoped>
+.custom-caption
+  text-align: center
+  padding: 12px
+  color: white
+  background-color: rgba(0, 0, 0, .3)
 </style>

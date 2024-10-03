@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import handleDbExceptions from '../../common/exceptions/error.db.exception';
 import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
@@ -141,15 +141,10 @@ export class RequestDocumentsService {
     };
   }
 
-  async getDocumentsForPDF(id: number) {
+  async getDocumentsForPDF(ids: number[]) {
     const data = await this.requestDocumentsRepository.find({
-      relations: {
-        requestPetition: true,
-      },
       where: {
-        requestPetition: {
-          id,
-        },
+        id: In(ids),
       },
       order: {
         id: 'ASC',

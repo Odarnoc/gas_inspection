@@ -10,6 +10,7 @@ import {
   clientPDFParser,
   techPDFParser,
 } from 'src/common/helpers/parsers/clientInfoParser';
+import { CreatePDFRequestPetitionDto } from './dto/requestPetition.dto';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PDFDocument = require('pdfkit-table');
@@ -31,7 +32,10 @@ export class RequestPdfService {
 
   private imageLogo = join(__dirname, '..', '..', 'assets/Logo.png');
 
-  async getProyectPdf(requestId: number): Promise<Buffer> {
+  async getProyectPdf(
+    requestId: number,
+    createPDFRequestPetitionDto: CreatePDFRequestPetitionDto,
+  ): Promise<Buffer> {
     const pdfBuffer: Buffer = await new Promise(async (resolve) => {
       const doc = new PDFDocument({
         size: 'LETTER',
@@ -63,9 +67,9 @@ export class RequestPdfService {
       await this.techInformation(doc, data);
       doc.moveDown();
 
-      await this.addSpecificFiles(doc, data);
+      await this.addSpecificFiles(doc, data, createPDFRequestPetitionDto);
 
-      await this.addExtraFiles(doc, data);
+      await this.addExtraFiles(doc, data, createPDFRequestPetitionDto);
 
       await this.generateFooter(doc);
 
@@ -116,8 +120,12 @@ export class RequestPdfService {
     return pdfBuffer;
   }
 
-  async addSpecificFiles(doc: any, request: RequestPetition) {
-    if (request.isometric) {
+  async addSpecificFiles(
+    doc: any,
+    request: RequestPetition,
+    createPDFRequestPetitionDto: CreatePDFRequestPetitionDto,
+  ) {
+    if (createPDFRequestPetitionDto.isometricSelected) {
       const isometric = await fetchBufferImage(request.isometric);
       doc.addPage().image(isometric, {
         fit: [doc.page.width - 60, doc.page.height - 60],
@@ -126,7 +134,7 @@ export class RequestPdfService {
       });
     }
 
-    if (request.floorPlan) {
+    if (createPDFRequestPetitionDto.floorPlanSelected) {
       const floorPlan = await fetchBufferImage(request.floorPlan);
       doc.addPage().image(floorPlan, {
         fit: [doc.page.width - 60, doc.page.height - 60],
@@ -135,7 +143,7 @@ export class RequestPdfService {
       });
     }
 
-    if (request.materials) {
+    if (createPDFRequestPetitionDto.materialsSelected) {
       const materials = await fetchBufferImage(request.materials);
       doc.addPage().image(materials, {
         fit: [doc.page.width - 60, doc.page.height - 60],
@@ -145,9 +153,13 @@ export class RequestPdfService {
     }
   }
 
-  async addExtraFiles(doc: any, request: RequestPetition) {
+  async addExtraFiles(
+    doc: any,
+    request: RequestPetition,
+    createPDFRequestPetitionDto: CreatePDFRequestPetitionDto,
+  ) {
     const extras = await this.requestDocumentsService.getDocumentsForPDF(
-      request.id,
+      createPDFRequestPetitionDto.selectedExtraDocumentIDS,
     );
 
     for await (const document of extras.data) {
