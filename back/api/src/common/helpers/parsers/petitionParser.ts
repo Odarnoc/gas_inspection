@@ -19,13 +19,15 @@ export function exportRejectedPetitionParserMap(items: RequestPetition[]) {
     } ${item.instalator?.maternalName ?? ''}`,
     createdAt: toUSADate(item.createdAt),
     finishDate: toUSADate(item.finishDate),
+    limitDate: toUSADate(new Date(`${item.limitDate}  00:00:00 -04`)),
     activeDays: getDaysBetwen(item.createdAt, new Date()),
+    doneDays: getDaysBetwen(item.createdAt, item.finishDate),
+    efectivity: parseEfectivity(item),
     observations: item.observations,
   }));
 }
 
 export function parsestatus(status: number) {
-  console.log(status === StatusOrder.assigned);
   if (status === StatusOrder.assigned) {
     return 'Asignada para inspección';
   }
@@ -55,4 +57,14 @@ export function parsestatus(status: number) {
   }
 
   return 'Uknown';
+}
+
+export function parseEfectivity(item: RequestPetition) {
+  const estimatedDays = getDaysBetwen(
+    item.createdAt,
+    new Date(`${item.limitDate}  00:00:00 -04`),
+  );
+  const doneDays = getDaysBetwen(item.createdAt, item.finishDate);
+
+  return doneDays > estimatedDays ? 'No efectiva' : 'Efectiva';
 }

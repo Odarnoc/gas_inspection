@@ -3,7 +3,6 @@ import { I18nContext, I18nService } from 'nestjs-i18n';
 import { join } from 'path';
 import { RequestPetition } from 'src/vendor/requests/entities/requestPetition.entity';
 import { RequestPetitionService } from 'src/vendor/requests/requestPetition.service';
-import { RequestMaterialsService } from '../../vendor/requestMaterials/RequestMaterials.service';
 import { fetchBufferImage } from 'src/common/helpers/fileHelpers';
 import { RequestDocumentsService } from 'src/vendor/requestDocuments/requestDocuments.service';
 import {
@@ -13,6 +12,7 @@ import {
 import { CreatePDFRequestPetitionDto } from './dto/requestPetition.dto';
 import { ReportPDFDto } from './dto/reports.dto';
 import { exportRejectedPetitionParserMap } from 'src/common/helpers/parsers/petitionParser';
+import { exportActorsParserMap } from 'src/common/helpers/parsers/ActorParser';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PDFDocument = require('pdfkit-table');
@@ -98,6 +98,66 @@ export class RequestPdfService {
       await this.generateHeader(doc);
 
       await this.reportInProgresTable(doc, reportPDFDto);
+      //doc.moveDown();
+
+      await this.generateFooter(doc);
+
+      // aqui finaliza edicion de pdf
+
+      const buffer = [];
+      doc.on('data', buffer.push.bind(buffer));
+      doc.on('end', () => {
+        const data = Buffer.concat(buffer);
+        resolve(data);
+      });
+      doc.end();
+    });
+
+    return pdfBuffer;
+  }
+
+  async getEfectivityReport(reportPDFDto: ReportPDFDto): Promise<Buffer> {
+    const pdfBuffer: Buffer = await new Promise(async (resolve) => {
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margin: 30,
+        bufferPages: true,
+      });
+      // aqui comieza edicion de pdf
+
+      await this.generateHeader(doc);
+
+      await this.reportEfectivityTable(doc, reportPDFDto);
+      //doc.moveDown();
+
+      await this.generateFooter(doc);
+
+      // aqui finaliza edicion de pdf
+
+      const buffer = [];
+      doc.on('data', buffer.push.bind(buffer));
+      doc.on('end', () => {
+        const data = Buffer.concat(buffer);
+        resolve(data);
+      });
+      doc.end();
+    });
+
+    return pdfBuffer;
+  }
+
+  async getActorReport(reportPDFDto: ReportPDFDto): Promise<Buffer> {
+    const pdfBuffer: Buffer = await new Promise(async (resolve) => {
+      const doc = new PDFDocument({
+        size: 'LETTER',
+        margin: 30,
+        bufferPages: true,
+      });
+      // aqui comieza edicion de pdf
+
+      await this.generateHeader(doc);
+
+      await this.reportActorTable(doc, reportPDFDto);
       //doc.moveDown();
 
       await this.generateFooter(doc);
@@ -304,6 +364,69 @@ export class RequestPdfService {
         { label: 'Fecha de inicio', property: 'createdAt' },
         { label: 'Días activos', property: 'activeDays' },
         { label: 'Observaciones', property: 'observations' },
+      ],
+      datas,
+    };
+
+    await doc.table(table, {
+      y: 100,
+      prepareHeader: () => doc.fontSize(8),
+      prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+        doc.fontSize(8);
+        indexColumn === 0 && doc.addBackground(rectRow, 'white', 0.15);
+      },
+    });
+  }
+
+  async reportEfectivityTable(doc: any, reportPDFDto: ReportPDFDto) {
+    const { data } = await this.requestPetitionService.getEfectivity(
+      reportPDFDto,
+    );
+    console.log(data);
+    const datas = exportRejectedPetitionParserMap(data);
+    const table = {
+      headers: [
+        { label: 'ID de proyecto', property: 'id' },
+        {
+          label: 'Tipo de proyecto',
+          property: 'proyectType',
+        },
+        { label: 'Nombre cliente', property: 'client' },
+        { label: 'Vendedor', property: 'vendor' },
+        { label: 'Inspector', property: 'inspector' },
+        { label: 'Instalador', property: 'instalator' },
+        { label: 'Fecha de inicio', property: 'createdAt' },
+        { label: 'Fecha de finalización', property: 'finishDate' },
+        { label: 'Fecha de límite', property: 'limitDate' },
+        { label: 'Días hasta finalizar', property: 'doneDays' },
+        { label: 'Efectividad', property: 'efectivity' },
+      ],
+      datas,
+    };
+
+    await doc.table(table, {
+      y: 100,
+      prepareHeader: () => doc.fontSize(8),
+      prepareRow: (row, indexColumn, indexRow, rectRow, rectCell) => {
+        doc.fontSize(8);
+        indexColumn === 0 && doc.addBackground(rectRow, 'white', 0.15);
+      },
+    });
+  }
+
+  async reportActorTable(doc: any, reportPDFDto: ReportPDFDto) {
+    const data = await this.requestPetitionService.getUserCountsReport(
+      reportPDFDto,
+    );
+    console.log(data);
+    const datas = exportActorsParserMap(data);
+    const table = {
+      headers: [
+        { label: 'Actor', property: 'name' },
+        {
+          label: 'Proyectos completados',
+          property: 'count',
+        },
       ],
       datas,
     };

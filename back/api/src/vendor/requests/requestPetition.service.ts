@@ -14,6 +14,7 @@ import { StatusOrder } from 'src/common/glob/status';
 import { RequestPetitionLogsService } from 'src/log/request-petition/request-petition-logs.service';
 import { TypesEventLogs, TypesResultEventLogs } from 'src/common/glob/types';
 import { ReportPDFDto } from 'src/pdf/request/dto/reports.dto';
+import { toDBDate } from 'src/common/helpers/dateHelpers';
 
 @Injectable()
 export class RequestPetitionService {
@@ -119,12 +120,66 @@ export class RequestPetitionService {
           StatusOrder.interrnalInspection,
           StatusOrder.observed,
         ]),
-        // createdAt: Between(reportPDFDto.startDate, reportPDFDto.endDate),
       },
     });
     return {
       data,
     };
+  }
+
+  async getEfectivity(reportPDFDto: ReportPDFDto) {
+    const data = await this.requestPetitionRepository.find({
+      relations: {
+        proyectType: true,
+        vendor: true,
+        inspector: true,
+        instalator: true,
+      },
+      where: {
+        status: In([StatusOrder.done, StatusOrder.store]),
+        createdAt: Between(reportPDFDto.startDate, reportPDFDto.endDate),
+      },
+    });
+    return {
+      data,
+    };
+  }
+
+  async getUserCountsReport(reportPDFDto: ReportPDFDto) {
+    const parsedStartDate = toDBDate(reportPDFDto.startDate);
+    const parsedEndDate = toDBDate(reportPDFDto.endDate);
+    return this.userRepository
+      .createQueryBuilder('user')
+      .select('user.firstName, user.paternalName, user.maternalName')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('count(*)')
+          .from(RequestPetition, 'request1')
+          .where(
+            'request1."vendorId" = user.id AND request1."finishDate" >= :parsedStartDate AND request1."finishDate" <= :parsedEndDate',
+          );
+      }, 'vendor_count')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('count(*)')
+          .from(RequestPetition, 'request2')
+          .where(
+            'request2."instalatorId" = user.id AND request2."finishDate" >= :parsedStartDate AND request2."finishDate" <= :parsedEndDate',
+          );
+      }, 'instalator_count')
+      .addSelect((subQuery) => {
+        return subQuery
+          .select('count(*)')
+          .from(RequestPetition, 'request3')
+          .where(
+            'request3."inspectorId" = user.id AND request3."finishDate" >= :parsedStartDate AND request3."finishDate" <= :parsedEndDate',
+          );
+      }, 'inspector_count')
+      .setParameters({
+        parsedStartDate: `${parsedStartDate} 00:00:00 -04`,
+        parsedEndDate: `${parsedEndDate} 23:59:59.999999 -04`,
+      })
+      .getRawMany();
   }
 
   async create(user: User, createUserTypeDto: CreateRequestPetitionDto) {

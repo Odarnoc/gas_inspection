@@ -49,7 +49,7 @@ export class RequestPdfController {
 
   @Post('getEfectivityReport')
   async getEfectivityReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
-    const buffer = await this.userPdfService.getInProgressReport(reportPDFDto);
+    const buffer = await this.userPdfService.getEfectivityReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -75,7 +75,7 @@ export class RequestPdfController {
 
   @Post('getActorReport')
   async getActorReport(@Res() res, @Body() reportPDFDto: ReportPDFDto) {
-    const buffer = await this.userPdfService.getInProgressReport(reportPDFDto);
+    const buffer = await this.userPdfService.getActorReport(reportPDFDto);
 
     res.set({
       'Content-Type': 'application/pdf',

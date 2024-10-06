@@ -23,6 +23,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ViewUserInspectorOptions } from './entities/userInspectorOptions.view.entity';
 import { TypesRol } from 'src/common/glob/types';
 import { ViewUserInstalatorOptions } from './entities/userInstalatorOptions.view.entity';
+import { RequestPetition } from 'src/vendor/requests/entities/requestPetition.entity';
 
 @Injectable()
 export class AuthService {

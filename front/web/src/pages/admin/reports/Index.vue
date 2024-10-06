@@ -166,7 +166,12 @@ export default {
   },
   mounted () {},
   methods: {
-    ...mapActions('pdf/request', ['getInProgressReport', 'getRejectedReport']),
+    ...mapActions('pdf/request', [
+      'getInProgressReport',
+      'getRejectedReport',
+      'getEfectivityReport',
+      'getActorReport'
+    ]),
     async downloadReport1 () {
       const params = {
         startDate: this.start,
@@ -181,7 +186,7 @@ export default {
         endDate: this.end,
         name: 'Efectividad.pdf'
       }
-      await this.getInProgressReport(params)
+      await this.getEfectivityReport(params)
     },
     async downloadReport3 () {
       const params = {
@@ -197,7 +202,7 @@ export default {
         endDate: this.end,
         name: 'Por actor.pdf'
       }
-      await this.getInProgressReport(params)
+      await this.getActorReport(params)
     }
   }
 }
