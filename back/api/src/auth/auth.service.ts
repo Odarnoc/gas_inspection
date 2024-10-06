@@ -199,7 +199,7 @@ export class AuthService {
     delete user.password;
     return {
       ...user,
-      token: this._getJwtToken({ id: user.id, email: user.email }),
+      token: this._getJwtToken2hrs({ id: user.id, email: user.email }),
     };
   }
 
@@ -286,5 +286,12 @@ export class AuthService {
 
   private _getJwtToken(jwtpayload: JwtPayload) {
     return this.jwtService.sign(jwtpayload);
+  }
+
+  private _getJwtToken2hrs(jwtpayload: JwtPayload) {
+    return this.jwtService.sign(jwtpayload, {
+      expiresIn: 60 * 60 * 2,
+      // expiresIn: 10,
+    });
   }
 }
