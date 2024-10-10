@@ -24,8 +24,14 @@ class UploadFile extends StatelessWidget {
                 const SizedBox(width: 400.0, height: 10.0),
                 uploadFileController.getImage() == null
                     ? Container()
-                    : Image.file(uploadFileController.getImage()!,
-                        width: 260, height: 260, fit: BoxFit.cover),
+                    : InteractiveViewer(
+                        panEnabled: false,
+                        boundaryMargin: const EdgeInsets.all(100),
+                        minScale: 1,
+                        maxScale: 5,
+                        child: Image.file(uploadFileController.getImage()!,
+                            width: 260, height: 260, fit: BoxFit.cover),
+                      ),
                 ElevatedButton(
                   onPressed: () async {
                     uploadFileController.pickImage(ImageSource.gallery);

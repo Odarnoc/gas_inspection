@@ -58,14 +58,20 @@ class DocumentsDialog extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(5.0)),
                             child: Stack(
                               children: <Widget>[
-                                CachedNetworkImage(
-                                  imageUrl: item.documentUrl,
-                                  fit: BoxFit.scaleDown,
-                                  width: 1000.0,
-                                  placeholder: (context, url) =>
-                                      Image.asset('assets/no-image.png'),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset('assets/no-image.png'),
+                                InteractiveViewer(
+                                  panEnabled: false,
+                                  boundaryMargin: const EdgeInsets.all(100),
+                                  minScale: 1,
+                                  maxScale: 5,
+                                  child: CachedNetworkImage(
+                                    imageUrl: item.documentUrl,
+                                    fit: BoxFit.scaleDown,
+                                    width: 1000.0,
+                                    placeholder: (context, url) =>
+                                        Image.asset('assets/no-image.png'),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset('assets/no-image.png'),
+                                  ),
                                 ),
                                 Positioned(
                                   bottom: 0.0,
