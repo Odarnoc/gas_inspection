@@ -111,7 +111,8 @@
     "addDocument": "Agregar documento",
     "accept": "Aceptar",
     "setCoordinates": "Asignar coordenadas",
-    "download_proyect": "Descargar proyecto"
+    "download_proyect": "Descargar proyecto",
+    "clear": "Limpiar"
   },
   "dialogs": {
     "loading": "Cargando",

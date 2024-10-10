@@ -15,6 +15,13 @@
             :label="$t('buttons.save')"
             @click="save"
           />
+          <q-btn
+            class="float-right q-mr-sm"
+            color="warning"
+            icon="clear"
+            :label="$t('buttons.clear')"
+            @click="clear"
+          />
         </div>
       </div>
     </div>
@@ -66,6 +73,9 @@ export default {
       }
       self.$destroyLoading()
       self.loading = false
+    },
+    async clear () {
+      self.$refs.regForm.resetFields()
     }
   }
 }

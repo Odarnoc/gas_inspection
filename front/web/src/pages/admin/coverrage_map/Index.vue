@@ -106,6 +106,15 @@
             <div class="col-12" v-if="isCreating">
               <q-btn
                 class="float-right"
+                color="warning"
+                icon="clear"
+                :label="$t('buttons.clear')"
+                @click="clear"
+              />
+            </div>
+            <div class="col-12" v-if="isCreating">
+              <q-btn
+                class="float-right"
                 color="primary"
                 icon="save"
                 :label="$t('buttons.save')"
@@ -333,6 +342,15 @@ export default {
       }
       this.$destroyLoading()
       this.loading = false
+    },
+    async clear () {
+      this.color = '#00d600'
+      this.city = ''
+      this.zone = ''
+      this.avenue = ''
+      this.streets = ''
+      this.newPath = []
+      this.$refs.linesForm.reset()
     },
     async deleteLine () {
       this.loading = true

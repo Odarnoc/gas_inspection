@@ -775,6 +775,8 @@ export default {
         incomeDate: '',
         conclusionDate: ''
       }
+      self.center = { lat: -16.49798820086203, lng: -68.13029845308486 }
+      self.marker = { lat: -16.49798820086203, lng: -68.13029845308486 }
       self.$refs.regForm.reset()
     },
     async updateIdentityCardImage (updateUrlImage) {
