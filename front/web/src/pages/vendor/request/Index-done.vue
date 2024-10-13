@@ -5,12 +5,26 @@
     <div class="q-pa-md bg-grey-3">
       <div class="row bg-white border-panel">
         <div class="col q-pa-md">
+          <div class="row q-col-gutter-sm">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <q-input filled v-model="filters.filters.ci" :label="$t('fields.ci')" />
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 q-pt-sm pull-left">
+              <q-btn
+                class="q-ml-sm q-mb-md"
+                color="primary"
+                icon="search"
+                @click="fetchTableDataByFilters"
+              />
+            </div>
+          </div>
           <div class="row q-mb-sm q-mt-md">
             <div class="col-12">
               <base-table
                 ref="table"
                 :columns="columnsServices"
                 :fetchData="getTableDone"
+                :fetchParams="filters"
                 :pag="pagination"
               >
                 <template v-slot:body="props">
@@ -54,6 +68,11 @@ export default {
       },
       loading: false,
       filter: '',
+      filters: {
+        filters: {
+          ci: null
+        }
+      },
       carrierId: 0
     }
   },

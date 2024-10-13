@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationCompleteDto } from 'src/common/dto/pagination.dto';
-import { Between, In, Repository } from 'typeorm';
+import { Between, ILike, In, Repository } from 'typeorm';
 import handleDbExceptions from '../../common/exceptions/error.db.exception';
 import { User } from '../../auth/entities/user.entity';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
@@ -33,6 +33,21 @@ export class RequestPetitionService {
     private readonly i18n: I18nService,
   ) {}
 
+  async getFilters(filters, where) {
+    const { ci } = filters;
+
+    const andFilters = {
+      ...where,
+      ci: ILike(`%${ci ?? ''}%`),
+    };
+
+    return [
+      {
+        ...andFilters,
+      },
+    ];
+  }
+
   async getTable({
     page,
     rowsPerPage,
@@ -40,7 +55,9 @@ export class RequestPetitionService {
     sortBy,
     descending,
     where,
+    filters,
   }: PaginationCompleteDto) {
+    const finalWhere = await this.getFilters(filters, where);
     const current = page || PAGINATION_DEFAULT_VALUES.page;
     const limit = rowsPerPage || PAGINATION_DEFAULT_VALUES.rowsPerPage;
     const skip = offset || (current - 1) * limit;
@@ -54,7 +71,7 @@ export class RequestPetitionService {
           inspector: true,
           instalator: true,
         },
-        where,
+        where: finalWhere,
         take: limit,
         skip,
         order,

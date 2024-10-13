@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import handleDbExceptions from 'src/common/exceptions/error.db.exception';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { RequestPetitionLogs } from './entities/request-petition-logs.entity';
 import { PaginationCompleteDto } from '../../common/dto/pagination.dto';
 import { PAGINATION_DEFAULT_VALUES } from '../../common/constants/pagination';
@@ -31,6 +31,23 @@ export class RequestPetitionLogsService {
     }
   }
 
+  async getFilters(filters, where) {
+    const { ci } = filters;
+    const { extraDetails } = filters;
+
+    const andFilters = {
+      ...where,
+      user: { ci: ILike(`%${ci ?? ''}%`) },
+      extraDetails: ILike(`%${extraDetails ?? ''}%`),
+    };
+
+    return [
+      {
+        ...andFilters,
+      },
+    ];
+  }
+
   async getTable({
     page,
     rowsPerPage,
@@ -38,7 +55,9 @@ export class RequestPetitionLogsService {
     sortBy,
     descending,
     where,
+    filters,
   }: PaginationCompleteDto) {
+    const finalWhere = await this.getFilters(filters, where);
     const current = page || PAGINATION_DEFAULT_VALUES.page;
     const limit = rowsPerPage || PAGINATION_DEFAULT_VALUES.rowsPerPage;
     const skip = offset || (current - 1) * limit;
@@ -50,7 +69,7 @@ export class RequestPetitionLogsService {
         relations: {
           user: true,
         },
-        where,
+        where: finalWhere,
         take: limit,
         skip,
         order,

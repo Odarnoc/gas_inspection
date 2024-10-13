@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ArrayContainedBy, Repository } from 'typeorm';
+import { ArrayContainedBy, ILike, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
@@ -44,6 +44,21 @@ export class AuthService {
     private readonly i18n: I18nService,
   ) {}
 
+  async getFilters(filters, where) {
+    const { ci } = filters;
+
+    const andFilters = {
+      ...where,
+      ci: ILike(`%${ci ?? ''}%`),
+    };
+
+    return [
+      {
+        ...andFilters,
+      },
+    ];
+  }
+
   async getTable({
     page,
     rowsPerPage,
@@ -51,7 +66,9 @@ export class AuthService {
     sortBy,
     descending,
     where,
+    filters,
   }: PaginationCompleteDto) {
+    const finalWhere = await this.getFilters(filters, where);
     const current = page || PAGINATION_DEFAULT_VALUES.page;
     const limit = rowsPerPage || PAGINATION_DEFAULT_VALUES.rowsPerPage;
     const skip = offset || (current - 1) * limit;
@@ -59,7 +76,7 @@ export class AuthService {
     descending = descending ?? PAGINATION_DEFAULT_VALUES.descending;
     const order = getOrderBy(sortBy, descending);
     const [items, total_items] = await this.userRepository.findAndCount({
-      where,
+      where: finalWhere,
       take: limit,
       skip,
       order,
