@@ -1,24 +1,5 @@
 <template>
   <q-form ref="regForm" class="q-gutter-md">
-    <div class="row q-col-gutter-xs justify-center">
-      <div class="col-md-6 col-xs-6 col-12 justify-center">
-        <q-select
-          :readonly="readonlyByStatus"
-          outlined
-          bg-color="primary-input-color"
-          color="border-primary-input-color"
-          label-color="primary-input-color"
-          input-class="value-primary-input-color"
-          :options="options.proyectTypes"
-          v-model="user.fields.proyectType"
-          map-options
-          emit-value
-          :label="$t('fields.selectProyectType')"
-          :rules="rules.proyectType"
-        />
-      </div>
-    </div>
-
     <p class="text-h5 text-bold">{{ $t('fields.personalInfo') }}</p>
 
     <div class="row q-col-gutter-xs">
@@ -119,6 +100,22 @@
           color="border-primary-input-color"
           label-color="primary-input-color"
           input-class="value-primary-input-color"
+          :options="options.proyectTypes"
+          v-model="user.fields.proyectType"
+          map-options
+          emit-value
+          :label="$t('fields.selectProyectType')"
+          :rules="rules.proyectType"
+        />
+      </div>
+      <div class="col-md-6 col-xs-6 col-12">
+        <q-select
+          :readonly="readonlyByStatus"
+          outlined
+          bg-color="primary-input-color"
+          color="border-primary-input-color"
+          label-color="primary-input-color"
+          input-class="value-primary-input-color"
           :options="options.inspectors"
           v-model="user.fields.inspector"
           map-options
@@ -130,7 +127,7 @@
     </div>
     <p class="text-h5 text-bold">{{ $t('fields.requirements') }}</p>
     <div class="row q-col-gutter-xs">
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
@@ -178,7 +175,7 @@
           </template>
         </q-input>
       </div>
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
@@ -225,7 +222,7 @@
           </template>
         </q-input>
       </div>
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
@@ -272,7 +269,7 @@
           </template>
         </q-input>
       </div>
-      <div class="col-12">
+      <div class="col-md-3 col-xs-6 col-12">
         <q-input
           outlined
           bg-color="primary-input-color"
