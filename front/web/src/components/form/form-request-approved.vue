@@ -94,6 +94,7 @@
     <div class="row q-col-gutter-xs">
       <div class="col-md-6 col-xs-6 col-12">
         <q-select
+          :readonly="validateVendor"
           outlined
           bg-color="primary-input-color"
           color="border-primary-input-color"
@@ -130,7 +131,7 @@
 
 <script>
 import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 let self
 export default {
@@ -175,6 +176,15 @@ export default {
     edit: Boolean
   },
   computed: {
+    ...mapGetters('users/auth', { currentUserId: 'id' }),
+    validateVendor () {
+      if (this.user.fields?.vendor) {
+        if (this.user.fields.vendor?.id !== this.currentUserId) {
+          return true
+        }
+      }
+      return false
+    },
     createIdentityCardFileRoute () {
       return `${GENERAL_ROUTES.user}identityCard/${new Date().getTime()}/`
     },

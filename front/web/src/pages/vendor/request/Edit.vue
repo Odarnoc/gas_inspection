@@ -35,7 +35,7 @@
         <div class="col-12">
           <q-btn color="warning" icon="photo_camera" @click="showExtraDocuments" />
           <q-btn
-            v-if="status == statusOrder.observed"
+            v-if="validateVendor && status == statusOrder.observed"
             class="float-right q-mr-md"
             color="primary"
             icon="save"
@@ -43,7 +43,7 @@
             @click="saveAndReassign"
           />
           <q-btn
-            v-if="status != statusOrder.rejected && status != statusOrder.done"
+            v-if="validateVendor && status != statusOrder.rejected && status != statusOrder.done"
             class="float-right q-mr-md"
             color="secondary"
             icon="save"
@@ -51,7 +51,7 @@
             @click="save"
           />
           <q-btn
-            v-if="status == statusOrder.observed"
+            v-if="validateVendor && status == statusOrder.observed"
             class="float-right q-mr-md"
             color="negative"
             icon="delete"
@@ -90,7 +90,7 @@
 
 <script>
 import { statusOrder } from 'src/commons/status'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 let self
 export default {
@@ -102,6 +102,7 @@ export default {
       isometric: null,
       materials: null,
       status: null,
+      vendor: null,
       slide: 1,
       slideExtra: 0,
       extraDocumentsDialog: false,
@@ -118,6 +119,15 @@ export default {
   },
   mounted () {},
   computed: {
+    ...mapGetters('users/auth', { currentUserId: 'id' }),
+    validateVendor () {
+      if (this.vendor) {
+        if (this.vendor?.id !== this.currentUserId) {
+          return false
+        }
+      }
+      return true
+    },
     breadCrumRoutes () {
       return [self.$t('menus.requests'), self.$t('buttons.edit')]
     }
@@ -138,6 +148,7 @@ export default {
       const data = response.data
       self.$refs.documentForm.setData(data.data)
       this.status = data.data.status
+      this.vendor = data.data.vendor
       this.floorPlan = data.data.floorPlan
       this.isometric = data.data.isometric
       this.materials = data.data.materials

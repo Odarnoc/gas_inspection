@@ -59,7 +59,7 @@
         </div>
         <div class="col-12">
           <image-upload
-            v-if="status == statusOrder.done"
+            v-if="validateVendor && status == statusOrder.done"
             color="warning"
             icon="photo_camera"
             :label="$t('buttons.addDocument')"
@@ -75,7 +75,7 @@
             @click="getProyectOnPdf"
           />
           <q-btn
-            v-if="status == statusOrder.done"
+            v-if="validateVendor && status == statusOrder.done"
             class="float-right q-mr-md"
             color="secondary"
             icon="folder"
@@ -91,7 +91,7 @@
 <script>
 import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
 import { statusOrder } from 'src/commons/status'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 let self
 export default {
@@ -103,6 +103,7 @@ export default {
       isometric: null,
       materials: null,
       status: null,
+      vendor: null,
       slide: 0,
       extraDocumentsDialog: false,
       statusOrder: {
@@ -132,6 +133,15 @@ export default {
     self.fetchFromServer()
   },
   computed: {
+    ...mapGetters('users/auth', { currentUserId: 'id' }),
+    validateVendor () {
+      if (this.vendor) {
+        if (this.vendor?.id !== this.currentUserId) {
+          return false
+        }
+      }
+      return true
+    },
     breadCrumRoutes () {
       return [self.$t('menus.requests'), self.$t('menus.approved')]
     },
@@ -206,6 +216,7 @@ export default {
       const data = response.data
       self.$refs.documentForm.setData(data.data)
       this.status = data.data.status
+      this.vendor = data.data.vendor
       this.floorPlan = data.data.floorPlan
       this.isometric = data.data.isometric
       this.materials = data.data.materials

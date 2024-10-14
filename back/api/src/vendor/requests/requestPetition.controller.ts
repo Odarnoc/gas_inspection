@@ -34,8 +34,15 @@ export class RequestPetitionController {
   }
 
   @Post('getTableDashboard')
-  getTableDashboard(@Body() paginationDto: PaginationCompleteDto) {
+  @Auth()
+  getTableDashboard(
+    @GetUser() user: User,
+    @Body() paginationDto: PaginationCompleteDto,
+  ) {
     paginationDto.where = {
+      vendor: {
+        id: user.id,
+      },
       status: In([
         StatusOrder.assigned,
         StatusOrder.inspectionAproved,

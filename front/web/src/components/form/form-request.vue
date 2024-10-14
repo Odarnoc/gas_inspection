@@ -147,7 +147,7 @@
               <q-badge v-if="!user.fields.identityCard" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
-                  <q-item>
+                  <q-item v-if="validateVendor">
                     <q-item-section>
                       <image-upload
                         :route="createIdentityCardFileRoute"
@@ -194,7 +194,7 @@
               <q-badge v-if="!user.fields.waterBill" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
-                  <q-item>
+                  <q-item v-if="validateVendor">
                     <q-item-section>
                       <image-upload
                         :route="createWaterBillFileRoute"
@@ -241,7 +241,7 @@
               <q-badge v-if="!user.fields.electricityBill" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
-                  <q-item>
+                  <q-item v-if="validateVendor">
                     <q-item-section>
                       <image-upload
                         :route="createElectricityBillFileRoute"
@@ -288,7 +288,7 @@
               <q-badge v-if="!user.fields.realFolio" color="orange" floating>!</q-badge>
               <q-menu anchor="top right" self="top left">
                 <q-list>
-                  <q-item>
+                  <q-item v-if="validateVendor">
                     <q-item-section>
                       <image-upload
                         :route="createRealFolioFileRoute"
@@ -538,7 +538,7 @@
 <script>
 import { GENERAL_ROUTES } from 'src/commons/filesRoutes'
 import { statusOrder } from 'src/commons/status'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 let self
 export default {
@@ -575,6 +575,7 @@ export default {
           limitDate: '',
           proyectType: null,
           inspector: null,
+          vendor: null,
           status: statusOrder.assigned,
           observations: ''
         }
@@ -587,11 +588,25 @@ export default {
     edit: Boolean
   },
   computed: {
+    ...mapGetters('users/auth', { currentUserId: 'id' }),
     readonlyByStatus () {
+      if (this.user.fields?.vendor) {
+        if (this.user.fields.vendor?.id !== this.currentUserId) {
+          return true
+        }
+      }
       return (
         this.user.fields.status === statusOrder.rejected ||
         this.user.fields.status === statusOrder.done
       )
+    },
+    validateVendor () {
+      if (this.user.fields?.vendor) {
+        if (this.user.fields.vendor?.id !== this.currentUserId) {
+          return false
+        }
+      }
+      return true
     },
     createIdentityCardFileRoute () {
       return `${GENERAL_ROUTES.user}identityCard/${new Date().getTime()}/`

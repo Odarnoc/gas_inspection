@@ -94,6 +94,7 @@ export class RequestPetitionService {
         proyectType: true,
         inspector: true,
         instalator: true,
+        vendor: true,
       },
       where: { id },
     });
