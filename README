@@ -1,0 +1,15 @@
+La aplicacion de flutter fue desarrollada en la version 3.22.1 del canal estable
+
+necesitare que me pasen un correo electronico para agregarlos como propietarios del proyecto de firebase que configure para el almacenamiento de archivos
+
+en el archivo "aplication\lib\constants\constants.dart" se deberan modificar las urls que estan en las variables "kDomain" y "kSokect" para conectarlo al servidor de backend que hayan montado
+
+para la creacion de base de datos, necesitan posgres con la extension postgis por lo general se puede seguir la documentacion oficial para la instalacion "https://postgis.net/documentation/getting_started/" pero varia dependiendo de como tengan montada su base de datos
+
+para el backend deberan copiar el archivo "back\api\.env.dist" y dejarlo solo como "back\api\.env" en ese archivo agregaran las configuraciones de base de datos, al momento de correr el proyecto con esas configuraciones se crearan todas las tablas necesarias para el funcionamiento del sistema
+
+para crear el usuario inicial administrador pueden usar el sql que esta en "sql\initialization-db.sql" la contraseña asignada en ese query es "123456" pueden modificar la info si lo requieren
+
+para el front end deberan modificar las urls en el archivo "front\web\config.env.js" al igual que se hiso con la aplicacion movil ya que tengan corriendo el servidor de backend, ahi habra 3 ambientes que podran modificar el importante seria "PRODUCTION" y se debera modificar "SOCKET_URL" y "API_URL"
+
+en los archivos docker file de back (back\api\Dockerfile) y front (front\Dockerfile) estan todos los comandos necesarios para correr el proyecto en contenedor, basta con que hagan build de esos archivos con docker para que tengan las imagenes de docker y las puedan correr usando docker, o pueden correr cada apartado de forma individual sin docker pero tendran que realizar todas las instalaciones y configuraciones de los dockerfiles
